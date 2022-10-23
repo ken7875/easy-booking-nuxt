@@ -1,0 +1,54 @@
+{
+  "private": true,
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "node": true
+    },
+    "extends": [
+      "@nuxtjs/eslint-config-typescript",
+      "plugin:nuxt/recommended",
+      "plugin:prettier/recommended",
+      "@vue/standard"
+    ],
+    "parserOptions": {
+      "parser": "babel-eslint"
+    },
+    "rules": {},
+    "overrides": [
+      {
+        "files": [
+          "**/__tests__/*.{j,t}s?(x)",
+          "**/tests/unit/**/*.spec.{j,t}s?(x)"
+        ],
+        "env": {
+          "jest": true
+        }
+      }
+    ]
+  },
+  "devDependencies": {
+    "@babel/eslint-parser": "^7.19.1",
+    "@nuxtjs/eslint-config-typescript": "^11.0.0",
+    "@nuxtjs/tailwindcss": "^5.3.5",
+    "@typescript-eslint/eslint-plugin": "5.0.0",
+    "@typescript-eslint/parser": "^5.40.0",
+    "eslint": "^8.25.0",
+    "eslint-plugin-vue": "^9.6.0",
+    "nuxt": "3.0.0-rc.11"
+  },
+  "dependencies": {
+    "@nuxtjs/composition-api": "^0.33.1",
+    "@pinia/nuxt": "^0.4.3",
+    "autoprefixer": "^10.4.12",
+    "gsap": "^3.11.3",
+    "pinia": "^2.0.23"
+  }
+}

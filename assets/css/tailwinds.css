@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html,
+  body,
+  *::before,
+  *::after {
+    @apply border-box;
+  }
+  html,
+  body{
+    @apply w-screen h-screen overflow-x-hidden
+  }
+}
