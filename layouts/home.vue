@@ -58,6 +58,7 @@
 </template>
 
 <script setup lang="ts">
+import '@/assets/css/tailwinds.css';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import worldMap from '@/components/worldMap.vue';

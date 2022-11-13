@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
+/* @layer base {
   html,
   body,
   *::before,
@@ -12,5 +12,25 @@
   html,
   body{
     @apply w-screen h-screen overflow-x-hidden
+  }
+} */
+
+@layer utilities {
+  .storke-text {
+    -webkit-text-stroke: 1px #000000;
+    -webkit-text-fill-color: white;
+    font-szie: 30px;
+  }
+}
+
+@layer components {
+  .swiper-button{
+    @apply relative after:content-[''] after:absolute after:bg-white after:w-[1.5rem] after:h-[1.5rem] after:top-[55%] after:left-[50%] after:translate-x-[-50%] after:translate-y-[-50%] z-30 after:z-10;
+  }
+  .swiper-icon {
+    @apply text-red-600 relative z-20;
+  }
+  .activeCard{
+    @apply bg-black text-black shadow-lg shadow-black;
   }
 }

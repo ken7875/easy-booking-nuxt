@@ -67,35 +67,38 @@
         </template>
       </slider>
     </div>
-    <section class="h-screen w-screen relative">
-      <div class="row align-items-center h-100 offset-1 offset-md-3">
-        <div class="text-wrap col-10 col-md-5">
-          <p>所有飯店</p>
-          <p>私人民宿</p>
-          <p>機票</p>
-          <p>機票 + 酒店</p>
-          <p>月租住宿</p>
+    <section class="w-screen h-screen bg-homeScrollImg relative" ref="scrollListWrap">
+      <div class="flex items-center justify-center w-full h-full" ref="textWrap">
+        <div class="text-white text-[2.5rem] w-[40%] translate-y-[50%]">
+          <p class="border-b-2 border-white mb-[25px] scrollText">所有飯店</p>
+          <p class="border-b-2 border-white mb-[25px] scrollText">私人民宿</p>
+          <p class="border-b-2 border-white mb-[25px] scrollText">機票</p>
+          <p class="border-b-2 border-white mb-[25px] scrollText">機票 + 酒店</p>
+          <p class="border-b-2 border-white mb-[25px] scrollText">月租住宿</p>
         </div>
       </div>
-      <div class="darkWrap"></div>
+      <div ref="mask" class="absolute top-0 left-0 w-full h-screen"></div>
     </section>
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { useStore } from '@/store/hotel';
-import slider from '@/components/slider/slider';
-import card from '@/components/cards';
+import slider from '@/components/slider/slider.vue';
+import card from '@/components/cards.vue';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { Hotel } from '@/store/hotel.js';
 
 definePageMeta({
   layout: 'home'
 });
-const hotProductsData = ref([]);
+const hotProductsData = ref<Hotel[]>([]);
 const getHotHotels = async () => {
   const runtimeConfig = useRuntimeConfig();
   const { baseUrl } = runtimeConfig.public;
   const apiUrl = `${baseUrl}/products/hotProducts`;
-  const { data: hotProducts } = await useAsyncData('hotProducts', () => $fetch(apiUrl));
+  const { data: hotProducts } = (await useAsyncData('hotProducts', () => $fetch(apiUrl))) as any;
   hotProductsData.value = hotProducts.value.data.data;
 };
 
@@ -104,13 +107,81 @@ const getAllHotels = async () => {
   const runtimeConfig = useRuntimeConfig();
   const { baseUrl } = runtimeConfig.public;
   const apiUrl = `${baseUrl}/products`;
-  const { data: allHotels } = await useAsyncData('allHotels', () => $fetch(apiUrl));
+  const { data: allHotels } = (await useAsyncData('allHotels', () => $fetch(apiUrl))) as any;
   allHotelsData.value = allHotels.value.data.data;
 };
 
 getHotHotels();
 getAllHotels();
 
+gsap.registerPlugin(ScrollTrigger);
+let tl: any = null;
+let tl2: any = null;
+let tl3: any = null;
+const nav = ref(null);
+const innerWidth = ref(0);
+
+if (process.client) {
+  innerWidth.value = window.innerWidth;
+}
+
+const scrollListWrap = ref<HTMLElement | null>(null);
+const scrollText = ref<HTMLElement | null>(null);
+const textWrap = ref<HTMLElement | null>(null);
+const mask = ref<HTMLElement | null>(null);
+const scrollTextAnimation = () => {
+  const end = innerWidth.value <= 640 ? '100%' : '200%';
+  console.log(innerWidth, end, 'asdasdasdasd');
+
+  tl = gsap.timeline({
+    scrollTrigger: {
+      start: '0',
+      end: end,
+      trigger: scrollListWrap.value,
+      scrub: 1
+    }
+  });
+  tl2 = gsap.timeline({
+    scrollTrigger: {
+      start: '0',
+      end: end,
+      trigger: scrollListWrap.value,
+      scrub: 1
+    }
+  });
+  tl3 = gsap.timeline({
+    scrollTrigger: {
+      start: '0',
+      end: end,
+      trigger: scrollListWrap.value,
+      scrub: 1,
+      pin: true
+    }
+  });
+
+  const textArr = gsap.utils.toArray('.scrollText');
+  // console.log(scrollListWrap.value);
+  tl.to(mask.value, { backgroundColor: 'rgba(0, 0, 0, 0.3)' }, '<');
+  tl.to(textWrap.value, { y: -130, duration: 5 });
+  tl.to(mask.value, { opacity: 0 }, '+=100%');
+
+  textArr.forEach((text) => {
+    tl2.fromTo(text, { fontSize: '2.5rem', duration: 2 }, { fontSize: '3.125rem', duration: 2 });
+    tl2.to(text, { fontSize: '2.5rem', duration: 2 }, '+=50');
+  });
+};
+onMounted(() => {
+  scrollTextAnimation();
+});
+
+onBeforeUnmount(() => {
+  tl.scrollTrigger.kill();
+  tl2.scrollTrigger.kill();
+  tl3.scrollTrigger.kill();
+  tl = null;
+  tl2 = null;
+  tl3 = null;
+});
 // const cardWraps = ref([]);
 // watch(allHotelsData, (val) => {
 //   nextTick(() => {
