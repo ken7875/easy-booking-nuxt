@@ -1,7 +1,8 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
-    './components/**/*.{js,vue,ts}',
+    './assets/**/*.{vue,js,css}',
+    './components/**/*.{vue,js}',
     './layouts/**/*.vue',
     './pages/**/*.vue',
     './plugins/**/*.{js,ts}',
@@ -28,6 +29,10 @@ module.exports = {
       },
       animation: {
         cardFadeInAnimate: 'cardFadeIn 0.5s ease-in-out both'
+      },
+      backgroundImage: {
+        homeScrollImg: "url('../img/japan.jpg')",
+        phoneBg: "url('../img/taiwan.jpg')"
       }
     }
   },

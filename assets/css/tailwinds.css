@@ -33,4 +33,22 @@
   .activeCard{
     @apply bg-black text-black shadow-lg shadow-black;
   }
+  .bubble{
+    @apply absolute z-[-1] lg:w-[15vw] lg:h-[15vw] md:w-[30vw] md:h-[30vw] opacity-[0.8] object-cover rounded-[50%] first-of-type:top-[17%] first-of-type:left-[5%] sm:first-of-type:left-[9px];
+  }
+  .button{
+    @apply p-[10px]
+    /* background-color: $bg;
+    padding: 10px;
+    border: 1px solid $bg;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 300;
+    color: #FFFFFF;
+    font-weight: bold;
+    min-width: 100px;
+    @content */
+  }
 }

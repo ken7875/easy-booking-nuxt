@@ -15,7 +15,7 @@
 
 <script setup lang="ts">
 import { Hotel } from '@/store/hotel';
-import swiperButton from './swiperButton';
+import swiperButton from './swiperButton.vue';
 
 const myprops = defineProps({
   data: {

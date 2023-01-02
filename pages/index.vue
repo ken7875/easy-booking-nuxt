@@ -1,17 +1,68 @@
 <template>
   <div>
-    <div class="h-screen w-screen bg-white relative z-[100] pt-[6.5rem]">
+    <section class="h-screen w-screen bg-white relative z-[100] pt-[6.5rem]">
       <div class="absolute top-0 left-[20%] z-1 h-full">
         <div class="h-full w-[1px] bg-black" v-border></div>
       </div>
-      <div class="bg-white relative top-[2rem] left-0 z-10 flex items-center flex-col">
+      <div class="bg-white relative left-0 z-10 flex items-center flex-col">
         <div class="h-[1px] w-full bg-black" v-border></div>
         <h2 class="text-[3.4rem] py-[1rem] whitespace-nowrap storke-text">
-          <strong>Lorem ipsum dolor sit amet consectetur, adipisicing elit.</strong>
+          <strong class="mr-[2rem]">熱門旅遊國家</strong>
+          <strong class="mr-[2rem]">熱門旅遊國家</strong>
+          <strong class="mr-[2rem]">熱門旅遊國家</strong>
+          <strong class="mr-[2rem]">熱門旅遊國家</strong>
+          <strong class="mr-[2rem]">熱門旅遊國家</strong>
         </h2>
         <div class="h-[0.5px] w-full bg-black" v-border></div>
       </div>
-    </div>
+      <div class="flex h-[calc(100%-6.5rem)] py-[2.5rem]">
+        <div class="w-[20%] h-full">
+          <ul class="flex flex-col justify-between h-full">
+            <li
+              class="group hover:scale-[1.2] transition-transform duration-500 text-[2.5rem] px-[3rem] cursor-pointer"
+            >
+              台灣
+              <div
+                class="border-t-[1px] border-black scale-[0] group-hover:scale-[1] delay-300 duration-300 origin-left"
+              ></div>
+            </li>
+            <li
+              class="group hover:scale-[1.2] transition-transform duration-500 text-[2.5rem] px-[3rem] cursor-pointer"
+            >
+              日本
+              <div
+                class="border-t-[1px] border-black scale-[0] group-hover:scale-[1] delay-300 duration-300 origin-left"
+              ></div>
+            </li>
+            <li
+              class="group hover:scale-[1.2] transition-transform duration-500 text-[2.5rem] px-[3rem] cursor-pointer"
+            >
+              美國
+              <div
+                class="border-t-[1px] border-black scale-[0] group-hover:scale-[1] delay-300 duration-300 origin-left"
+              ></div>
+            </li>
+            <li
+              class="group hover:scale-[1.2] transition-transform duration-500 text-[2.5rem] px-[3rem] cursor-pointer"
+            >
+              韓國
+              <div
+                class="border-t-[1px] border-black scale-[0] group-hover:scale-[1] delay-300 duration-300 origin-left"
+              ></div>
+            </li>
+            <li
+              class="group hover:scale-[1.2] transition-transform duration-500 text-[2.5rem] px-[3rem] cursor-pointer"
+            >
+              法國
+              <div
+                class="border-t-[1px] border-black scale-[0] group-hover:scale-[1] delay-300 duration-300 origin-left"
+              ></div>
+            </li>
+          </ul>
+        </div>
+        <div class="w-[80%]"></div>
+      </div>
+    </section>
     <div
       class="h-screen w-screen relative bg-[#666666] before:content-[''] before:bg-[#666666] before:w-screen before:h-[3rem] before:rotate-1 before:z-100 before:absolute before:top-[-2%] before:left-0"
     >
@@ -79,11 +130,45 @@
       </div>
       <div ref="mask" class="absolute top-0 left-0 w-full h-screen"></div>
     </section>
+    <section class="h-screen w-screen relative" ref="phoneScroll">
+      <div
+        class="w-full h-full flex flex-col items-center relative top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]"
+      >
+        <div
+          ref="phone"
+          class="absolute w-[45%] h-[50%] top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] scale-[3] bg-black rounded-[20px] before:absolute before:top-[50%] before:left-[2%] before:translate-y-[-50%] before:w-[1%] before:h-[15%] before:z-[2] before:bg-[#474E5D] before:rounded-[20px]"
+        >
+          <div
+            class="bg-phoneBg w-[90%] h-[90%] bg-cover absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] rounded-[20px] flex justify-center items-center"
+          >
+            <!-- <img src="@/assets/images/taiwan.jpg" alt=""> -->
+            <div class="flex flex-col justify-center items-center">
+              <h3 class="text-white text-[2.5rem]">
+                <strong v-surface>準</strong>
+                <strong v-surface>備</strong>
+                <strong v-surface>好</strong>
+                <strong v-surface>出</strong>
+                <strong v-surface>發</strong>
+                <strong v-surface>了</strong>
+                <strong v-surface>嗎</strong>
+              </h3>
+              <div ref="routeButton">
+                <router-link to="/products" class="">開始旅程</router-link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <img src="@/assets/img/canada.jpg" alt="" class="bubble left-[5%] sm:left-[9px]" />
+      <img src="@/assets/img/taiwan.jpg" alt="" class="bubble top-[65%] left-[12%] md:top-[65%] md:left-[12%]" />
+      <img src="@/assets/img/china.jpg" alt="" class="bubble top-[18%] right-[5%] md:top-[37%] md:right-[5%]" />
+      <img src="@/assets/img/korea.jpg" alt="" class="bubble bottom-[5%] right-[10%] md:bottom-[8%] md:right-[10%]" />
+    </section>
   </div>
 </template>
 
 <script setup lang="ts">
-import { useStore } from '@/store/hotel';
+// import { useStore } from '@/store/hotel';
 import slider from '@/components/slider/slider.vue';
 import card from '@/components/cards.vue';
 import gsap from 'gsap';
@@ -126,7 +211,6 @@ if (process.client) {
 }
 
 const scrollListWrap = ref<HTMLElement | null>(null);
-const scrollText = ref<HTMLElement | null>(null);
 const textWrap = ref<HTMLElement | null>(null);
 const mask = ref<HTMLElement | null>(null);
 const scrollTextAnimation = () => {
@@ -170,17 +254,40 @@ const scrollTextAnimation = () => {
     tl2.to(text, { fontSize: '2.5rem', duration: 2 }, '+=50');
   });
 };
+
+let tl4: any = null;
+let phoneScroll = ref<HTMLElement | null>(null);
+let phone = ref<HTMLElement | null>(null);
+let routeButton = ref<HTMLElement | null>(null);
+const phoneScrollAnimation = () => {
+  tl4 = gsap.timeline({
+    scrollTrigger: {
+      start: '0',
+      end: '100%',
+      trigger: phoneScroll.value,
+      scrub: 1,
+      pin: true
+    }
+  });
+  tl4.to(phone.value, { scaleX: 3, scaleY: 3 });
+  tl4.to(phone.value, { scaleX: 1, scaleY: 1 });
+  tl4.fromTo(routeButton.value, { opacity: 0 }, { opacity: 1 });
+};
+
 onMounted(() => {
   scrollTextAnimation();
+  phoneScrollAnimation();
 });
 
 onBeforeUnmount(() => {
   tl.scrollTrigger.kill();
   tl2.scrollTrigger.kill();
   tl3.scrollTrigger.kill();
+  tl4.scrollTrigger.kill();
   tl = null;
   tl2 = null;
   tl3 = null;
+  tl4 = null;
 });
 // const cardWraps = ref([]);
 // watch(allHotelsData, (val) => {

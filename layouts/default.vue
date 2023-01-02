@@ -1,19 +1,14 @@
 <template>
   <div>
     <header>
-      <p class="text-blue-600">123</p>
+      <Navbar />
     </header>
     <slot />
     <footer>456</footer>
   </div>
 </template>
 
-<script>
-export default {
-
-}
+<script setup>
+import '@/assets/css/tailwinds.css';
+import Navbar from './components/navbar.vue';
 </script>
-
-<style>
-
-</style>

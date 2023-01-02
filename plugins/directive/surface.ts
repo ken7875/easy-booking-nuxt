@@ -4,19 +4,16 @@ import Observer from '@/utils/observer';
 export default {
   mounted(el: HTMLElement) {
     const options = {
-      rootMargin: '0px 0px 40px 0px',
+      rootMargin: '-10px 0px 10px 0px',
       threshold: 0
     };
     // text surface animation
-    const borderAnimation = () => {
+    const textSurface = () => {
       // const elArr = gsap.utils.toArray('.h2 span')
-      const tl = gsap.timeline({
-        duration: 1
-      });
-      tl.fromTo(el, { transform: 'scale(0)' }, { transform: 'scale(1)' });
+      gsap.fromTo(el, { y: 55 }, { y: 0, duration: 2 });
     };
 
-    const hanldeObserve = new Observer(el, options, borderAnimation);
+    const hanldeObserve = new Observer(el, options, textSurface);
     hanldeObserve.observer();
   }
 };
