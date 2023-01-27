@@ -31,7 +31,7 @@ export interface Hotel {
   locations: Locations;
   name: string;
   price: number;
-  country: string;
+  country: '台灣' | '美國' | '日本' | '加拿大' | '韓國' | '中國';
   ratingAverage: number;
   ratingQuantity: string;
   description: string;
@@ -64,7 +64,7 @@ export const useHotel = defineStore('hotelStore', {
         },
         name: '',
         price: 0,
-        country: '',
+        country: '台灣',
         ratingAverage: 0,
         ratingQuantity: '',
         description: '',

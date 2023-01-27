@@ -14,4 +14,7 @@ export default defineNuxtConfig({
       baseUrl: 'http://localhost:8000/api'
     }
   }
+  // app: {
+  //   baseURL: '/home/'
+  // }
 });

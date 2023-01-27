@@ -13,5 +13,4 @@ const { getAllHotels } = hotelStore;
 
 const { allHotels } = storeToRefs(hotelStore);
 await getAllHotels();
-console.log(allHotels.value);
 </script>

@@ -1,22 +1,24 @@
 <template>
   <div class="rounded-[8px] border-1 overflow-hidden h-full bg-white flex flex-col">
-    <div class="h-[45%]">
+    <div :class="headerHeight" v-if="$slots.header">
       <slot name="header"></slot>
     </div>
-    <div class="h-[55%]">
+    <div :class="bodyHeight" v-if="$slots.body">
       <slot name="body"></slot>
     </div>
-    <div class="h-[10%]">
+    <div :class="footerHeight" v-if="$slots.footer">
       <slot name="footer"></slot>
     </div>
-    <slot name="detail"></slot>
+    <slot name="detail" v-if="$slots.detail"></slot>
   </div>
 </template>
 
 <script setup lang="ts">
 const myprops = defineProps({
   isHorizontalCard: { type: Boolean, default: false },
-  headerHeight: { type: String }
+  headerHeight: { type: String, default: 'h-[45%]' },
+  bodyHeight: { type: String, default: 'h-[55%]' },
+  footerHeight: { type: String, default: 'h-[10%]' }
 });
 const { isHorizontalCard } = toRefs(myprops);
 // const card = props.isHorizontalCard ? 'horizontalCard' : 'card'

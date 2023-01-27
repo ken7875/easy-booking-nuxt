@@ -5,7 +5,6 @@
 </template>
 
 <script setup lang="ts">
-import { Ref } from 'vue';
 useHead({
   link: [
     {
@@ -14,6 +13,4 @@ useHead({
     }
   ]
 });
-const a: Ref<string> = ref('');
-a.value = '3';
 </script>

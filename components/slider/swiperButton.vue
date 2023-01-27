@@ -1,10 +1,10 @@
 <template>
   <div class="absolute top-[50%] left-[50%] translate-x-[-53%] translate-y-[-50%] z-50">
     <button @click="change(curIdx - 1)" class="float-left swiper-button">
-      <i class="bi bi-dash-circle-fill text-[2.5rem] swiper-icon"></i>
+      <i class="bi bi-dash-circle-fill text-[2.5rem] swiper-icon text-red-500"></i>
     </button>
     <button @click="change(curIdx + 1)" class="float-right swiper-button">
-      <i class="bi bi-plus-circle-fill text-[2.5rem] swiper-icon"></i>
+      <i class="bi bi-plus-circle-fill text-[2.5rem] swiper-icon text-red-500"></i>
     </button>
   </div>
 </template>
