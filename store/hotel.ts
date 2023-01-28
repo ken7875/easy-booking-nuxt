@@ -1,47 +1,6 @@
 import { defineStore } from 'pinia';
-
-interface Locations {
-  coordinates: number[];
-  address: string;
-}
-
-interface ViewPorts {
-  locations: Locations;
-  address: string;
-  coordinates: number[];
-  name: '';
-  product: Hotel | string;
-  productCooradinates: number[];
-  distance: number;
-  id: string;
-}
-
-export interface roomType {
-  remainRoom: number;
-  name: string;
-  image: string[];
-  person: number;
-  service: string[];
-  price: number;
-  roomNum: number;
-}
-
-export interface Hotel {
-  id: '';
-  locations: Locations;
-  name: string;
-  price: number;
-  country: '台灣' | '美國' | '日本' | '加拿大' | '韓國' | '中國';
-  ratingAverage: number;
-  ratingQuantity: string;
-  description: string;
-  images: string[];
-  summary: string;
-  viewPorts: ViewPorts[];
-  accommodate: number;
-  roomType: roomType[];
-}
-
+import { getAllHotelsApi } from '@/api/index';
+import { Hotel } from '@/model/hotel';
 interface State {
   allHotels: Hotel[];
   hotel: Hotel;
@@ -81,17 +40,10 @@ export const useHotel = defineStore('hotelStore', {
   },
   actions: {
     async getAllHotels(query?: string) {
-      const path = query ? `products?${query}` : 'products';
-      const apiUrl = `${this.baseUrl}/${path}`;
-      const data = (await $fetch(apiUrl)) as any;
-      // console.log(data, 'asd');
-      // console.log(data.value?.data.data);
-      console.log(data.data.data);
-      this.allHotels = data.data.data;
-    },
-    getHotHotels() {
-      // const apiUrl = `${this.baseUrl}/products/hotProducts`;
-      // const { data } = useAsyncData('hello world', () => $fetch(apiUrl));
+      const hotelData = await getAllHotelsApi();
+      console.log(hotelData, 'asjdklasjdklasjd');
+      this.allHotels = hotelData?.data?.data;
+      console.log(this.allHotels);
     }
   }
 });

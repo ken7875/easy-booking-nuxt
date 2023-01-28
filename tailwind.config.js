@@ -15,6 +15,12 @@ module.exports = {
       flex: {
         hotProducts: 'calc(25% - 24px) 0 0'
       },
+      borderWidth: {
+        DEFAULT: '1px'
+      },
+      colors: {
+        primary: 'rgb(239 68 68)'
+      },
       keyframes: {
         cardFadeIn: {
           '0%': {

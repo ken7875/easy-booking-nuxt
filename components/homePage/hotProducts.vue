@@ -10,7 +10,7 @@
     </h3>
     <slider
       :spacing="`ml-[calc(-1*25%*2.5)]`"
-      :data="allHotelsData"
+      :data="allHotels"
       :buttonWidth="'w-[26%]'"
       class="h-[67%] absolute top-[60%] translate-y-[-50%]"
     >
@@ -58,32 +58,16 @@
 <script setup lang="ts">
 import slider from '../slider/slider.vue';
 import card from '../cards.vue';
-import { Hotel } from '@/store/hotel';
+import { Hotel } from '@/model/hotel';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { hotel } from '@/store/index';
+import { storeToRefs } from 'pinia';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const hotProductsData = ref<Hotel[]>([]);
-const getHotHotels = async () => {
-  const runtimeConfig = useRuntimeConfig();
-  const { baseUrl } = runtimeConfig.public;
-  const apiUrl = `${baseUrl}/products/hotProducts`;
-  const { data: hotProducts } = (await useAsyncData('hotProducts', () => $fetch(apiUrl))) as any;
-  hotProductsData.value = hotProducts.value.data.data;
-};
-
-const allHotelsData = ref([]);
-const getAllHotels = async () => {
-  const runtimeConfig = useRuntimeConfig();
-  const { baseUrl } = runtimeConfig.public;
-  const apiUrl = `${baseUrl}/products`;
-  const { data: allHotels } = (await useAsyncData('allHotels', () => $fetch(apiUrl))) as any;
-  allHotelsData.value = allHotels.value.data.data;
-};
-
-getHotHotels();
-getAllHotels();
+const hotelStore = hotel();
+const { allHotels } = storeToRefs(hotelStore);
 
 let hotProductsWrapRef = ref<HTMLElement | null>(null);
 

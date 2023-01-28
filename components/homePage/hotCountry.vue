@@ -99,7 +99,8 @@
 <script setup lang="ts">
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { useHotel, Hotel } from '@/store/hotel';
+import { useHotel } from '@/store/hotel';
+import { Hotel } from '@/model/hotel';
 import { storeToRefs } from 'pinia';
 import throttle from '@/utils/throttle';
 

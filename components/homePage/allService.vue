@@ -1,24 +1,23 @@
 <template>
-  <section class="w-[calc(4000px)] h-[180vh] bg-homeScrollImg relative bg-black" ref="scrollListWrapRef">
+  <section
+    class="w-[calc(4000px)] h-[150vh] bg-homeScrollImg relative bg-black overflow-hidden"
+    ref="scrollListWrapRef"
+  >
     <div
       class="bg-[#E033FF] rounded-[50%] w-[50vw] h-[50vw] blur-[2px] bgBlur absolute translate-x-[50%] translate-y-[25%]"
     ></div>
     <div
-      class="flex justify-center w-full lg:h-[350px] absolute top-[30%] left-[-25%] rotate-[15deg] perspective-20 ml-[-24%]"
+      class="flex justify-center w-full lg:h-[350px] absolute top-[50%] left-[-10%] rotate-[15deg] perspective-20"
       ref="cardWrapRef"
     >
-      <div
-        v-for="(service, idx) in serviceAryLoop"
-        :key="idx"
-        :class="[
-          'lg:w-[400px] lg:h-[350px] p-[16px] transform-3d translate-z-[500px]',
-          { '!w-[29rem]': idx === 7 || idx === 5 },
-          { '!w-[32rem]': idx === 6 }
-        ]"
-        :style="{
+      <!-- :style="{
           transform: `rotateY(${service.rotateY}) translate3d(${service.transform3d})`
-        }"
-      >
+        }" -->
+      <!-- :class="[
+          'lg:w-[400px] lg:h-[350px] p-[16px] transform-3d translate-z-[500px]',
+          { '!w-[29rem]': idx === 5, '!w-[36rem]': idx === 6 }
+        ]" -->
+      <div v-for="(service, idx) in serviceAryLoop" :key="idx" class="lg:w-[400px] lg:h-[350px] p-[16px]">
         <Cards :body-height="'h-full'">
           <template #body>
             <div
@@ -54,28 +53,27 @@
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Cards from '@/components/cards.vue';
-import { HtmlAttributes } from '@zhead/schema';
 
 const allServiceAry = ref([
   {
     title: '所有飯店',
     img: 'bg-[url("/img/cars.jpg")]',
-    rotateY: '20deg',
-    transform3d: '0, 0, 300px'
+    rotateY: '16deg',
+    transform3d: '238px, 0, 215px'
   },
   {
     title: '私人民宿',
     img: 'bg-[url("/img/villa.jpg")]',
     rotateY: '17deg',
     // translateZ: '300px',
-    transform3d: '50px, 0, 274px' // 213123123
+    transform3d: '240px, 0, 90px'
   },
   {
     title: '機票',
     img: 'bg-[url("/img/airplane.jpg")]',
-    rotateY: '6deg',
+    rotateY: '-22deg',
     // translateZ: '300px',
-    transform3d: '105px, 0, 180px'
+    transform3d: '200px, 0, -7px'
   },
   {
     title: '機票 + 酒店',
@@ -87,9 +85,9 @@ const allServiceAry = ref([
   {
     title: '月租住宿',
     img: 'bg-[url("/img/monthlyRend.jpg")]',
-    rotateY: '5deg',
+    rotateY: '8deg',
     // translateZ: '300px',
-    transform3d: '40px, 0, 300px'
+    transform3d: '280px, 0, 236px'
   }
 ]);
 

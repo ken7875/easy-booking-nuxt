@@ -1,8 +1,9 @@
 <template>
   <div class="w-screen overflow-x-hidden">
     <hotCountry />
-    <hotProducts />
+    <hotProducts v-if="hotProducts" />
     <allService />
+    <warterFull v-if="warterFull" />
   </div>
 </template>
 
@@ -10,14 +11,29 @@
 // // import { useStore } from '@/store/hotel';
 // import gsap from 'gsap';
 // import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import hotProducts from '@/components/homePage/hotProducts.vue';
+// import hotProducts from '@/components/homePage/hotProducts.vue';
 import hotCountry from '~~/components/homePage/hotCountry.vue';
 import allService from '~~/components/homePage/allService.vue';
+import { hotel } from '@/store/index';
+
+const hotelStore = hotel();
+const { getAllHotels } = hotelStore;
+const hotProducts = shallowRef();
+const warterFull = shallowRef();
+const getAsyncComp = async () => {
+  await getAllHotels();
+  hotProducts.value = defineAsyncComponent(() => {
+    return import('@/components/homePage/hotProducts.vue');
+  });
+  warterFull.value = defineAsyncComponent(async () => {
+    return import('@/components/homePage/waterfull.vue');
+  });
+};
 
 definePageMeta({
   layout: 'home'
 });
-
+getAsyncComp();
 // gsap.registerPlugin(ScrollTrigger);
 // let tl: any = null;
 // let tl2: any = null;
