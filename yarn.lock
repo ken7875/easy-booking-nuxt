@@ -48,6 +48,27 @@
     json5 "^2.2.1"
     semver "^6.3.0"
 
+"@babel/core@^7.20.12":
+  version "7.20.12"
+  resolved "https://registry.yarnpkg.com/@babel/core/-/core-7.20.12.tgz#7930db57443c6714ad216953d1356dac0eb8496d"
+  integrity sha512-XsMfHovsUYHFMdrIHkZphTN/2Hzzi78R08NuHfDBehym2VsPDL6Zn/JAD/JQdnRvbSsbQc4mVaU1m6JgtTEElg==
+  dependencies:
+    "@ampproject/remapping" "^2.1.0"
+    "@babel/code-frame" "^7.18.6"
+    "@babel/generator" "^7.20.7"
+    "@babel/helper-compilation-targets" "^7.20.7"
+    "@babel/helper-module-transforms" "^7.20.11"
+    "@babel/helpers" "^7.20.7"
+    "@babel/parser" "^7.20.7"
+    "@babel/template" "^7.20.7"
+    "@babel/traverse" "^7.20.12"
+    "@babel/types" "^7.20.7"
+    convert-source-map "^1.7.0"
+    debug "^4.1.0"
+    gensync "^1.0.0-beta.2"
+    json5 "^2.2.2"
+    semver "^6.3.0"
+
 "@babel/core@^7.20.5":
   version "7.20.7"
   resolved "https://registry.yarnpkg.com/@babel/core/-/core-7.20.7.tgz#37072f951bd4d28315445f66e0ec9f6ae0c8c35f"
@@ -185,7 +206,7 @@
     "@babel/traverse" "^7.19.6"
     "@babel/types" "^7.19.4"
 
-"@babel/helper-module-transforms@^7.20.7":
+"@babel/helper-module-transforms@^7.20.11", "@babel/helper-module-transforms@^7.20.7":
   version "7.20.11"
   resolved "https://registry.yarnpkg.com/@babel/helper-module-transforms/-/helper-module-transforms-7.20.11.tgz#df4c7af713c557938c50ea3ad0117a7944b2f1b0"
   integrity sha512-uRy78kN4psmji1s2QtbtcCSaj/LILFDp0f/ymhpQH5QY3nljUZCaNWz9X1dEj/8MBdBEFECs7yRhKn8i7NjZgg==
@@ -290,6 +311,11 @@
   resolved "https://registry.npmjs.org/@babel/parser/-/parser-7.19.6.tgz"
   integrity sha512-h1IUp81s2JYJ3mRkdxJgs4UvmSsRvDrx5ICSJbPvtWYv5i1nTBGcBpnog+89rAFMwvvru6E5NUHdBe01UeSzYA==
 
+"@babel/parser@^7.20.13":
+  version "7.20.13"
+  resolved "https://registry.yarnpkg.com/@babel/parser/-/parser-7.20.13.tgz#ddf1eb5a813588d2fb1692b70c6fce75b945c088"
+  integrity sha512-gFDLKMfpiXCsjt4za2JA9oTMn70CeseCehb11kRZgvd7+F67Hih3OHOK24cRrWECJ/ljfPGac6ygXAs/C8kIvw==
+
 "@babel/parser@^7.20.7":
   version "7.20.7"
   resolved "https://registry.yarnpkg.com/@babel/parser/-/parser-7.20.7.tgz#66fe23b3c8569220817d5feb8b9dcdc95bb4f71b"
@@ -329,6 +355,11 @@
   version "7.19.6"
   resolved "https://registry.npmjs.org/@babel/standalone/-/standalone-7.19.6.tgz"
   integrity sha512-SUOBMtHlxGpXf14X85c1vtHyxYgIODBUdclntETSEGkgI274MNPBUkOVWpvFmRhMuLokK3CL07qJoK2e5CIToA==
+
+"@babel/standalone@^7.20.12":
+  version "7.20.14"
+  resolved "https://registry.yarnpkg.com/@babel/standalone/-/standalone-7.20.14.tgz#26b02632680ca58da9612630b1035d11e62437a1"
+  integrity sha512-zxdQD6+eMQumJFPOLpOZE34JAAGrZPMXCKvHR7Mtat/l+nHDOxlit5u85HDk5WkBXmvN5PhUMeimiC95KXD9+A==
 
 "@babel/standalone@^7.20.6":
   version "7.20.11"
@@ -381,6 +412,22 @@
     "@babel/helper-hoist-variables" "^7.18.6"
     "@babel/helper-split-export-declaration" "^7.18.6"
     "@babel/parser" "^7.20.7"
+    "@babel/types" "^7.20.7"
+    debug "^4.1.0"
+    globals "^11.1.0"
+
+"@babel/traverse@^7.20.12":
+  version "7.20.13"
+  resolved "https://registry.yarnpkg.com/@babel/traverse/-/traverse-7.20.13.tgz#817c1ba13d11accca89478bd5481b2d168d07473"
+  integrity sha512-kMJXfF0T6DIS9E8cgdLCSAL+cuCK+YEZHWiLK0SXpTo8YRj5lpJu3CDNKiIBCne4m9hhTIqUg6SYTAI39tAiVQ==
+  dependencies:
+    "@babel/code-frame" "^7.18.6"
+    "@babel/generator" "^7.20.7"
+    "@babel/helper-environment-visitor" "^7.18.9"
+    "@babel/helper-function-name" "^7.19.0"
+    "@babel/helper-hoist-variables" "^7.18.6"
+    "@babel/helper-split-export-declaration" "^7.18.6"
+    "@babel/parser" "^7.20.13"
     "@babel/types" "^7.20.7"
     debug "^4.1.0"
     globals "^11.1.0"
@@ -650,6 +697,30 @@
     unimport "^0.6.8"
     untyped "^0.5.0"
 
+"@nuxt/kit@^3.0.0-rc.13":
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/@nuxt/kit/-/kit-3.1.1.tgz#7641afe192297db02d3585234e9d2a71caf164df"
+  integrity sha512-wmqVCIuD/te6BKf3YiqWyMumKI5JIpkiv0li/1Y3QHnTkoxyIhLkbFgNcQHuBxJ3eMlk2UjAjAqWiqBHTX54vQ==
+  dependencies:
+    "@nuxt/schema" "3.1.1"
+    c12 "^1.1.0"
+    consola "^2.15.3"
+    defu "^6.1.2"
+    globby "^13.1.3"
+    hash-sum "^2.0.0"
+    ignore "^5.2.4"
+    jiti "^1.16.2"
+    knitwork "^1.0.0"
+    lodash.template "^4.5.0"
+    mlly "^1.1.0"
+    pathe "^1.1.0"
+    pkg-types "^1.0.1"
+    scule "^1.0.0"
+    semver "^7.3.8"
+    unctx "^2.1.1"
+    unimport "^2.0.1"
+    untyped "^1.2.2"
+
 "@nuxt/postcss8@^1.1.3":
   version "1.1.3"
   resolved "https://registry.yarnpkg.com/@nuxt/postcss8/-/postcss8-1.1.3.tgz#a7f8f6f2a664430bbdd3b175498eb693e0b1b351"
@@ -716,6 +787,25 @@
     ufo "^0.8.6"
     unimport "^0.6.8"
     untyped "^0.5.0"
+
+"@nuxt/schema@3.1.1":
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/@nuxt/schema/-/schema-3.1.1.tgz#c45f67f245a117f99b028d98f259cce4c740ffa7"
+  integrity sha512-/KuoCDVGrLD9W7vwuYhu4HbdT/BpbrhA4Pm9dGn7Jah40kHDGqUnJxugvMjt+4suq53rLQyTA0LRDWfFxfxAOQ==
+  dependencies:
+    c12 "^1.1.0"
+    create-require "^1.1.1"
+    defu "^6.1.2"
+    hookable "^5.4.2"
+    jiti "^1.16.2"
+    pathe "^1.1.0"
+    pkg-types "^1.0.1"
+    postcss-import-resolver "^2.0.0"
+    scule "^1.0.0"
+    std-env "^3.3.1"
+    ufo "^1.0.1"
+    unimport "^2.0.1"
+    untyped "^1.2.2"
 
 "@nuxt/telemetry@^2.1.5":
   version "2.1.6"
@@ -798,6 +888,14 @@
     magic-string "^0.26.2"
     pathe "^0.3.3"
     ufo "^0.8.5"
+
+"@nuxtjs/device@^3.0.0":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/@nuxtjs/device/-/device-3.0.0.tgz#0892e38a7a44aa8f678b1badcb622da3b0b4d11e"
+  integrity sha512-81ZXEyJ/6rZEGTUIfgUjsHWBWB1InHayN83LVW63/TclVyrrb/Si47BczkGcIgmiETcKTM9iaqMLcDfu9M7BNg==
+  dependencies:
+    "@nuxt/kit" "^3.0.0-rc.13"
+    defu "^6.1.0"
 
 "@nuxtjs/eslint-config-typescript@^11.0.0":
   version "11.0.0"
@@ -1647,7 +1745,7 @@ c12@^0.2.13:
     pkg-types "^0.3.5"
     rc9 "^1.2.2"
 
-c12@^1.0.1:
+c12@^1.0.1, c12@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/c12/-/c12-1.1.0.tgz#2d73596c885f0b990dcd91244b15e3c0405ebbeb"
   integrity sha512-9KRFWEng+TH8sGST4NNdiKzZGw1Z1CHnPGAmNqAyVP7suluROmBjD8hsiR34f94DdlrvtGvvmiGDsoFXlCBWIw==
@@ -2192,6 +2290,11 @@ defu@^6.1.1:
   version "6.1.1"
   resolved "https://registry.yarnpkg.com/defu/-/defu-6.1.1.tgz#a12c712349197c545dc61d3cd3b607b4cc7ef0c1"
   integrity sha512-aA964RUCsBt0FGoNIlA3uFgo2hO+WWC0fiC6DBps/0SFzkKcYoM/3CzVLIa5xSsrFjdioMdYgAIbwo80qp2MoA==
+
+defu@^6.1.2:
+  version "6.1.2"
+  resolved "https://registry.yarnpkg.com/defu/-/defu-6.1.2.tgz#1217cba167410a1765ba93893c6dbac9ed9d9e5c"
+  integrity sha512-+uO4+qr7msjNNWKYPHqN/3+Dx3NFkmIzayk2L1MyZQlvgZb/J1A0fo410dpKrN2SnqFjt8n4JL8fDJE0wIgjFQ==
 
 delegates@^1.0.0:
   version "1.0.0"
@@ -3310,6 +3413,17 @@ globby@^13.1.2:
     merge2 "^1.4.1"
     slash "^4.0.0"
 
+globby@^13.1.3:
+  version "13.1.3"
+  resolved "https://registry.yarnpkg.com/globby/-/globby-13.1.3.tgz#f62baf5720bcb2c1330c8d4ef222ee12318563ff"
+  integrity sha512-8krCNHXvlCgHDpegPzleMq07yMYTO2sXKASmZmquEYWEmCx6J5UTRbp5RwMJkTJGtcQ44YpiUYUiN0b9mzy8Bw==
+  dependencies:
+    dir-glob "^3.0.1"
+    fast-glob "^3.2.11"
+    ignore "^5.2.0"
+    merge2 "^1.4.1"
+    slash "^4.0.0"
+
 globrex@^0.1.2:
   version "0.1.2"
   resolved "https://registry.npmjs.org/globrex/-/globrex-0.1.2.tgz"
@@ -3402,6 +3516,11 @@ hookable@^5.3.0:
   version "5.4.1"
   resolved "https://registry.npmjs.org/hookable/-/hookable-5.4.1.tgz"
   integrity sha512-i808BglQ1OuSIcgPSZoWsDapCMLXKe5wLS6XZvIXpaBWdWLUZARM8vOLayu6cXewj5TSbaZaMzKnq+pRnfscEQ==
+
+hookable@^5.4.2:
+  version "5.4.2"
+  resolved "https://registry.yarnpkg.com/hookable/-/hookable-5.4.2.tgz#6a1d3c4b3cb5b4262f99b3070ce0ee92c9c78049"
+  integrity sha512-6rOvaUiNKy9lET1X0ECnyZ5O5kSV0PJbtA5yZUgdEF7fGJEVwSLSislltyt7nFwVVALYHQJtfGeAR2Y0A0uJkg==
 
 hosted-git-info@^2.1.4:
   version "2.8.9"
@@ -3501,6 +3620,11 @@ ignore@^5.1.1, ignore@^5.2.0:
   version "5.2.0"
   resolved "https://registry.npmjs.org/ignore/-/ignore-5.2.0.tgz"
   integrity sha512-CmxgYGiEPCLhfLnpPp1MoRmifwEIOgjcHXxOBjv7mY96c+eWScsOP9c112ZyLdWHi0FxHjI+4uVhKYp/gcdRmQ==
+
+ignore@^5.2.4:
+  version "5.2.4"
+  resolved "https://registry.yarnpkg.com/ignore/-/ignore-5.2.4.tgz#a291c0c6178ff1b960befe47fcdec301674a6324"
+  integrity sha512-MAb38BcSbH0eHNBxn7ql2NH/kX33OkB3lZ1BNdh7ENeRChHTYsTvWrMubiIAMNS2llXEEgZ1MUOBtXChP3kaFQ==
 
 import-fresh@^3.0.0, import-fresh@^3.2.1:
   version "3.3.0"
@@ -3813,6 +3937,11 @@ jiti@^1.15.0, jiti@^1.16.0:
   resolved "https://registry.npmjs.org/jiti/-/jiti-1.16.0.tgz"
   integrity sha512-L3BJStEf5NAqNuzrpfbN71dp43mYIcBUlCRea/vdyv5dW/AYa1d4bpelko4SHdY3I6eN9Wzyasxirj1/vv5kmg==
 
+jiti@^1.16.2:
+  version "1.16.2"
+  resolved "https://registry.yarnpkg.com/jiti/-/jiti-1.16.2.tgz#75f7a0a8fde4a0e57e576f7d329491d588db89cf"
+  integrity sha512-OKBOVWmU3FxDt/UH4zSwiKPuc1nihFZiOD722FuJlngvLz2glX1v2/TJIgoA4+mrpnXxHV6dSAoCvPcYQtoG5A==
+
 js-sdsl@^4.1.4:
   version "4.1.5"
   resolved "https://registry.npmjs.org/js-sdsl/-/js-sdsl-4.1.5.tgz"
@@ -3857,7 +3986,7 @@ json5@^1.0.1:
   dependencies:
     minimist "^1.2.0"
 
-json5@^2.1.2:
+json5@^2.1.2, json5@^2.2.2:
   version "2.2.3"
   resolved "https://registry.yarnpkg.com/json5/-/json5-2.2.3.tgz#78cd6f1a19bdc12b73db5ad0c61efd66c1e29283"
   integrity sha512-XmOWe7eyHYH14cLdVPoyg+GOH3rYX++KpzrylJwSW98t3Nk+U8XOl8FWKOgwtzdb8lXGf6zYwDUzeHMWfxasyg==
@@ -4027,6 +4156,11 @@ local-pkg@^0.4.2:
   version "0.4.2"
   resolved "https://registry.npmjs.org/local-pkg/-/local-pkg-0.4.2.tgz"
   integrity sha512-mlERgSPrbxU3BP4qBqAvvwlgW4MTg78iwJdGGnv7kibKjWcJksrG3t6LB5lXI93wXRDvG4NpUgJFmTG4T6rdrg==
+
+local-pkg@^0.4.3:
+  version "0.4.3"
+  resolved "https://registry.yarnpkg.com/local-pkg/-/local-pkg-0.4.3.tgz#0ff361ab3ae7f1c19113d9bb97b98b905dbc4963"
+  integrity sha512-SFppqq5p42fe2qcZQqqEOiVRXl+WCP1MdT6k7BDEW1j++sp5fIY+/fdRQitvKgB5BrBcmrs5m/L0v2FrU5MY1g==
 
 locate-path@^5.0.0:
   version "5.0.0"
@@ -4344,6 +4478,16 @@ mlly@^1.0.0:
     pathe "^1.0.0"
     pkg-types "^1.0.0"
     ufo "^1.0.0"
+
+mlly@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/mlly/-/mlly-1.1.0.tgz#9e23c5e675ef7b10cc47ee6281795cb1a7aa3aa2"
+  integrity sha512-cwzBrBfwGC1gYJyfcy8TcZU1f+dbH/T+TuOhtYP2wLv/Fb51/uV7HJQfBPtEupZ2ORLRU1EKFS/QfS3eo9+kBQ==
+  dependencies:
+    acorn "^8.8.1"
+    pathe "^1.0.0"
+    pkg-types "^1.0.1"
+    ufo "^1.0.1"
 
 mri@^1.2.0:
   version "1.2.0"
@@ -4875,6 +5019,11 @@ pathe@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/pathe/-/pathe-1.0.0.tgz#135fc11464fc57c84ef93d5c5ed21247e24571df"
   integrity sha512-nPdMG0Pd09HuSsr7QOKUXO2Jr9eqaDiZvDwdyIhNG5SHYujkQHYKDfGQkulBxvbDHz8oHLsTgKN86LSwYzSHAg==
+
+pathe@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/pathe/-/pathe-1.1.0.tgz#e2e13f6c62b31a3289af4ba19886c230f295ec03"
+  integrity sha512-ODbEPR0KKHqECXW1GoxdDb+AZvULmXjVPy4rt+pGo2+TnjJTIPJQSVS6N63n8T2Ip+syHhbn52OewKicV0373w==
 
 perfect-debounce@^0.1.3:
   version "0.1.3"
@@ -6257,7 +6406,7 @@ ufo@^0.8.3, ufo@^0.8.5, ufo@^0.8.6:
   resolved "https://registry.npmjs.org/ufo/-/ufo-0.8.6.tgz"
   integrity sha512-fk6CmUgwKCfX79EzcDQQpSCMxrHstvbLswFChHS0Vump+kFkw7nJBfTZoC1j0bOGoY9I7R3n2DGek5ajbcYnOw==
 
-ufo@^1.0.0:
+ufo@^1.0.0, ufo@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/ufo/-/ufo-1.0.1.tgz#64ed43b530706bda2e4892f911f568cf4cf67d29"
   integrity sha512-boAm74ubXHY7KJQZLlXrtMz52qFvpsbOxDcZOnw/Wf+LS4Mmyu7JxmzD4tDLtUQtmZECypJ0FrCz4QIe6dvKRA==
@@ -6282,7 +6431,7 @@ unctx@^2.0.2:
     magic-string "^0.26.2"
     unplugin "^0.9.5"
 
-unctx@^2.1.0:
+unctx@^2.1.0, unctx@^2.1.1:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/unctx/-/unctx-2.1.1.tgz#415b07cf6ce42fad59ae1e4fa42ace2e71f4372d"
   integrity sha512-RffJlpvLOtolWsn0fxXsuSDfwiWcR6cyuykw2e0+zAggvGW1SesXt9WxIWlWpJhwVCZD/WlxxLqKLS50Q0CkWA==
@@ -6337,6 +6486,23 @@ unimport@^1.0.1:
     magic-string "^0.27.0"
     mlly "^1.0.0"
     pathe "^1.0.0"
+    pkg-types "^1.0.1"
+    scule "^1.0.0"
+    strip-literal "^1.0.0"
+    unplugin "^1.0.1"
+
+unimport@^2.0.1:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/unimport/-/unimport-2.1.0.tgz#d1c5bfe29f8ef1625816e2f6f3250fa2c1ec28c1"
+  integrity sha512-GDVIxATluUquX8EqelT6DtnmnZaXGID1jsO9IXwlnxb0OIEqKAxTOnTlnGmHbseoGTh+ZC9kcNDaO18HYQj9KA==
+  dependencies:
+    "@rollup/pluginutils" "^5.0.2"
+    escape-string-regexp "^5.0.0"
+    fast-glob "^3.2.12"
+    local-pkg "^0.4.3"
+    magic-string "^0.27.0"
+    mlly "^1.1.0"
+    pathe "^1.1.0"
     pkg-types "^1.0.1"
     scule "^1.0.0"
     strip-literal "^1.0.0"
@@ -6401,6 +6567,16 @@ untyped@^1.0.0:
     "@babel/core" "^7.20.5"
     "@babel/standalone" "^7.20.6"
     "@babel/types" "^7.20.5"
+    scule "^1.0.0"
+
+untyped@^1.2.2:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/untyped/-/untyped-1.2.2.tgz#d442a5d4b4281b5344cefed318736eb480b70c2f"
+  integrity sha512-EANYd5L6AdpgfldlgMcmvOOnj092nWhy0ybhc7uhEH12ipytDYz89EOegBQKj8qWL3u1wgYnmFjADhsuCJs5Aw==
+  dependencies:
+    "@babel/core" "^7.20.12"
+    "@babel/standalone" "^7.20.12"
+    "@babel/types" "^7.20.7"
     scule "^1.0.0"
 
 update-browserslist-db@^1.0.9:

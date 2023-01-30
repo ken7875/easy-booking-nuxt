@@ -2,7 +2,7 @@
   <nav
     class="nav fixed top-0 left-0 w-full bg-black flex justify-between items-center opacity-0 z-[110] h-[6.5rem] px-5"
   >
-    <h2 class="text-[1.5rem] text-white font-[900]">
+    <h2 class="text-[1.5rem] text-white font-[900] mx-auto lg:mx-0">
       <NuxtLink>
         <span class="block text-white">Easy</span>
         <span class="block text-white">Booking</span>

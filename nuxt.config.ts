@@ -5,7 +5,7 @@ export default defineNuxtConfig({
   build: {
     transpile: ['gsap']
   },
-  modules: ['@nuxtjs/tailwindcss'],
+  modules: ['@nuxtjs/tailwindcss', '@pinia/nuxt', '@nuxtjs/device'],
   typescript: {
     strict: true
   },
