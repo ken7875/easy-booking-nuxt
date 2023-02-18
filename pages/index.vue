@@ -11,9 +11,10 @@
 // // import { useStore } from '@/store/hotel';
 // import gsap from 'gsap';
 // import { ScrollTrigger } from 'gsap/ScrollTrigger';
-// import hotProducts from '@/components/homePage/hotProducts.vue';
-import hotCountry from '~~/components/homePage/hotCountry.vue';
-import allService from '~~/components/homePage/allService.vue';
+// import hotProducts from '@/components/homePage/HotProducts.vue';
+// import warterFull from '@/components/homePage/Waterfull.vue';
+import hotCountry from '~~/components/homePage/HotCountry.vue';
+import allService from '~~/components/homePage/AllService.vue';
 import { hotel } from '@/store/index';
 
 const hotelStore = hotel();
@@ -23,10 +24,10 @@ const warterFull = shallowRef();
 const getAsyncComp = async () => {
   await getAllHotels();
   hotProducts.value = defineAsyncComponent(() => {
-    return import('@/components/homePage/hotProducts.vue');
+    return import('~~/components/homePage/HotProducts.vue');
   });
   warterFull.value = defineAsyncComponent(async () => {
-    return import('@/components/homePage/waterfull.vue');
+    return import('~~/components/homePage/Waterfull.vue');
   });
 };
 

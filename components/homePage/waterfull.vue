@@ -1,9 +1,11 @@
 <template>
-  <div class="flex justify-between overflow-hidden w-[110%] ml-[-5%] h-[100vh] bg-black relative">
+  <div
+    class="flex justify-between overflow-hidden lg:w-[110%] w-[170%] lg:ml-[-5%] ml-[-35%] h-[100vh] bg-black relative"
+  >
     <div
       v-for="(row, rowIdx) in waterfullData"
       :key="rowIdx"
-      :class="['w-[25%] h-full']"
+      class="w-full h-full"
       :ref="
         (el) => {
           waterfullAnimation(el as HTMLElement, rowIdx);
@@ -34,16 +36,17 @@
 import { hotel } from '@/store/index';
 import { storeToRefs } from 'pinia';
 import gsap from 'gsap';
-import Button from '@/components/button.vue';
+import Button from '~~/components/Button.vue';
 
 const hotelStore = hotel();
 const { allHotels } = storeToRefs(hotelStore);
 
+const device = useDevice();
 // 瀑布流資料結構
 const waterfullData = computed(() => {
   let res = [];
   //   let waterfullTotal = 36; // 瀑布需要的資料總數
-  let rowNum = 5; // 瀑布排數
+  let rowNum = device.isMobile ? 3 : 5; // 瀑布排數
   let startIdx = 0;
   let endIdx = 6;
 
@@ -58,6 +61,7 @@ const waterfullData = computed(() => {
     if (waterfullCol.length < 6) {
       waterfullCol.push(...allHotels.value.slice(0, 3));
     }
+
     res.push(waterfullCol);
     startIdx += 6;
     endIdx += 6;

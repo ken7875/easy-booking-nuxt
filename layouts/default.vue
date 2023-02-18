@@ -10,5 +10,5 @@
 
 <script setup>
 import '@/assets/css/tailwinds.css';
-import Navbar from './components/navbar.vue';
+import Navbar from './components/Navbar.vue';
 </script>

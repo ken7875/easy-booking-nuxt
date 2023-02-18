@@ -57,32 +57,36 @@
 
 <script setup lang="ts">
 import slider from '../slider/slider.vue';
-import card from '../cards.vue';
+import card from '../card/index.vue';
 import { Hotel } from '@/model/hotel';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { hotel } from '@/store/index';
 import { storeToRefs } from 'pinia';
 
-gsap.registerPlugin(ScrollTrigger);
-
 const hotelStore = hotel();
+// const { getAllHotels } = hotelStore;
+// await getAllHotels();
 const { allHotels } = storeToRefs(hotelStore);
 
 let hotProductsWrapRef = ref<HTMLElement | null>(null);
 
 let tl: GSAPTimeline | null = null;
 const changeBgMode = () => {
-  tl = gsap.timeline({
-    scrollTrigger: {
-      trigger: hotProductsWrapRef.value,
-      start: '-=20%',
-      end: '+=5%',
-      scrub: 1
-    }
+  tl = useScrollAnimation({
+    trigger: hotProductsWrapRef.value,
+    start: '-=20%',
+    end: '+=5%',
+    scrub: 1
   });
+  // tl = gsap.timeline({
+  //   scrollTrigger: {
+  //     trigger: hotProductsWrapRef.value,
+  //     start: '-=20%',
+  //     end: '+=5%',
+  //     scrub: 1
+  //   }
+  // });
 
-  tl.fromTo(hotProductsWrapRef.value, { backgroundColor: '#FFFFFF' }, { backgroundColor: '#000000', duration: 0.5 });
+  tl?.fromTo(hotProductsWrapRef.value, { backgroundColor: '#FFFFFF' }, { backgroundColor: '#000000', duration: 0.5 });
 };
 
 onMounted(() => {
@@ -90,7 +94,7 @@ onMounted(() => {
 });
 
 onBeforeUnmount(() => {
-  tl?.scrollTrigger?.kill();
+  tl?.kill();
   tl = null;
 });
 </script>

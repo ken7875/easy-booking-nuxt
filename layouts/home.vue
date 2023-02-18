@@ -35,15 +35,15 @@
 
 <script setup lang="ts">
 import '@/assets/css/tailwinds.css';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import worldMap from '@/components/worldMap.vue';
-import Navbar from './components/navbar.vue';
+// import gsap from 'gsap';
+// import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import worldMap from '~~/components/WorldMap.vue';
+import Navbar from './components/Navbar.vue';
 
-gsap.registerPlugin(ScrollTrigger);
-let tl: any = null;
-let tl2: any = null;
-let tl3: any = null;
+// gsap.registerPlugin(ScrollTrigger);
+let tl: GSAPTimeline | null = null;
+let tl2: GSAPTimeline | null = null;
+let tl3: GSAPTimeline | null = null;
 // const nav = ref(null);
 // const innerWidth = ref(0);
 
@@ -52,48 +52,70 @@ let tl3: any = null;
 // }
 
 const gsapAnimation = () => {
-  tl = gsap.timeline({
-    scrollTrigger: {
-      trigger: '.navbar',
-      start: '0%',
-      end: '200%',
-      scrub: 1
-    }
+  tl = useScrollAnimation({
+    trigger: '.navbar',
+    start: '0%',
+    end: '200%',
+    scrub: 1
   });
-  tl2 = gsap.timeline({
-    scrollTrigger: {
-      trigger: '.navbar',
-      start: '100%',
-      end: '180%',
-      scrub: 1
-    }
+
+  tl2 = useScrollAnimation({
+    trigger: '.navbar',
+    start: '100%',
+    end: '180%',
+    scrub: 1
   });
-  tl3 = gsap.timeline({
-    scrollTrigger: {
-      trigger: '.navbar',
-      start: '0%',
-      end: '200%',
-      scrub: 1,
-      pin: true,
-      pinSpacing: false
-    }
+
+  tl3 = useScrollAnimation({
+    trigger: '.navbar',
+    start: '0%',
+    end: '200%',
+    scrub: 1,
+    pin: true,
+    pinSpacing: false
   });
+  // tl = gsap.timeline({
+  //   scrollTrigger: {
+  //     trigger: '.navbar',
+  //     start: '0%',
+  //     end: '200%',
+  //     scrub: 1
+  //   }
+  // });
+  // tl2 = gsap.timeline({
+  //   scrollTrigger: {
+  //     trigger: '.navbar',
+  //     start: '100%',
+  //     end: '180%',
+  //     scrub: 1
+  //   }
+  // });
+  // tl3 = gsap.timeline({
+  //   scrollTrigger: {
+  //     trigger: '.navbar',
+  //     start: '0%',
+  //     end: '200%',
+  //     scrub: 1,
+  //     pin: true,
+  //     pinSpacing: false
+  //   }
+  // });
 
   const { isMobile, isTablet } = useDevice();
 
-  tl.to('.content p:first-child', { opacity: 1, duration: 2 });
-  tl.to('.content p:first-child', { opacity: 0, duration: 2 });
-  tl.to('.content p:nth-child(2)', { opacity: 1, duration: 2 });
-  tl.to('.content p:nth-child(2)', { opacity: 0, duration: 2 });
-  tl.to('.content p:nth-child(3)', { opacity: 1, duration: 2 });
-  tl.to('.content p:nth-child(3)', { opacity: 0, duration: 2 });
-  tl.fromTo(
+  tl?.to('.content p:first-child', { opacity: 1, duration: 2 });
+  tl?.to('.content p:first-child', { opacity: 0, duration: 2 });
+  tl?.to('.content p:nth-child(2)', { opacity: 1, duration: 2 });
+  tl?.to('.content p:nth-child(2)', { opacity: 0, duration: 2 });
+  tl?.to('.content p:nth-child(3)', { opacity: 1, duration: 2 });
+  tl?.to('.content p:nth-child(3)', { opacity: 0, duration: 2 });
+  tl?.fromTo(
     '.logo',
     { scale: isMobile || isTablet ? 2 : 4 },
     { scale: 1, top: isMobile || isTablet ? 0 : '2%', left: isMobile || isTablet ? '50%' : '3%', duration: 3 }
   );
-  tl.fromTo('.nav', { opacity: 0 }, { opacity: 1 });
-  tl2.fromTo('.worldMap', { opacity: 1 }, { opacity: 0 });
+  tl?.fromTo('.nav', { opacity: 0 }, { opacity: 1 });
+  tl2?.fromTo('.worldMap', { opacity: 1 }, { opacity: 0 });
 };
 
 // const token = computed(() => store.state.auth.token)
@@ -104,9 +126,9 @@ onMounted(() => {
 
 onBeforeUnmount(() => {
   if (tl !== null) {
-    tl.scrollTrigger.kill();
-    tl2.scrollTrigger.kill();
-    tl3.scrollTrigger.kill();
+    tl?.kill();
+    tl2?.kill();
+    tl3?.kill();
     tl = null;
     tl2 = null;
     tl3 = null;

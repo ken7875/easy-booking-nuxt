@@ -1,11 +1,11 @@
 <template>
   <section class="h-screen w-screen bg-white relative z-[100] pt-[6.5rem]" ref="scrollWrap">
     <div class="absolute top-0 left-[20%] z-1 h-full">
-      <div class="h-full w-[1px] bg-black" v-border></div>
+      <div class="h-full w-[1px] bg-black hidden lg:block" v-border></div>
     </div>
     <div class="bg-white relative left-0 z-10 flex items-center flex-col">
       <div class="h-[1px] w-full bg-black" v-border></div>
-      <h2 class="text-[3.4rem] py-[1rem] whitespace-nowrap storke-text">
+      <h2 class="lg:text-[3.4rem] text-[2rem] py-[1rem] whitespace-nowrap storke-text">
         <strong class="mr-[2rem]">熱門旅遊國家</strong>
         <strong class="mr-[2rem]">熱門旅遊國家</strong>
         <strong class="mr-[2rem]">熱門旅遊國家</strong>
@@ -15,10 +15,10 @@
       <div class="h-[0.5px] w-full bg-black" v-border></div>
     </div>
     <div class="flex h-[calc(100%-6.5rem)] py-[2.5rem]">
-      <div class="w-[20%] h-full">
+      <div class="w-[20%] h-full hidden md:block">
         <ul class="flex flex-col justify-between h-full">
           <li
-            class="group hover:scale-[1.2] transition-transform duration-500 text-[2.5rem] px-[3rem] cursor-pointer menuList"
+            class="group hover:scale-[1.2] transition-transform duration-500 lg:text-[2.5rem] text-[1.5rem] lg:px-[3rem] px-[0.8rem] whitespace-nowrap cursor-pointer menuList"
           >
             台灣
             <div
@@ -26,7 +26,7 @@
             ></div>
           </li>
           <li
-            class="group hover:scale-[1.2] transition-transform duration-500 text-[2.5rem] px-[3rem] cursor-pointer menuList"
+            class="group hover:scale-[1.2] transition-transform duration-500 lg:text-[2.5rem] text-[1.5rem] lg:px-[3rem] px-[0.8rem] whitespace-nowrap cursor-pointer menuList"
           >
             日本
             <div
@@ -34,7 +34,7 @@
             ></div>
           </li>
           <li
-            class="group hover:scale-[1.2] transition-transform duration-500 text-[2.5rem] px-[3rem] cursor-pointer menuList"
+            class="group hover:scale-[1.2] transition-transform duration-500 lg:text-[2.5rem] text-[1.5rem] lg:px-[3rem] px-[0.8rem] whitespace-nowrap cursor-pointer menuList"
           >
             美國
             <div
@@ -42,7 +42,7 @@
             ></div>
           </li>
           <li
-            class="group hover:scale-[1.2] transition-transform duration-500 text-[2.5rem] px-[3rem] cursor-pointer menuList"
+            class="group hover:scale-[1.2] transition-transform duration-500 lg:text-[2.5rem] text-[1.5rem] lg:px-[3rem] px-[0.8rem] whitespace-nowrap cursor-pointer menuList"
           >
             韓國
             <div
@@ -50,7 +50,7 @@
             ></div>
           </li>
           <li
-            class="group hover:scale-[1.2] transition-transform duration-500 text-[2.5rem] px-[3rem] cursor-pointer menuList"
+            class="group hover:scale-[1.2] transition-transform duration-500 lg:text-[2.5rem] text-[1.5rem] lg:px-[3rem] px-[0.8rem] whitespace-nowrap cursor-pointer menuList"
           >
             法國
             <div
@@ -59,20 +59,23 @@
           </li>
         </ul>
       </div>
-      <div class="w-[100%] ml-[10%] overflow-hidden">
-        <ul class="flex flex-nowrap w-[400%] h-full translate-x-[10%]">
+      <div class="w-[100%] lg:ml-[10%] ml-[5%] overflow-hidden">
+        <ul class="flex flex-nowrap lg:w-[400%] w-[1100vw] h-full lg:translate-x-[10%] translate-x-[5%]">
           <!-- "w-[18vw] h-[18vw] -->
           <li
             v-for="(country, idx) in hotCountryMap"
             :key="idx"
-            class="w-[8%] h-[20vw] bg-cover bg-center bg-no-repeat relative mr-[3%] even:top-[6vw]"
+            class="lg:w-[8%] lg:h-[20vw] w-[30vw] h-[80vw] bg-cover bg-center bg-no-repeat relative lg:mr-[3%] mr-[98%] mr-[7%] even:top-[6vw]"
             ref="countryList"
             @click="changeCardAnimation(country.id)"
             @mouseover="hvoerCard(country.id, 'on')"
             @mouseout="hvoerCard(country.id, 'leave')"
           >
             <!-- card front -->
-            <div :class="[country.img, 'absolute top-0 left-0 w-[20vw] h-full z-20 rounded-[16px]']" ref="frontCard">
+            <div
+              :class="[country.img, 'absolute top-0 left-0 lg:w-[20vw] w-[80vw] h-full z-20 rounded-[16px]']"
+              ref="frontCard"
+            >
               <p class="text-[1.8rem] text-white">{{ country.name }}</p>
               <!-- <img src="" alt="" /> -->
               <p>2000</p>
@@ -81,7 +84,7 @@
             <!-- card back -->
             <div
               :class="[
-                'absolute w-[20vw] h-full z-10 bg-black rounded-[16px] duration-300 origin-bottom-left translate-x-[50px] translate-y-[20px] overflow-hidden'
+                'absolute lg:w-[20vw] w-[80vw] h-full z-10 bg-black rounded-[16px] duration-300 origin-bottom-left translate-x-[50px] translate-y-[20px] overflow-hidden'
               ]"
               ref="backCard"
             >
@@ -97,12 +100,11 @@
 </template>
 
 <script setup lang="ts">
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useHotel } from '@/store/hotel';
 import { Hotel } from '@/model/hotel';
 import { storeToRefs } from 'pinia';
 import throttle from '@/utils/throttle';
+import gsap from 'gsap';
 
 const hotelStore = useHotel();
 
@@ -200,37 +202,26 @@ let countryList = ref(null);
 let frontCard = ref<HTMLElement[] | null>(null);
 let backCard = ref<HTMLElement[] | null>(null);
 
-gsap.registerPlugin(ScrollTrigger);
-
+const device = useDevice();
 // 橫向移動動畫
 const horizatialScrollAnimation = () => {
   let countryListAry: HTMLElement[] = gsap.utils.toArray(countryList.value); // 國家卡片
-  let endPos = scrollWrap.value?.offsetWidth || 100; // 水平捲動結束位置
+  const endTimes = device.isMobile ? 2.5 : 1;
+  let endPos = (scrollWrap.value?.offsetWidth as number) * endTimes || 100; // 水平捲動結束位置
   let end = `+=${endPos}`;
-  tl = gsap.timeline({
-    scrollTrigger: {
-      pin: true,
-      // snap: 1 / countryListAry.length,
-      start: '+=5%',
-      end,
-      trigger: scrollWrap.value,
-      scrub: 1
-    }
+
+  tl = useScrollAnimation({
+    pin: true,
+    // snap: 1 / countryListAry.length,
+    start: '+=5%',
+    end,
+    trigger: scrollWrap.value,
+    scrub: 1
   });
 
-  // tl2 = gsap.timeline({
-  //   // xPercent: -100 * (countryListAry.length - 1),
-  //   // ease: 'none',
-  //   scrollTrigger: {
-  //     start: '0%',
-  //     end,
-  //     trigger: scrollWrap.value,
-  //     scrub: 1,
-  //     markers: true
-  //   }
-  // });
+  const xPercent = (device.isMobile ? -350 : -100) * countryListAry.length - 50;
 
-  tl.to(countryListAry, { xPercent: -100 * countryListAry.length - 50 });
+  tl?.to(countryListAry, { xPercent });
   // tl2?.fromTo(backCard.value![0], { x: 0, y: 0 }, { x: 20, y: 20, duration: 0.3 }, '-=15%');
   // tl2?.fromTo(backCard.value![1], { x: 0, y: 0 }, { x: 20, y: 20, duration: 0.3 }, '-=30%');
   // tl2?.fromTo(backCard.value![2], { x: 0, y: 0 }, { x: 20, y: 20, duration: 0.3 }, '-=50%');
@@ -290,7 +281,7 @@ onMounted(() => {
 });
 
 onBeforeUnmount(() => {
-  tl?.scrollTrigger?.kill();
+  tl?.kill();
   tl = null;
 });
 </script>
