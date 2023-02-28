@@ -2,7 +2,7 @@
   <div class="w-full px-[20px] flex h-fit">
     <ul class="w-[50%] p-[20px]">
       <li v-for="(hotel, i) in loadedHotels" :key="i" :isHorizontal="true" class="mb-[20px]">
-        <Card :detailType="detailType" class="border border-[#dee2e6]">
+        <Card :detailType="detailType" :isHorizontal="true" class="border border-[#dee2e6]">
           <template #header>
             <img
               :src="hotel.images[0]"

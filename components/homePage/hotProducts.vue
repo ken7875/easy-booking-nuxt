@@ -59,13 +59,19 @@
 import slider from '../slider/slider.vue';
 import card from '../card/index.vue';
 import { Hotel } from '@/model/hotel';
-import { hotel } from '@/store/index';
-import { storeToRefs } from 'pinia';
+// import { hotel } from '@/store/index';
+// import { storeToRefs } from 'pinia';
 
-const hotelStore = hotel();
+// const hotelStore = hotel();
 // const { getAllHotels } = hotelStore;
 // await getAllHotels();
-const { allHotels } = storeToRefs(hotelStore);
+
+interface Props {
+  allHotels: Hotel[];
+}
+
+const props = defineProps<Props>();
+const { allHotels } = toRefs(props);
 
 let hotProductsWrapRef = ref<HTMLElement | null>(null);
 

@@ -33,13 +33,17 @@
 </template>
 
 <script setup lang="ts">
-import { hotel } from '@/store/index';
-import { storeToRefs } from 'pinia';
 import gsap from 'gsap';
 import Button from '~~/components/Button.vue';
+import { Hotel } from 'model/hotel';
+import throttle from '~~/utils/throttle';
 
-const hotelStore = hotel();
-const { allHotels } = storeToRefs(hotelStore);
+interface Props {
+  allHotels: Hotel[];
+}
+
+const props = defineProps<Props>();
+const { allHotels } = toRefs(props);
 
 const device = useDevice();
 // 瀑布流資料結構
@@ -84,9 +88,9 @@ const waterfullAnimation = (el: HTMLElement, rowIdx: number) => {
 
 const router = useRouter();
 
-const goProductsPage = () => {
-  router.push('/products');
-};
+const goProductsPage = throttle(() => {
+  router.push('/hotel/Hotels');
+});
 
 onBeforeUnmount(() => {
   tl?.kill();

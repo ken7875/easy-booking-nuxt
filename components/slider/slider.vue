@@ -34,11 +34,12 @@ const myprops = defineProps({
 
 // const slots = useSlots();
 const { data, spacing, buttonWidth } = toRefs(myprops);
-console.log(buttonWidth);
 const initData = ref<Hotel[]>([]);
+initData.value = data.value as Hotel[];
 
 const loopData = computed(() => {
   const result: Hotel[] = [];
+  console.log(initData.value, 'card card');
   if (initData.value.length > 0) {
     while (result.length < 9) {
       initData.value.forEach((item: Hotel) => {
@@ -64,8 +65,4 @@ const change = (idx: number) => {
   let newIdx = idx > limit ? 0 : idx < 0 ? mountedData.value.length - 1 : idx;
   curIdx.value = newIdx;
 };
-
-watch(data, (val) => {
-  initData.value = val as Hotel[];
-});
 </script>

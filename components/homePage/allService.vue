@@ -1,14 +1,14 @@
 <template>
   <section
-    class="w-[calc(4000px)] h-[150vh] bg-homeScrollImg relative bg-black overflow-hidden"
+    class="w-[calc(4000px)] lg:h-[150vh] h-[100vh] bg-homeScrollImg relative bg-black overflow-hidden"
     ref="scrollListWrapRef"
   >
     <div
       class="bg-[#E033FF] rounded-[50%] w-[50vw] h-[50vw] blur-[2px] bgBlur absolute translate-x-[50%] translate-y-[25%]"
     ></div>
     <div
-      class="flex justify-center w-full lg:h-[350px] absolute top-[50%] left-[-10%] rotate-[15deg] perspective-20"
-      ref="cardWrapRef"
+      class="flex justify-center w-full lg:h-[350px] h-[250px] absolute lg:top-[6%] top-[35%] left-[-10%] rotate-[15deg] perspective-20"
+      ref="cardWrapRef1"
     >
       <!-- :style="{
           transform: `rotateY(${service.rotateY}) translate3d(${service.transform3d})`
@@ -17,7 +17,7 @@
           'lg:w-[400px] lg:h-[350px] p-[16px] transform-3d translate-z-[500px]',
           { '!w-[29rem]': idx === 5, '!w-[36rem]': idx === 6 }
         ]" -->
-      <div v-for="(service, idx) in serviceAryLoop" :key="idx" class="lg:w-[400px] lg:h-[350px] p-[16px]">
+      <div v-for="(service, idx) in serviceAryLoop" :key="idx" class="lg:w-[400px] h-full p-[16px]">
         <Cards :body-height="'h-full'">
           <template #body>
             <div
@@ -37,22 +37,64 @@
           </template>
         </Cards>
       </div>
-      <!-- <div class="text-white text-[2.5rem] w-[40%] translate-y-[50%]">
-        <p class="border-b-2 border-white mb-[25px] scrollText">所有飯店</p>
-        <p class="border-b-2 border-white mb-[25px] scrollText">私人民宿</p>
-        <p class="border-b-2 border-white mb-[25px] scrollText">機票</p>
-        <p class="border-b-2 border-white mb-[25px] scrollText">機票 + 酒店</p>
-        <p class="border-b-2 border-white mb-[25px] scrollText">月租住宿</p>
-      </div> -->
     </div>
-    <div ref="mask" class="absolute top-0 left-0 w-full h-screen"></div>
+    <div
+      class="flex justify-center w-full lg:h-[350px] h-[250px] absolute lg:top-[52%] top-[80%] left-[-10%] rotate-[15deg] perspective-20"
+      ref="cardWrapRef2"
+    >
+      <div v-for="(service, idx) in serviceAryLoop" :key="idx" class="lg:w-[400px] h-full p-[16px]">
+        <Cards :body-height="'h-full'">
+          <template #body>
+            <div
+              :class="[
+                service.img,
+                'bg-cover bg-center h-full w-full flex items-center px-[20px] relative before:bg-black before:opacity-[0.3] before:absolute before:w-full before:h-full before:top-0 before:left-0'
+              ]"
+            >
+              <div class="static z-10">
+                <p class="text-white text-[40px]">{{ service.title }}</p>
+                <p class="text-white">
+                  Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vel obcaecati error distinctio labore
+                  quibusdam nihil nulla placeat culpa deserunt ad?
+                </p>
+              </div>
+            </div>
+          </template>
+        </Cards>
+      </div>
+    </div>
+    <div
+      class="flex justify-center w-full lg:h-[350px] h-[250px] absolute lg:bottom-[-11%] bottom-[-30%] left-[-10%] rotate-[15deg] perspective-20"
+      ref="cardWrapRef3"
+    >
+      <div v-for="(service, idx) in serviceAryLoop" :key="idx" class="lg:w-[400px] h-full p-[16px]">
+        <Cards :body-height="'h-full'">
+          <template #body>
+            <div
+              :class="[
+                service.img,
+                'bg-cover bg-center h-full w-full flex items-center px-[20px] relative before:bg-black before:opacity-[0.3] before:absolute before:w-full before:h-full before:top-0 before:left-0'
+              ]"
+            >
+              <div class="static z-10">
+                <p class="text-white text-[40px]">{{ service.title }}</p>
+                <p class="text-white">
+                  Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vel obcaecati error distinctio labore
+                  quibusdam nihil nulla placeat culpa deserunt ad?
+                </p>
+              </div>
+            </div>
+          </template>
+        </Cards>
+      </div>
+    </div>
+    <div class="absolute top-0 left-0 w-full h-full bg-[#000] opacity-[0.5]"></div>
   </section>
 </template>
 
 <script setup lang="ts">
 import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import Cards from '@/components/cards.vue';
+import Cards from '~~/components/card/index.vue';
 
 const allServiceAry = ref([
   {
@@ -94,29 +136,29 @@ const allServiceAry = ref([
 const serviceAryLoop = computed(() => allServiceAry.value.concat(allServiceAry.value));
 
 // gsap animation
-gsap.registerPlugin(ScrollTrigger);
 
 let tl: GSAPTimeline | null = null;
 let tl2: GSAPTimeline | null = null;
 
 const scrollListWrapRef = ref<HTMLElement | null>(null);
-const cardWrapRef = ref<HTMLElement | null>(null);
+const cardWrapRef1 = ref<HTMLElement | null>(null);
+const cardWrapRef2 = ref<HTMLElement | null>(null);
+const cardWrapRef3 = ref<HTMLElement | null>(null);
 
 // 卡片水平移動
 const cardMoveAnimation = () => {
-  tl = gsap.timeline({
-    scrollTrigger: {
-      // snap: 1 / countryListAry.length,
-      start: '-=15%',
-      end: '+=150%',
-      trigger: scrollListWrapRef.value,
-      scrub: 1
-    }
+  tl = useScrollAnimation({
+    // snap: 1 / countryListAry.length,
+    start: '-=15%',
+    end: '+=190%',
+    trigger: scrollListWrapRef.value,
+    scrub: 1
   });
 
-  tl.fromTo(cardWrapRef.value, { x: 0 }, { x: -500 });
+  tl?.fromTo(cardWrapRef1.value, { x: 0 }, { x: -500 });
+  tl?.fromTo(cardWrapRef2.value, { x: -500 }, { x: 0 }, '<');
+  tl?.fromTo(cardWrapRef3.value, { x: 0 }, { x: -500 }, '<');
 };
-
 // 卡片3d效果
 // let cardListAry = ref<HTMLElement[] | null>(null);
 
@@ -144,7 +186,7 @@ onMounted(() => {
 });
 
 onBeforeUnmount(() => {
-  tl?.scrollTrigger?.kill();
+  tl?.kill();
   tl = null;
 });
 </script>
