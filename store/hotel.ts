@@ -1,8 +1,10 @@
 import { defineStore } from 'pinia';
 import { getAllHotelsApi } from '@/api/index';
-import { Hotel } from '@/model/hotel';
+import { Hotel, AllHotelMap, AllHotelQuery } from '@/model/hotel';
+
 interface State {
   allHotels: Hotel[];
+  hotelTotal: number;
   hotel: Hotel;
   hotHotels: Hotel[];
   filterData: string;
@@ -15,6 +17,7 @@ export const useHotel = defineStore('hotelStore', {
     const { baseUrl } = runtimeConfig.public;
     return {
       allHotels: [],
+      hotelTotal: 0,
       hotel: {
         id: '',
         locations: {
@@ -31,7 +34,8 @@ export const useHotel = defineStore('hotelStore', {
         summary: '',
         viewPorts: [],
         accommodate: 0,
-        roomType: []
+        roomType: [],
+        stars: 0
       },
       hotHotels: [],
       filterData: '',
@@ -39,11 +43,23 @@ export const useHotel = defineStore('hotelStore', {
     };
   },
   actions: {
-    async getAllHotels(query?: string) {
-      const hotelData = await getAllHotelsApi();
-      console.log(hotelData, 'asjdklasjdklasjd');
+    async getAllHotels(query?: AllHotelQuery) {
+      const hotelData = await getAllHotelsApi(query);
       this.allHotels = hotelData?.data?.data;
-      console.log(this.allHotels);
+      this.hotelTotal = hotelData.total;
+    }
+  },
+  getters: {
+    allHotelMap(): AllHotelMap {
+      const map: AllHotelMap = {
+        id: this.allHotels[0]
+      };
+
+      this.allHotels.forEach((item: Hotel) => {
+        map![item.id] = item;
+      });
+
+      return map;
     }
   }
 });

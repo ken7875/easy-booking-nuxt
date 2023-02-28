@@ -53,11 +53,18 @@
     "typescript": "^4.8.4"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.3.0",
+    "@fortawesome/free-brands-svg-icons": "^6.3.0",
+    "@fortawesome/free-solid-svg-icons": "^6.3.0",
+    "@fortawesome/vue-fontawesome": "^3.0.3",
     "@nuxtjs/composition-api": "^0.33.1",
     "@nuxtjs/device": "^3.0.0",
     "@pinia/nuxt": "^0.4.3",
+    "@types/leaflet": "^1.9.1",
+    "@vue-leaflet/vue-leaflet": "^0.8.4",
     "autoprefixer": "^10.4.12",
     "gsap": "^3.11.3",
+    "leaflet": "^1.9.3",
     "ofetch": "^1.0.0",
     "pinia": "^2.0.23"
   }

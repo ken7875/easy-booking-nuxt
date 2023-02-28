@@ -38,4 +38,16 @@ export interface Hotel {
   viewPorts: ViewPorts[];
   accommodate: number;
   roomType: roomType[];
+  stars: number;
+}
+
+export type AllHotelMap = { [key: string]: Hotel };
+
+export interface AllHotelQuery {
+  name?: string;
+  id?: string;
+  price?: number;
+  page?: number;
+  limit?: number;
+  country?: string;
 }

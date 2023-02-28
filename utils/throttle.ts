@@ -1,18 +1,21 @@
-const context = null;
-let timer: any = null;
-let last = 0;
-export default (fn: () => void, delay = 100) => {
-  return function (this: any, ...args: []): void {
-    let now: number = +new Date();
-    if (last && now < last + delay) {
-      clearTimeout(timer);
+export default (cb: any, timeout = 250) => {
+  let timer: ReturnType<typeof setTimeout> | null = null;
+  let last = 0;
+
+  return (...args: any) => {
+    // const context: any = this;
+    const now = +new Date();
+
+    if (last && now < last + timeout) {
+      clearTimeout(timer!);
+
       timer = setTimeout(() => {
-        now = last;
-        fn.apply(this, args);
-      }, delay);
+        last = now;
+        cb(...args);
+      }, timeout);
     } else {
       last = now;
-      fn.apply(this, args);
+      cb(...args);
     }
   };
 };

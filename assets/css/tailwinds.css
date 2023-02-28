@@ -2,18 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
-/* @layer base {
+@layer base {
   html,
   body,
   *::before,
   *::after {
-    @apply border-box;
+    @apply box-border;
   }
-  html,
+  /* html,
   body{
     @apply w-screen h-screen overflow-x-hidden
-  }
-} */
+  } */
+}
 @layer utilities {
   .storke-text {
     -webkit-text-stroke: 1px #000000;
@@ -42,18 +42,19 @@
     @apply absolute z-[-1] lg:w-[15vw] lg:h-[15vw] md:w-[30vw] md:h-[30vw] opacity-[0.8] object-cover rounded-[50%] first-of-type:top-[17%] first-of-type:left-[5%] sm:first-of-type:left-[9px];
   }
   .button{
-    @apply p-[10px]
-    /* background-color: $bg;
-    padding: 10px;
-    border: 1px solid $bg;
-    border-radius: 8px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-weight: 300;
-    color: #FFFFFF;
-    font-weight: bold;
-    min-width: 100px;
-    @content */
+    @apply p-[10px] bg-primary border border-primary rounded-[8px] flex justify-center items-center font-bold text-white min-w-[100px];
+    &__outline-primary{
+      @apply bg-transparent text-primary hover:bg-primary hover:text-white;
+    }
+    /* &__outline-danger{
+      @include button(transparent) {
+        border: 1px solid $danger;
+        color: $danger;
+      }
+      &:hover{
+        background: $danger;
+        color: #FFFFFF;
+      }
+    } */
   }
 }

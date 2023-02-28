@@ -1,7 +1,7 @@
 // https://v3.nuxtjs.org/api/configuration/nuxt.config
 export default defineNuxtConfig({
   buildModules: ['@pinia/nuxt'],
-  css: ['@/assets/css/tailwinds.css'],
+  css: ['@/assets/css/tailwinds.css', '@fortawesome/fontawesome-svg-core/styles.css'],
   build: {
     transpile: ['gsap']
   },
