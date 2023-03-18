@@ -18,5 +18,3 @@
 <script setup lang="ts">
 const a = 'asdasdasdasd';
 </script>
-
-<style></style>

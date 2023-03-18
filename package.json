@@ -65,6 +65,7 @@
     "autoprefixer": "^10.4.12",
     "gsap": "^3.11.3",
     "leaflet": "^1.9.3",
+    "moment": "^2.29.4",
     "ofetch": "^1.0.0",
     "pinia": "^2.0.23"
   }

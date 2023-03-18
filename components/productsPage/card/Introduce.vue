@@ -1,19 +1,19 @@
 <template>
   <div>
-    <p>{{ singleProducts[0].description }}</p>
+    <p>{{ description }}</p>
   </div>
 </template>
 
-<script>
-import { inject } from 'vue';
-export default {
-  name: 'Introduce',
-  setup() {
-    const singleProducts = inject('singleProducts');
+<script setup lang="ts">
+import { useHotel } from '@/store/hotel';
+import { storeToRefs } from 'pinia';
 
-    return { singleProducts };
-  }
-};
+interface Props {
+  id: string;
+}
+const props = defineProps<Props>();
+const hotelStore = useHotel();
+const { allHotelMap } = storeToRefs(hotelStore);
+
+const description = computed(() => allHotelMap.value[props.id].description || []);
 </script>
-
-<style></style>

@@ -15,14 +15,19 @@
 </template>
 
 <script setup lang="ts">
-import { Props } from './types/props';
+interface Props {
+  label?: string;
+  modelValue: string | number;
+  error?: string;
+  placeholder?: string;
+}
 
-defineProps<Props<string | number>>();
+defineProps<Props>();
 </script>
 
-<style scoped lang="scss">
+<!-- <style scoped lang="scss">
 .input {
   @include input;
   width: 100%;
 }
-</style>
+</style> -->

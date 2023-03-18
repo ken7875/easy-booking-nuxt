@@ -1,21 +1,23 @@
 <template>
   <div class="grid grid-cols-4 gap-x-[10px] auto-rows-[150px]">
-    <div v-for="(image, i) in singleProducts[0].images" :key="i" class="img-wrap">
+    <div v-for="(image, i) in hotelImage" :key="i" class="img-wrap">
       <img :src="image" alt="image" />
     </div>
   </div>
 </template>
 
-<script>
-import { inject } from 'vue';
-export default {
-  name: 'images',
-  setup() {
-    const singleProducts = inject('singleProducts');
+<script setup lang="ts">
+import { useHotel } from '@/store/hotel';
+import { storeToRefs } from 'pinia';
 
-    return { singleProducts };
-  }
-};
+interface Props {
+  id: string;
+}
+const props = defineProps<Props>();
+const hotelStore = useHotel();
+const { allHotelMap } = storeToRefs(hotelStore);
+
+const hotelImage = computed(() => allHotelMap.value[props.id].images || []);
 </script>
 
 <!-- <style lang="scss" scoped>

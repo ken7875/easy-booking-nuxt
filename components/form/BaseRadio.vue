@@ -14,10 +14,16 @@
 </template>
 
 <script setup lang="ts">
-import { Props } from './types/props';
+interface Props {
+  label?: string;
+  modelValue: string | number | boolean;
+  error?: string;
+  placeholder?: string;
+  options: any[];
+  value: string | number | boolean;
+}
 
-type radioProps = Props<string | number> & { value: string | number };
-defineProps<radioProps>();
+defineProps<Props>();
 
 // export default {
 //   components: {

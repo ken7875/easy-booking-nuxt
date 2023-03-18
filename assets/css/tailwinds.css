@@ -9,6 +9,16 @@
   *::after {
     @apply box-border;
   }
+  /* number input 移除上下按鈕 */
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  input[type=number] {
+    -moz-appearance:textfield; /* Firefox */
+  }
   /* html,
   body{
     @apply w-screen h-screen overflow-x-hidden
@@ -46,6 +56,9 @@
     &__outline-primary{
       @apply bg-transparent text-primary hover:bg-primary hover:text-white;
     }
+    &__none{
+      @apply bg-transparent border-0 text-black;
+    }
     /* &__outline-danger{
       @include button(transparent) {
         border: 1px solid $danger;
@@ -56,5 +69,14 @@
         color: #FFFFFF;
       }
     } */
+  }
+  .dateInput{
+    @apply w-full h-full text-center box-border flex justify-center items-center;
+    p{
+      @apply mb-0;
+    }
+  }
+  .input{
+    @apply py-[5px] px-[20px] border border-[#CED4DA] rounded-[5px] outline-none focus:shadow-[0_0_10px_0_#007bff] bg-white;
   }
 }

@@ -12,8 +12,13 @@
 </template>
 
 <script setup lang="ts">
-import { Props } from './types/props';
+interface Props {
+  label?: string;
+  modelValue: boolean;
+  error?: string;
+  placeholder?: string;
+}
 
-defineProps<Props<boolean>>();
+defineProps<Props>();
 // const { label, modelValue, error } = toRefs(props);
 </script>

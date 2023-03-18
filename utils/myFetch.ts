@@ -6,7 +6,6 @@ interface Options {
 export default (url: string, options: Options): Promise<any> => {
   const runtimeConfig = useRuntimeConfig();
   const baseURL = runtimeConfig.public.apiBase;
-  console.log(baseURL);
   const apiFetch = $fetch.create({ baseURL });
   const authToken = useCookie('HKToken', { default: undefined });
   return apiFetch(url, {
@@ -19,7 +18,7 @@ export default (url: string, options: Options): Promise<any> => {
       // 👈️ ! non-null assertion
     },
     async onRequestError({ request, options, error }) {
-      console.log(request, options, error);
+      // console.log(request, options, error);
       // Handle the request errors
     },
     async onResponse({ response }) {
@@ -28,7 +27,7 @@ export default (url: string, options: Options): Promise<any> => {
     },
     async onResponseError({ request, response, options }) {
       // Handle the response errors
-      console.log(request, response, options);
+      // console.log(request, response, options);
     }
   });
 };

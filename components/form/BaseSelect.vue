@@ -25,14 +25,23 @@
 </template>
 
 <script setup lang="ts">
-import { Props } from './types/props';
+interface Props {
+  label?: string;
+  modelValue: string | number;
+  error?: string;
+  placeholder?: string;
+  options: any[];
+}
 
-type SelectProps = Props<string | number> & { options: any[] };
-defineProps<SelectProps>();
+withDefaults(defineProps<Props>(), {
+  label: '',
+  error: '',
+  placeholder: ''
+});
 </script>
 
-<style lang="scss" scoped>
+<!-- <style lang="scss" scoped>
 select {
   @include input;
 }
-</style>
+</style> -->

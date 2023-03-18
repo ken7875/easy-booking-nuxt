@@ -1,9 +1,11 @@
 <template>
   <div>
-    <header>
+    <header class="sticky top-0 left-0 z-navbar">
       <Navbar />
     </header>
-    <slot />
+    <main class="h-fit">
+      <slot />
+    </main>
     <footer>456</footer>
   </div>
 </template>

@@ -1,22 +1,20 @@
 <template>
-  <nav
-    class="nav fixed top-0 left-0 w-full bg-black flex justify-between items-center opacity-0 z-[110] h-[6.5rem] px-5"
-  >
+  <div class="w-full flex justify-between items-center h-[6.5rem] px-5 bg-black">
     <h2 class="text-[1.5rem] text-white font-[900] mx-auto lg:mx-0">
-      <NuxtLink>
+      <NuxtLink to="/">
         <span class="block text-white">Easy</span>
         <span class="block text-white">Booking</span>
       </NuxtLink>
     </h2>
-    <ul class="nav-list hidden md:flex">
+    <ul class="hidden md:flex">
       <li>
-        <NuxtLink class="text-white font-bold mr-5">註冊</NuxtLink>
+        <NuxtLink class="text-white font-bold mr-5" to="/">註冊</NuxtLink>
       </li>
       <li>
-        <NuxtLink class="text-white font-bold mr-5">所有產品</NuxtLink>
+        <NuxtLink class="text-white font-bold mr-5" to="/hotel/Hotels">所有產品</NuxtLink>
       </li>
       <li>
-        <NuxtLink class="text-white font-bold mr-5">關於我們</NuxtLink>
+        <NuxtLink class="text-white font-bold mr-5" to="/">關於我們</NuxtLink>
       </li>
       <!-- <li v-if="token" @click="menu.toggleMenu = true">
           <img :src="avatar" alt="avatar">
@@ -25,5 +23,5 @@
           <NuxtLink to="/login">會員登入</NuxtLink>
         </li> -->
     </ul>
-  </nav>
+  </div>
 </template>

@@ -1,5 +1,5 @@
 <template>
-  <div class="input-wrap">
+  <div class="flex items-center">
     <label :for="label">{{ label }}</label>
     <input
       v-bind="$attrs"
@@ -12,10 +12,22 @@
   </div>
 </template>
 
-<script setup lang="ts">
-import { Props } from './types/props';
+<script lang="ts">
+// use normal <script> to declare options
+export default {
+  inheritAttrs: false
+};
+</script>
 
-defineProps<Props<boolean>>();
+<script setup lang="ts">
+interface Props {
+  label?: string;
+  modelValue: string | number;
+  error?: string;
+  placeholder?: string;
+}
+
+defineProps<Props>();
 // import BaseErrorMsg from './BaseErrorMsg';
 // export default {
 //   inheritAttrs: false,
@@ -38,7 +50,7 @@ defineProps<Props<boolean>>();
 // };
 </script>
 
-<style lang="scss" scoped>
+<!-- <style lang="scss" scoped>
 .input {
   @include input;
   height: 40px;
@@ -47,4 +59,4 @@ defineProps<Props<boolean>>();
 .isError {
   border: 1px solid red;
 }
-</style>
+</style> -->

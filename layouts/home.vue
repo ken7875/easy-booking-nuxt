@@ -1,6 +1,8 @@
 <template>
   <div class="w-full overflow-x-hidde">
-    <Navbar />
+    <header class="nav fixed top-0 left-0 opacity-0 z-[110] w-full">
+      <Navbar />
+    </header>
     <div class="navbar w-full h-screen bg-black mb-[130vh] z-40 overflow-x-hidden">
       <div class="h-full grid grid-cols-8">
         <div class="lg:col-span-3 col-span-full h-full">
@@ -35,21 +37,12 @@
 
 <script setup lang="ts">
 import '@/assets/css/tailwinds.css';
-// import gsap from 'gsap';
-// import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import worldMap from '~~/components/WorldMap.vue';
 import Navbar from './components/Navbar.vue';
 
-// gsap.registerPlugin(ScrollTrigger);
 let tl: GSAPTimeline | null = null;
 let tl2: GSAPTimeline | null = null;
 let tl3: GSAPTimeline | null = null;
-// const nav = ref(null);
-// const innerWidth = ref(0);
-
-// if (process.client) {
-//   innerWidth.value = window.innerWidth;
-// }
 
 const gsapAnimation = () => {
   tl = useScrollAnimation({
@@ -74,32 +67,6 @@ const gsapAnimation = () => {
     pin: true,
     pinSpacing: false
   });
-  // tl = gsap.timeline({
-  //   scrollTrigger: {
-  //     trigger: '.navbar',
-  //     start: '0%',
-  //     end: '200%',
-  //     scrub: 1
-  //   }
-  // });
-  // tl2 = gsap.timeline({
-  //   scrollTrigger: {
-  //     trigger: '.navbar',
-  //     start: '100%',
-  //     end: '180%',
-  //     scrub: 1
-  //   }
-  // });
-  // tl3 = gsap.timeline({
-  //   scrollTrigger: {
-  //     trigger: '.navbar',
-  //     start: '0%',
-  //     end: '200%',
-  //     scrub: 1,
-  //     pin: true,
-  //     pinSpacing: false
-  //   }
-  // });
 
   const { isMobile, isTablet } = useDevice();
 
@@ -115,6 +82,7 @@ const gsapAnimation = () => {
     { scale: 1, top: isMobile || isTablet ? 0 : '2%', left: isMobile || isTablet ? '50%' : '3%', duration: 3 }
   );
   tl?.fromTo('.nav', { opacity: 0 }, { opacity: 1 });
+  tl2?.fromTo('.worldMap', { opacity: 1 }, { opacity: 0 });
   tl2?.fromTo('.worldMap', { opacity: 1 }, { opacity: 0 });
 };
 

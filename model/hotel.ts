@@ -25,7 +25,7 @@ export interface roomType {
 }
 
 export interface Hotel {
-  id: '';
+  id: string;
   locations: Locations;
   name: string;
   price: number;
@@ -42,8 +42,7 @@ export interface Hotel {
 }
 
 export type AllHotelMap = { [key: string]: Hotel };
-
-export interface AllHotelQuery {
+interface BaseAllHotelQuery {
   name?: string;
   id?: string;
   price?: number;
@@ -51,3 +50,13 @@ export interface AllHotelQuery {
   limit?: number;
   country?: string;
 }
+
+type AllHotelQueryGte = {
+  [P in keyof BaseAllHotelQuery as `${P}[gte]`]?: string | number;
+};
+
+type AllHotelQueryLte = {
+  [P in keyof BaseAllHotelQuery as `${P}[gte]`]?: string | number;
+};
+
+export interface AllHotelQuery extends BaseAllHotelQuery, AllHotelQueryGte, AllHotelQueryLte {}

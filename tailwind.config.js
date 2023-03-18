@@ -19,7 +19,12 @@ module.exports = {
         DEFAULT: '1px'
       },
       colors: {
-        primary: 'rgb(239 68 68)'
+        primary: 'rgb(239 68 68)',
+        secondary: '#007bff',
+        darkLight: '#dee2e6'
+      },
+      zIndex: {
+        navbar: '100'
       },
       keyframes: {
         cardFadeIn: {

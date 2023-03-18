@@ -39,7 +39,6 @@ initData.value = data.value as Hotel[];
 
 const loopData = computed(() => {
   const result: Hotel[] = [];
-  console.log(initData.value, 'card card');
   if (initData.value.length > 0) {
     while (result.length < 9) {
       initData.value.forEach((item: Hotel) => {

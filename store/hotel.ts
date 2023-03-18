@@ -52,11 +52,26 @@ export const useHotel = defineStore('hotelStore', {
   getters: {
     allHotelMap(): AllHotelMap {
       const map: AllHotelMap = {
-        id: this.allHotels[0]
+        id: {
+          ...this.allHotels[0]
+          // coordinatesObj: {
+          //   lat: this.allHotels[0].locations.coordinates[1],
+          //   lng: this.allHotels[0].locations.coordinates[0]
+          // }
+        }
       };
-
       this.allHotels.forEach((item: Hotel) => {
-        map![item.id] = item;
+        // const latlngObj = {
+        //   lat: item.locations.coordinates[1],
+        //   lng: item.locations.coordinates[0]
+        // };
+        map![item.id] = {
+          ...item
+          // coordinatesObj: {
+          //   lat: this.allHotels[0].locations.coordinates[1],
+          //   lng: this.allHotels[0].locations.coordinates[0]
+          // }
+        };
       });
 
       return map;
