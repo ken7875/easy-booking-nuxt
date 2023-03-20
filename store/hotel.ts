@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
-import { getAllHotelsApi } from '@/api/index';
-import { Hotel, AllHotelMap, AllHotelQuery } from '@/model/hotel';
+import { getAllHotelsApi } from '~~/api/index';
+import { Hotel, AllHotelMap, AllHotelQuery } from '~~/model/hotel';
 
 interface State {
   allHotels: Hotel[];

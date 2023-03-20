@@ -1,5 +1,5 @@
 import gsap from 'gsap';
-import Observer from '@/utils/observer';
+import Observer from '~~/utils/observer';
 
 export default {
   mounted(el: HTMLElement) {

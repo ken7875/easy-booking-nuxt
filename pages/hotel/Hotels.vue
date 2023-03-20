@@ -116,15 +116,15 @@
 
 <script setup lang="ts">
 import { ref } from 'vue-demi';
-import { useHotel } from '@/store/hotel';
+import { useHotel } from '~~/store/hotel';
 import { storeToRefs } from 'pinia';
-import Card from '@/components/card/index.vue';
-import Images from '@/components/productsPage/card/Images.vue';
-import Introduce from '@/components/productsPage/card/Introduce.vue';
-import Reviews from '@/components/productsPage/card/Reviews.vue';
+import Card from '~~/components/card/index.vue';
+import Images from '~~/components/productsPage/card/Images.vue';
+import Introduce from '~~/components/productsPage/card/Introduce.vue';
+import Reviews from '~~/components/productsPage/card/Reviews.vue';
 import throttle from '~~/utils/throttle';
-import SearchBar from '@/components/searchBar/index.vue';
-import FilterBar from '@/components/filterBar/index.vue';
+import SearchBar from '~~/components/searchBar/index.vue';
+import FilterBar from '~~/components/filterBar/index.vue';
 // import Leaflet from '~~/components/Leaflet.vue';
 import { Hotel } from '~~/model/hotel';
 import gsap from 'gsap';

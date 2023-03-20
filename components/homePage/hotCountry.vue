@@ -100,10 +100,10 @@
 </template>
 
 <script setup lang="ts">
-import { useHotel } from '@/store/hotel';
-import { Hotel } from '@/model/hotel';
+import { useHotel } from '~~/store/hotel';
+import { Hotel } from '~~/model/hotel';
 import { storeToRefs } from 'pinia';
-import throttle from '@/utils/throttle';
+import throttle from '~~/utils/throttle';
 import gsap from 'gsap';
 
 const hotelStore = useHotel();

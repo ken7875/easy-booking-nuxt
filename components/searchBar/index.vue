@@ -8,7 +8,7 @@
 </template>
 
 <script setup ts="lang">
-import Datepicker from '@/components/datepicker/DatePicker.vue';
+import Datepicker from '~~/components/datepicker/DatePicker.vue';
 import BaseInput from '../form/BaseInput.vue';
 import PeopleCounter from './PeopleCounter.vue';
 import Button from '../Button.vue';

@@ -26,7 +26,7 @@ import { storeToRefs } from 'pinia';
 import { useStore } from '~~/store';
 import { LMap, LTileLayer, LMarker, LPopup } from '@vue-leaflet/vue-leaflet';
 import 'leaflet/dist/leaflet.css';
-import { Hotel } from '@/model/hotel';
+import { Hotel } from '~~/model/hotel';
 
 const { useHotel } = useStore();
 

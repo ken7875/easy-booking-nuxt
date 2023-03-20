@@ -36,7 +36,7 @@
 </template>
 
 <script setup lang="ts">
-import '@/assets/css/tailwinds.css';
+import '~~/assets/css/tailwinds.css';
 import worldMap from '~~/components/WorldMap.vue';
 import Navbar from './components/Navbar.vue';
 

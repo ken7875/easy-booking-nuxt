@@ -36,7 +36,7 @@
 // 兩個日曆拆分為兩個元件做
 import { ref, watch, reactive, nextTick } from 'vue';
 import Panel from './DatePanel.vue';
-import { useStore } from '@/store/index';
+import { useStore } from '~~/store/index';
 import { storeToRefs } from 'pinia';
 
 const { useDatePicker } = useStore();

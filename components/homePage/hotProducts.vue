@@ -58,8 +58,8 @@
 <script setup lang="ts">
 import slider from '../slider/slider.vue';
 import card from '../card/index.vue';
-import { Hotel } from '@/model/hotel';
-// import { hotel } from '@/store/index';
+import { Hotel } from '~~/model/hotel';
+// import { hotel } from '~~/store/index';
 // import { storeToRefs } from 'pinia';
 
 // const hotelStore = hotel();

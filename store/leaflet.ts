@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { Hotel } from '@/model/hotel';
+import { Hotel } from '~~/model/hotel';
 
 interface State {
   mapObj: any;

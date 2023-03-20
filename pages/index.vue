@@ -8,14 +8,14 @@
 </template>
 
 <script setup lang="ts">
-// // import { useStore } from '@/store/hotel';
+// // import { useStore } from '~~/store/hotel';
 // import gsap from 'gsap';
 // import { ScrollTrigger } from 'gsap/ScrollTrigger';
-// import LazyHotProducts from '@/components/homePage/HotProducts.vue';
-// import LazyWarterFull from '@/components/homePage/Waterfull.vue';
+// import LazyHotProducts from '~~/components/homePage/HotProducts.vue';
+// import LazyWarterFull from '~~/components/homePage/Waterfull.vue';
 import hotCountry from '~~/components/homePage/HotCountry.vue';
 import allService from '~~/components/homePage/AllService.vue';
-import { useStore } from '@/store/index';
+import { useStore } from '~~/store/index';
 import { storeToRefs } from 'pinia';
 
 const { useHotel } = useStore();

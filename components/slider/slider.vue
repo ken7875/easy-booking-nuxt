@@ -14,7 +14,7 @@
 </template>
 
 <script setup lang="ts">
-import { Hotel } from '@/model/hotel';
+import { Hotel } from '~~/model/hotel';
 import swiperButton from './swiperButton.vue';
 
 const myprops = defineProps({

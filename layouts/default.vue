@@ -11,6 +11,6 @@
 </template>
 
 <script setup>
-import '@/assets/css/tailwinds.css';
+import '~~/assets/css/tailwinds.css';
 import Navbar from './components/Navbar.vue';
 </script>

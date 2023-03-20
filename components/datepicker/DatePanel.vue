@@ -31,7 +31,7 @@
 
 <script setup lang="ts">
 import { ref, computed } from 'vue';
-import { useStore } from '@/store/index';
+import { useStore } from '~~/store/index';
 import { DateType } from './type';
 
 const { useDatePicker } = useStore();

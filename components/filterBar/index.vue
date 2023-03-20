@@ -44,7 +44,7 @@ import RangeSlider from './RangeSlider.vue';
 import BaseSelect from '../form/BaseSelect.vue';
 import DropDownMenu from '../DropDownMenu.vue';
 import throttle from '~~/utils/throttle';
-import { useStore } from '@/store/index';
+import { useStore } from '~~/store/index';
 import icon from '~~/utils/icon';
 
 const { useHotel } = useStore();
