@@ -10,7 +10,7 @@
     </h3>
     <slider
       :spacing="`ml-[calc(-1*25%*2.5)]`"
-      :data="allHotels"
+      :data="hotHotelData.data.data"
       :buttonWidth="'w-[26%]'"
       class="h-[67%] absolute top-[60%] translate-y-[-50%]"
     >
@@ -59,19 +59,15 @@
 import slider from '../slider/slider.vue';
 import card from '../card/index.vue';
 import { Hotel } from '~~/model/hotel';
-// import { hotel } from '~~/store/index';
-// import { storeToRefs } from 'pinia';
+import { getHotHotels } from '@/api/hotel';
 
-// const hotelStore = hotel();
-// const { getAllHotels } = hotelStore;
-// await getAllHotels();
-
-interface Props {
-  allHotels: Hotel[];
-}
-
-const props = defineProps<Props>();
-const { allHotels } = toRefs(props);
+const {
+  data: hotHotelData,
+  pending,
+  error
+} = await useAsyncData('hotHotelData', () => getHotHotels(), {
+  lazy: true
+});
 
 let hotProductsWrapRef = ref<HTMLElement | null>(null);
 

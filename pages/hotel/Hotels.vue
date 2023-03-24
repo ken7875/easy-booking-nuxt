@@ -1,12 +1,13 @@
 <template>
-  <div class="w-full lg:px-[20px] flex flex-wrap flex-col-reverse lg:flex-row h-fit">
-    <SearchBar class="w-full flex bg-white h-[5rem] z-[30]" />
-    <FilterBar class="sticky top-[5rem] w-full" />
-    <article class="lg:w-[50%] w-full lg:px-[20px]">
+  <div class="w-full flex flex-wrap flex-col-reverse lg:flex-row h-fit">
+    <SearchBar class="w-full flex h-[5rem] z-[40]" />
+    <FilterBar class="sticky top-[5rem] w-full z-[30]" @updageProducts="getAllHotelsHandler($event, hotelFilterObj)" />
+    <article class="lg:w-[50%] w-full lg:px-[20px] relative">
       <!--  top-[19.6rem] 為 navbar height(6.5rem) + SearchBar height(5rem) -->
       <div
-        class="flex z-[10] h-[50px] justify-center lg:justify-between sticky top-[6.5rem] left-0 self-start overflow-hidden bg-white py-[15px]"
+        class="flex z-[10] h-[70px] justify-center lg:justify-between sticky lg:top-[13rem] top-[6.5rem] left-0 self-start overflow-hidden bg-white py-[15px]"
       >
+        <p>找到的飯店總數:{{ hotelTotal }}</p>
         <button
           class="openMap w-[250px] h-[50px] rounded-[8px] opacity-0 bg-[url('/img/checkMap.png')] bg-left-top border-0 text-[1.25rem] font-bold hidden"
           @click="toggleMap.openMap"
@@ -98,24 +99,30 @@
                 >
               </div>
             </template>
-            <template #detail v-if="detailType.id === hotel.id">
+            <template #detail v-if="detailType.id && detailType.title && detailType.id === hotel.id">
               <component :is="renderComp" :id="detailType.id" />
             </template>
           </Card>
         </li>
       </ul>
+      <!-- v-if="isHotelApiLoading" -->
+      <Loading class="absolute bottom-[-2.5%] left-[50%] translate-x-[-50%]" v-if="isHotelApiLoading" />
     </article>
     <article
-      class="mapWrap fixed lg:sticky z-[20] lg:top-[19.6rem] top-[6.5rem] left-[50%] translate-x-[-50%] lg:left-0 lg:translate-x-0 self-start w-[100vw] h-[100vh] lg:w-[50%] lg:h-[72vh] rounded-[8px] overflow-hidden"
+      class="mapWrap fixed lg:sticky z-[20] lg:top-[13rem] top-[6.5rem] left-[50%] translate-x-[-50%] lg:left-0 lg:translate-x-0 self-start w-[100vw] h-[100vh] lg:w-[50%] lg:h-[72vh] rounded-[8px] overflow-hidden"
     >
       <div class="close absolute top-[2%] right-[2%] z-[1000]" @click="toggleMap.closeMap">X</div>
-      <Leaflet v-if="Leaflet" :id="detailType.id || allHotels[0].id" ref="leaflet" class="z-[10]" />
+      <LazyLeaflet
+        v-if="loadedHotels.length > 0"
+        :id="detailType.id || loadedHotels[0]?.id"
+        ref="leaflet"
+        class="z-[10]"
+      />
     </article>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue-demi';
 import { useHotel } from '~~/store/hotel';
 import { storeToRefs } from 'pinia';
 import Card from '~~/components/card/index.vue';
@@ -128,11 +135,13 @@ import FilterBar from '~~/components/filterBar/index.vue';
 // import Leaflet from '~~/components/Leaflet.vue';
 import { Hotel } from '~~/model/hotel';
 import gsap from 'gsap';
+import { AllHoteFilterObj } from '~~/model/hotel';
+import Loading from '@/components/Loading.vue';
 
 definePageMeta({
   layout: 'default'
 });
-const Leaflet = shallowRef<any>(null);
+
 let htmlDom: HTMLElement | null = null;
 
 const pageData = reactive({
@@ -143,38 +152,76 @@ const pageData = reactive({
 const loadedHotels = ref<Hotel[]>([]);
 const hotelStore = useHotel();
 const { getAllHotels } = hotelStore;
-const { allHotels, hotelTotal, allHotelMap } = storeToRefs(hotelStore);
+const { allHotels, allHotelMap, hotelFilterObj, hotelTotal, curHotelNum } = storeToRefs(hotelStore);
 
-watch(allHotels, (val) => {
+// 篩選條件改變需要初始的資料
+const resetFilterData = () => {
+  // 篩選資料需要reset
   loadedHotels.value = [];
-  loadedHotels.value.push(...val);
-});
+  hotelStore.$patch({
+    hotelFilterObj: {
+      page: pageData.page,
+      limit: pageData.limit
+    }
+  });
+
+  if (process.client) {
+    // 避免資料過短網頁觸底重新搜尋觸發handleScroll造成發2次api
+    window.scrollTo(0, 0);
+  }
+};
+
+const curHotelTotal = ref(0);
+const isHotelApiLoading = ref(false);
+
 // 取得所有飯店api
-const getAllHotelsHandler = async (page: number, limit: number) => {
-  await getAllHotels({ page, limit });
-  loadedHotels.value.push(...allHotels.value);
-  Leaflet.value = defineAsyncComponent(() => import('~~/components/Leaflet.vue'));
+const getAllHotelsHandler = async (resetData: boolean, filterObj: AllHoteFilterObj) => {
+  if (resetData) {
+    resetFilterData();
+  }
+
+  isHotelApiLoading.value = true;
+
+  await getAllHotels(filterObj);
+
+  isHotelApiLoading.value = false;
+
+  checkProduct(allHotels.value[0].id);
+
+  curHotelTotal.value += curHotelNum.value;
+
+  loadedHotels.value?.push(...allHotels.value);
+};
+
+const removeScrollListener = () => {
+  window.removeEventListener('scroll', throttleScroll);
+  htmlDom = null;
 };
 
 const handleScroll = () => {
-  if (loadedHotels.value.length >= hotelTotal.value) {
-    window.removeEventListener('scroll', throttleScroll);
-    htmlDom = null;
+  const { scrollTop, clientHeight, scrollHeight } = htmlDom!;
+
+  if (loadedHotels.value?.length > 0 && curHotelTotal.value >= hotelTotal.value) {
     return;
   }
 
-  const { scrollTop, clientHeight, scrollHeight } = htmlDom!;
+  if (scrollTop + clientHeight >= scrollHeight - 50) {
+    hotelStore.$patch({
+      hotelFilterObj: {
+        page: ++pageData.page,
+        limit: pageData.limit
+      }
+    });
 
-  if (scrollTop + clientHeight >= scrollHeight - 50 && loadedHotels.value.length < hotelTotal.value) {
-    getAllHotelsHandler(++pageData.page, pageData.limit);
+    getAllHotelsHandler(false, hotelFilterObj.value);
   }
 };
 
 const throttleScroll = throttle(handleScroll.bind(this, htmlDom), 500);
 
-// TODO 懶加載待優化
 onMounted(() => {
-  getAllHotelsHandler(1, 10);
+  getAllHotelsHandler(false, hotelFilterObj.value);
+
   if (process.client) {
     htmlDom = document.querySelector('html')!;
     window.addEventListener('scroll', throttleScroll);
@@ -182,8 +229,7 @@ onMounted(() => {
 });
 
 onBeforeUnmount(() => {
-  window.removeEventListener('scroll', throttleScroll);
-  htmlDom = null;
+  removeScrollListener();
 });
 
 type CurComp = {
@@ -212,16 +258,19 @@ const detailType = ref<detailType>({
 
 const leaflet = ref();
 
-const checkProduct = (id: string, title: keyof CurComp): void => {
-  renderComp.value = curComp[title];
-  detailType.value = { id, title };
+const checkProduct = (id: string, title?: keyof CurComp): void => {
+  if (title) {
+    renderComp.value = curComp[title];
+  }
+  detailType.value = { id, title: title || '' };
   const [lat, lng] = [allHotelMap.value[id].locations.coordinates[1], allHotelMap.value[id].locations.coordinates[0]];
 
-  leaflet.value.triggerPopup([lat, lng]);
+  leaflet.value?.triggerPopup([lat, lng]);
 };
 
 // 地圖開關動畫
 const { isMobile, isTablet, isDesktop } = useDevice();
+
 interface ToggleMap {
   tl: GSAPTimeline | null;
   closeMap: () => void;

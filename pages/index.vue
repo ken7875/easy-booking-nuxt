@@ -1,9 +1,9 @@
 <template>
   <div class="w-screen overflow-x-hidden">
     <hotCountry />
-    <LazyHomePageHotProducts :allHotels="allHotels" v-if="allHotels.length" />
+    <HotProducts />
     <allService />
-    <LazyHomePageWaterfull :allHotels="allHotels" v-if="allHotels.length" />
+    <LazyHomePageWaterfull />
   </div>
 </template>
 
@@ -11,7 +11,7 @@
 // // import { useStore } from '~~/store/hotel';
 // import gsap from 'gsap';
 // import { ScrollTrigger } from 'gsap/ScrollTrigger';
-// import LazyHotProducts from '~~/components/homePage/HotProducts.vue';
+import HotProducts from '~~/components/homePage/HotProducts.vue';
 // import LazyWarterFull from '~~/components/homePage/Waterfull.vue';
 import hotCountry from '~~/components/homePage/HotCountry.vue';
 import allService from '~~/components/homePage/AllService.vue';

@@ -42,21 +42,25 @@ export interface Hotel {
 }
 
 export type AllHotelMap = { [key: string]: Hotel };
-interface BaseAllHotelQuery {
-  name?: string;
-  id?: string;
+export interface BaseRangeQuery {
   price?: number;
-  page?: number;
-  limit?: number;
-  country?: string;
+  ratingAverage?: number;
+  stars?: number;
 }
 
 type AllHotelQueryGte = {
-  [P in keyof BaseAllHotelQuery as `${P}[gte]`]?: string | number;
+  [P in keyof BaseRangeQuery as `${P}[gte]`]?: number;
 };
 
 type AllHotelQueryLte = {
-  [P in keyof BaseAllHotelQuery as `${P}[gte]`]?: string | number;
+  [P in keyof BaseRangeQuery as `${P}[lte]`]?: number;
 };
 
-export interface AllHotelQuery extends BaseAllHotelQuery, AllHotelQueryGte, AllHotelQueryLte {}
+export interface AllHoteFilterObj extends BaseRangeQuery, AllHotelQueryGte, AllHotelQueryLte {
+  'service[in]'?: string[];
+  page?: number;
+  limit?: number;
+  country?: string;
+  name?: string;
+  id?: string;
+}

@@ -1353,7 +1353,7 @@
 export default {};
 </script>
 
-<style>
+<style scoped>
 .cls-1 {
   fill: #2e2e2e;
 }

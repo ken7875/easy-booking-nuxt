@@ -1,14 +1,16 @@
 import { defineStore } from 'pinia';
 import { getAllHotelsApi } from '~~/api/index';
-import { Hotel, AllHotelMap, AllHotelQuery } from '~~/model/hotel';
+import { Hotel, AllHotelMap } from '~~/model/hotel';
+import { AllHoteFilterObj } from '~~/model/hotel';
 
 interface State {
   allHotels: Hotel[];
   hotelTotal: number;
   hotel: Hotel;
   hotHotels: Hotel[];
-  filterData: string;
   baseUrl: string;
+  hotelFilterObj: AllHoteFilterObj;
+  curHotelNum: number;
 }
 
 export const useHotel = defineStore('hotelStore', {
@@ -17,7 +19,8 @@ export const useHotel = defineStore('hotelStore', {
     const { baseUrl } = runtimeConfig.public;
     return {
       allHotels: [],
-      hotelTotal: 0,
+      hotelTotal: 0, // 資料總筆數
+      curHotelNum: 0, // 當前分頁筆數
       hotel: {
         id: '',
         locations: {
@@ -38,15 +41,36 @@ export const useHotel = defineStore('hotelStore', {
         stars: 0
       },
       hotHotels: [],
-      filterData: '',
-      baseUrl
+      baseUrl,
+      hotelFilterObj: {
+        'price[gte]': 0,
+        'price[lte]': 20000,
+        'ratingAverage[gte]': 0,
+        'stars[gte]': 0,
+        'service[in]': [
+          '游泳池',
+          '健身房',
+          '停車場',
+          '機場接送',
+          '酒吧',
+          '溫泉',
+          '禁菸房',
+          '景觀',
+          '提供早餐',
+          '免費網路'
+        ],
+        page: 1,
+        limit: 10
+      }
     };
   },
   actions: {
-    async getAllHotels(query?: AllHotelQuery) {
-      const hotelData = await getAllHotelsApi(query);
+    async getAllHotels(filterObj: AllHoteFilterObj = {}) {
+      const hotelData = await getAllHotelsApi(filterObj);
+      console.log(hotelData);
       this.allHotels = hotelData?.data?.data;
       this.hotelTotal = hotelData.total;
+      this.curHotelNum = hotelData.result;
     }
   },
   getters: {
@@ -54,23 +78,11 @@ export const useHotel = defineStore('hotelStore', {
       const map: AllHotelMap = {
         id: {
           ...this.allHotels[0]
-          // coordinatesObj: {
-          //   lat: this.allHotels[0].locations.coordinates[1],
-          //   lng: this.allHotels[0].locations.coordinates[0]
-          // }
         }
       };
       this.allHotels.forEach((item: Hotel) => {
-        // const latlngObj = {
-        //   lat: item.locations.coordinates[1],
-        //   lng: item.locations.coordinates[0]
-        // };
         map![item.id] = {
           ...item
-          // coordinatesObj: {
-          //   lat: this.allHotels[0].locations.coordinates[1],
-          //   lng: this.allHotels[0].locations.coordinates[0]
-          // }
         };
       });
 

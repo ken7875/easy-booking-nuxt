@@ -16,7 +16,6 @@ interface Props {
   label?: string;
   modelValue: boolean;
   error?: string;
-  placeholder?: string;
 }
 
 defineProps<Props>();

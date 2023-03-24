@@ -37,14 +37,14 @@ import gsap from 'gsap';
 import Button from '~~/components/Button.vue';
 import { Hotel } from 'model/hotel';
 import throttle from '~~/utils/throttle';
+import { storeToRefs } from 'pinia';
+import { useHotel } from '~~/store/hotel';
 
-interface Props {
-  allHotels: Hotel[];
-}
+const hotelStore = useHotel();
+const { getAllHotels } = hotelStore;
+const { allHotels } = storeToRefs(hotelStore);
 
-const props = defineProps<Props>();
-const { allHotels } = toRefs(props);
-
+getAllHotels();
 const device = useDevice();
 // 瀑布流資料結構
 const waterfullData = computed(() => {

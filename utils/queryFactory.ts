@@ -3,14 +3,21 @@ type Query = { [key: string]: any };
 export const queryFactory = (query: Query) => {
   const entries = Object.entries(query);
   let queryStr = '';
+  let index = 0;
 
-  for (const [index, [key, value]] of Object.entries(entries)) {
-    if (+index === 0) {
-      queryStr += `?${key}=${value}`;
-    } else {
-      queryStr += `&${key}=${value}`;
+  entries.forEach(([key, value]) => {
+    if (!value) {
+      return;
     }
-  }
+    console.log(key, value);
+    const parseValue = typeof value === 'object' ? JSON.stringify(value) : value;
+    if (index === 0) {
+      queryStr += `?${key}=${parseValue}`;
+    } else {
+      queryStr += `&${key}=${parseValue}`;
+    }
+    index++;
+  });
 
   return queryStr;
 };

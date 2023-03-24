@@ -3,6 +3,7 @@
     <label :for="label">{{ label }}</label>
     <select
       :id="label"
+      class="input"
       :value="modelValue"
       v-bind="{
         ...$attrs,
@@ -17,7 +18,7 @@
         :key="i"
         :selected="option.value === modelValue"
       >
-        <span v-for="(item, i) in option.content" :key="i">{{ item }}</span>
+        <template v-for="(item, i) in option.content" :key="i">{{ item }}</template>
       </option>
     </select>
     <p v-if="error" class="error">{{ error }}</p>

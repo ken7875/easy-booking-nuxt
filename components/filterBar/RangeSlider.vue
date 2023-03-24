@@ -53,8 +53,8 @@ const rangeValue = reactive({
   max: props.max
 });
 
-const leftLength = ref('25%');
-const rightLength = ref('25%');
+const leftLength = ref('0%');
+const rightLength = ref('0%');
 
 const lengthCalc = (e: Event, option: 'max' | 'min') => {
   // slider 長度計算
@@ -82,7 +82,7 @@ const gapCalc = (e: Event, option: 'max' | 'min') => {
 const change = (e: Event, option: 'max' | 'min') => {
   lengthCalc(e, option);
   gapCalc(e, option);
-  emit('updateProducts', rangeValue);
+  emit('updateProducts', { min: rangeValue.min * 1, max: rangeValue.max * 1 });
 };
 </script>
 

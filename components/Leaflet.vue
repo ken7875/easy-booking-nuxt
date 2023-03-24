@@ -56,12 +56,13 @@ const mapInit = reactive<MapInit>({
 });
 
 const markers = computed(() =>
-  allHotels.value.map((hotelMap: Hotel) => [hotelMap.locations.coordinates[1], hotelMap.locations.coordinates[0]])
+  allHotels.value.map((hotel: Hotel) => [hotel.locations.coordinates[1], hotel.locations.coordinates[0]])
 );
 
 const triggerPopup = (latlng: number[]) => {
   mapInit.coordinates = latlng;
 };
+
 defineExpose({
   triggerPopup
 });

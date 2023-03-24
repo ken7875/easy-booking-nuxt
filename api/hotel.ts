@@ -1,19 +1,18 @@
 import myFetch from '@/utils/myFetch';
-import { AllHotelQuery } from '@/model/hotel';
+import { AllHoteFilterObj } from '@/model/hotel';
 import { queryFactory } from '@/utils/queryFactory';
 
-export const getHotHotels = () => {
-  return myFetch('/products/hotProducts', {
+export const getHotHotels = () =>
+  myFetch('/products/hotProducts', {
     method: 'GET'
   });
-};
 
-export const getAllHotels: (query?: AllHotelQuery) => any = (query = {}) => {
+export const getAllHotels: (body?: AllHoteFilterObj) => any = (body = {}) => {
   // const path = query ? `products?${query}` : 'products';
-  const path = 'products';
-  const queryStr: string = Object.keys(query).length > 0 ? queryFactory(query) : '';
-
-  return myFetch(`${path}${queryStr}`, {
+  // const queryStr: string = Object.keys(query).length > 0 ? queryFactory(query) : '';
+  const query = queryFactory(body);
+  console.log(query, 'query');
+  return myFetch(`/products${query}`, {
     method: 'GET'
   });
 };
