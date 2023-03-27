@@ -19,7 +19,8 @@ import {
   faPersonSwimming,
   faCircleXmark,
   faUserLarge,
-  faLocationDot
+  faLocationDot,
+  faXmark
 } from '@fortawesome/free-solid-svg-icons';
 
 config.autoAddCss = false;
@@ -43,7 +44,8 @@ library.add(
   faSquareParking,
   faCircleXmark,
   faUserLarge,
-  faLocationDot
+  faLocationDot,
+  faXmark
 );
 
 export default defineNuxtPlugin((nuxtApp) => {

@@ -1,7 +1,7 @@
 <template>
-  <div class="border border-[#dee2e6] rounded-[8px] bg-white">
+  <div class="border border-[#dee2e6] lg:rounded-[8px] rounded-none bg-white">
     <div class="flex border-1 border-[#dee2e6] h-full w-full">
-      <div class="dateInput" @click="openCalendarHandler('from')">
+      <div class="dateInput border-r border-[#dee2e6]" @click="openCalendarHandler('from')">
         <p v-timeFormat="showDateRange.star"></p>
       </div>
       <div class="dateInput" @click="openCalendarHandler('to')">

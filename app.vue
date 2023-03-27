@@ -2,9 +2,14 @@
   <NuxtLayout>
     <NuxtPage />
   </NuxtLayout>
+  <client-only>
+    <Modal />
+  </client-only>
 </template>
 
 <script setup lang="ts">
+import Modal from './components/modal/index.vue';
+
 useHead({
   link: [
     {

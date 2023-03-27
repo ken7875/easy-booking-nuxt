@@ -7,12 +7,20 @@ export const getHotHotels = () =>
     method: 'GET'
   });
 
-export const getAllHotels: (body?: AllHoteFilterObj) => any = (body = {}) => {
+export const getAllHotels: (body: AllHoteFilterObj) => any = (body) => {
   // const path = query ? `products?${query}` : 'products';
   // const queryStr: string = Object.keys(query).length > 0 ? queryFactory(query) : '';
-  const query = queryFactory(body);
+  let query = '';
+  if (body) {
+    query = queryFactory(body);
+  }
   console.log(query, 'query');
   return myFetch(`/products${query}`, {
     method: 'GET'
   });
 };
+
+export const getProductApi = (id: string) =>
+  myFetch(`products/${id}`, {
+    method: 'GET'
+  });

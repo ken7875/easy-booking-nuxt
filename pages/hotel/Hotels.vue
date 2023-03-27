@@ -1,7 +1,12 @@
 <template>
-  <div class="w-full flex flex-wrap flex-col-reverse lg:flex-row h-fit">
-    <SearchBar class="w-full flex h-[5rem] z-[40]" />
-    <FilterBar class="sticky top-[5rem] w-full z-[30]" @updageProducts="getAllHotelsHandler($event, hotelFilterObj)" />
+  <div class="w-full flex flex-wrap lg:flex-row h-fit">
+    <SearchBar
+      :class="['w-full flex lg:z-[40]', isMapOpen ? 'z-[100px]' : 'z-[10]']"
+      @updateProducts="getAllHotelsHandler($event, hotelFilterObj)"
+    />
+    <FilterBarPc :class="['sticky top-[5rem] w-full lg:z-[30]', isMapOpen ? 'z-[100px]' : 'z-[10]']" />
+    <!-- @updateProducts="getAllHotelsHandler($event, hotelFilterObj)" -->
+    <FilterBarMobile @open-map="toggleMap.openMap.apply(toggleMap)" />
     <article class="lg:w-[50%] w-full lg:px-[20px] relative">
       <!--  top-[19.6rem] 為 navbar height(6.5rem) + SearchBar height(5rem) -->
       <div
@@ -11,6 +16,7 @@
         <button
           class="openMap w-[250px] h-[50px] rounded-[8px] opacity-0 bg-[url('/img/checkMap.png')] bg-left-top border-0 text-[1.25rem] font-bold hidden"
           @click="toggleMap.openMap"
+          v-if="isDesktop"
         >
           展開地圖
         </button>
@@ -123,7 +129,7 @@
 </template>
 
 <script setup lang="ts">
-import { useHotel } from '~~/store/hotel';
+import { useStore } from '~~/store/index';
 import { storeToRefs } from 'pinia';
 import Card from '~~/components/card/index.vue';
 import Images from '~~/components/productsPage/card/Images.vue';
@@ -131,12 +137,14 @@ import Introduce from '~~/components/productsPage/card/Introduce.vue';
 import Reviews from '~~/components/productsPage/card/Reviews.vue';
 import throttle from '~~/utils/throttle';
 import SearchBar from '~~/components/searchBar/index.vue';
-import FilterBar from '~~/components/filterBar/index.vue';
+import FilterBarPc from '~~/components/filterTool/FilterBarPc.vue';
+import FilterBarMobile from '~~/components/filterTool/FilterBarMobile.vue';
 // import Leaflet from '~~/components/Leaflet.vue';
 import { Hotel } from '~~/model/hotel';
 import gsap from 'gsap';
 import { AllHoteFilterObj } from '~~/model/hotel';
 import Loading from '@/components/Loading.vue';
+import type { Component } from 'vue';
 
 definePageMeta({
   layout: 'default'
@@ -150,6 +158,8 @@ const pageData = reactive({
 });
 
 const loadedHotels = ref<Hotel[]>([]);
+
+const { useHotel } = useStore();
 const hotelStore = useHotel();
 const { getAllHotels } = hotelStore;
 const { allHotels, allHotelMap, hotelFilterObj, hotelTotal, curHotelNum } = storeToRefs(hotelStore);
@@ -158,6 +168,7 @@ const { allHotels, allHotelMap, hotelFilterObj, hotelTotal, curHotelNum } = stor
 const resetFilterData = () => {
   // 篩選資料需要reset
   loadedHotels.value = [];
+  console.log(pageData, 'pageData'); // 等等記得reset pageData
   hotelStore.$patch({
     hotelFilterObj: {
       page: pageData.page,
@@ -186,12 +197,28 @@ const getAllHotelsHandler = async (resetData: boolean, filterObj: AllHoteFilterO
 
   isHotelApiLoading.value = false;
 
-  checkProduct(allHotels.value[0].id);
+  checkProduct(allHotels.value[0]?.id);
 
   curHotelTotal.value += curHotelNum.value;
 
   loadedHotels.value?.push(...allHotels.value);
 };
+
+watch(
+  () => [
+    hotelFilterObj.value['price[lte]'],
+    hotelFilterObj.value['price[gte]'],
+    hotelFilterObj.value['ratingAverage[gte]'],
+    hotelFilterObj.value['stars[gte]'],
+    hotelFilterObj.value['service[in]']
+  ],
+  (val) => {
+    getAllHotelsHandler(true, hotelFilterObj.value);
+  },
+  {
+    deep: true
+  }
+);
 
 const removeScrollListener = () => {
   window.removeEventListener('scroll', throttleScroll);
@@ -233,9 +260,9 @@ onBeforeUnmount(() => {
 });
 
 type CurComp = {
-  所有圖片: ReturnType<typeof defineComponent>;
-  所有評論: ReturnType<typeof defineComponent>;
-  詳細介紹: ReturnType<typeof defineComponent>;
+  所有圖片: Component | null;
+  所有評論: Component | null;
+  詳細介紹: Component | null;
 };
 
 const curComp: CurComp = {
@@ -249,7 +276,7 @@ interface detailType {
   title: '所有圖片' | '所有評論' | '詳細介紹' | '';
 }
 
-const renderComp = shallowRef(null);
+const renderComp = shallowRef<Component | null>(null);
 
 const detailType = ref<detailType>({
   id: '',
@@ -278,23 +305,29 @@ interface ToggleMap {
   killAnimation: () => void;
 }
 
+const isMapOpen = ref(false);
+
 const toggleMap: ToggleMap = {
   tl: gsap.timeline(),
   closeMap() {
     this.tl?.to('.close', { display: 'none', duration: 0 });
     this.tl?.to('.mapWrap', { height: '50px', duration: 1 });
     this.tl?.to('.mapWrap', { width: '0px', duration: 1 }, '<+=100%');
-    this.tl?.to('.openMap', { opacity: 1, display: 'block', duration: 1 }, '>');
     if (isDesktop) {
+      this.tl?.to('.openMap', { opacity: 1, display: 'block', duration: 1 }, '>');
       this.tl?.fromTo('.openMap', { x: 100 }, { x: 0, duration: 1 }, '<');
     }
+    isMapOpen.value = false;
   },
   openMap() {
-    this.tl?.to('.openMap', { opacity: 0, display: 'none', duration: 1 });
-    this.tl?.fromTo('.openMap', { x: 0 }, { x: 100, duration: 1 });
+    if (isDesktop) {
+      this.tl?.to('.openMap', { opacity: 0, display: 'none', duration: 1 });
+      this.tl?.fromTo('.openMap', { x: 0 }, { x: 100, duration: 1 });
+    }
     this.tl?.to('.mapWrap', { width: isDesktop ? '50%' : '100%', duration: 1 });
     this.tl?.to('.mapWrap', { height: isDesktop ? '550px' : '100vh', duration: 1 }, '<+=100%');
     this.tl?.to('.close', { display: 'block', duration: 0 }, '<+=100%');
+    isMapOpen.value = true;
   },
   killAnimation() {
     this.tl?.kill();

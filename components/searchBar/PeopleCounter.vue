@@ -2,7 +2,7 @@
   <DropDownMenu>
     <template #trigger>
       <div
-        class="text-[.75rem] leading-[1.3] border border-darkLight flex pl-[10px] items-center w-[10rem] h-[3rem] rounded-[8px] mr-[20px] bg-white"
+        class="text-[.75rem] leading-[1.3] border border-darkLight flex pl-[10px] items-center lg:rounded-[8px] rounded-0 mr-[20px] bg-white h-full w-full"
       >
         <div>
           <p class="mb-0">{{ options.room }}間房</p>
@@ -62,7 +62,6 @@ const options = reactive<Option>({
   child: 0,
   people: 0
 });
-const personStr = ref('');
 
 const tempOptions = reactive<Option>({ ...options });
 
@@ -72,7 +71,6 @@ const save = () => {
   options.adult = tempOptions.adult;
   options.child = tempOptions.child;
   options.people = tempOptions.adult + tempOptions.child;
-  personStr.value = options.adult + options.child > 0 ? `&person[gte]=${options.adult + options.child}` : '';
 };
 
 const add = (type: keyof Option) => {
@@ -104,4 +102,8 @@ const minus = (type: keyof Option) => {
       break;
   }
 };
+
+defineExpose({
+  options
+});
 </script>

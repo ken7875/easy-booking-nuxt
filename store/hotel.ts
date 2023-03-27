@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia';
 import { getAllHotelsApi } from '~~/api/index';
-import { Hotel, AllHotelMap } from '~~/model/hotel';
-import { AllHoteFilterObj } from '~~/model/hotel';
+import { Hotel, AllHotelMap, AllHoteFilterObj, OptionsType } from '~~/model/hotel';
+import { getProductApi } from '@/api/hotel';
 
 interface State {
   allHotels: Hotel[];
@@ -11,6 +11,7 @@ interface State {
   baseUrl: string;
   hotelFilterObj: AllHoteFilterObj;
   curHotelNum: number;
+  baseServices: string[];
 }
 
 export const useHotel = defineStore('hotelStore', {
@@ -59,18 +60,48 @@ export const useHotel = defineStore('hotelStore', {
           '提供早餐',
           '免費網路'
         ],
+        people: 0,
+        country: '',
+        room: 0,
         page: 1,
-        limit: 10
-      }
+        limit: 10,
+        startDate: new Date(),
+        endDate: new Date(+new Date() + 86400000)
+      },
+      baseServices: ['游泳池', '健身房', '停車場', '機場接送', '酒吧', '溫泉', '禁菸房', '景觀', '提供早餐', '免費網路']
     };
   },
   actions: {
-    async getAllHotels(filterObj: AllHoteFilterObj = {}) {
+    async getAllHotels(filterObj: AllHoteFilterObj) {
       const hotelData = await getAllHotelsApi(filterObj);
-      console.log(hotelData);
       this.allHotels = hotelData?.data?.data;
       this.hotelTotal = hotelData.total;
       this.curHotelNum = hotelData.result;
+    },
+    filterHandler(type: string, value: any) {
+      switch (type) {
+        case 'price':
+          this.hotelFilterObj['price[lte]'] = value.max;
+          this.hotelFilterObj['price[gte]'] = value.min;
+          break;
+        case 'rating':
+          this.hotelFilterObj['ratingAverage[gte]'] = value;
+          break;
+        case 'stars':
+          this.hotelFilterObj['stars[gte]'] = value;
+          break;
+        case 'service':
+          this.hotelFilterObj['service[in]'] = value;
+          break;
+
+        default:
+          break;
+      }
+    },
+    async getHotelById(id: string) {
+      const hotelData = await getProductApi(id);
+      console.log(hotelData, 'asdasd');
+      this.hotel = hotelData.data.data;
     }
   },
   getters: {

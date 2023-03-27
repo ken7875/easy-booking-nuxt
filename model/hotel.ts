@@ -63,4 +63,15 @@ export interface AllHoteFilterObj extends BaseRangeQuery, AllHotelQueryGte, AllH
   country?: string;
   name?: string;
   id?: string;
+  people: number;
+  startDate: Date;
+  endDate: Date;
+  room?: number;
 }
+
+export type OptionsType = {
+  price: { max: number; min: number };
+  ratingAverage: number;
+  stars: number;
+  service: string[];
+};
