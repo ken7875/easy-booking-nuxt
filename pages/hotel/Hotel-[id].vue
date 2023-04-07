@@ -260,7 +260,7 @@ import icon from '~~/utils/icon';
 import SearchBar from '~~/components/searchBar/index.vue';
 import { RoomType, ReserveHotelInfo } from '~~/model/hotel';
 import Card from '~~/components/card/index.vue';
-import Slider from '~~/components/slider/slider.vue';
+import Slider from '~~/components/slider/Slider.vue';
 import Button from '~~/components/Button.vue';
 import { useRouter, useRoute } from 'vue-router';
 import { Hotel } from '~~/model/Hotel';
