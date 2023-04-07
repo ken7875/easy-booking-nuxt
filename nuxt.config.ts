@@ -11,10 +11,10 @@ export default defineNuxtConfig({
   css: ['~~/assets/css/tailwinds.css', '@fortawesome/fontawesome-svg-core/styles.css'],
   runtimeConfig: {
     public: {
-      apiBase: 'http://localhost:8000/api'
+      apiBase: process.env.NODE_ENV === 'development' ? process.env.API_BASE_URL : process.env.API_BASE_URL_PROD
     }
   }
   // app: {
   //   baseURL: '/home/'
-  // }
+  // }'http://localhost:8000/api'
 });
