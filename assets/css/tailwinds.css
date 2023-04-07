@@ -52,14 +52,26 @@
     @apply absolute z-[-1] lg:w-[15vw] lg:h-[15vw] md:w-[30vw] md:h-[30vw] opacity-[0.8] object-cover rounded-[50%] first-of-type:top-[17%] first-of-type:left-[5%] sm:first-of-type:left-[9px];
   }
   .button{
-    @apply p-[10px] bg-primary border border-primary rounded-[8px] flex justify-center items-center font-bold text-white min-w-[100px];
+    @apply p-[10px] flex justify-center items-center font-bold rounded-[8px];
+    &__primary{
+      @apply bg-primary border border-primary text-white;
+    }
+    &__secondary{
+      @apply bg-secondary border border-secondary text-white bg-secondary;
+    }
     &__outline-primary{
       @apply bg-transparent text-primary hover:bg-primary hover:text-white;
+    }
+    &__outline-darkLight{
+      @apply bg-transparent text-black hover:bg-[#dee2e6]
+    }
+    &__gray{
+      @apply bg-gary text-white
     }
     &__none{
       @apply bg-transparent border-0 text-black;
     }
-    /* &__outline-danger{
+    /* &__outline-danger{a
       @include button(transparent) {
         border: 1px solid $danger;
         color: $danger;

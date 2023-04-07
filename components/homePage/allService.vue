@@ -93,7 +93,6 @@
 </template>
 
 <script setup lang="ts">
-import gsap from 'gsap';
 import Cards from '~~/components/card/index.vue';
 
 const allServiceAry = ref([

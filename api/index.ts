@@ -1,4 +1,3 @@
-import { getHotHotels, getAllHotels } from './hotel';
+import { getHotHotels } from './hotel';
 
 export const getHotHotelsApi = getHotHotels;
-export const getAllHotelsApi = getAllHotels;

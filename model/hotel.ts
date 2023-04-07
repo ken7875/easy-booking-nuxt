@@ -3,6 +3,18 @@ export interface Locations {
   address: string;
 }
 
+export type Service = (
+  | '游泳池'
+  | '健身房'
+  | '停車場'
+  | '機場接送'
+  | '酒吧'
+  | '溫泉'
+  | '禁菸房'
+  | '景觀'
+  | '提供早餐'
+  | '免費網路'
+)[];
 export interface ViewPorts {
   locations: Locations;
   address: string;
@@ -14,14 +26,35 @@ export interface ViewPorts {
   id: string;
 }
 
-export interface roomType {
+export interface RoomType {
   remainRoom: number;
   name: string;
   image: string[];
   person: number;
-  service: string[];
+  service: Service;
   price: number;
   roomNum: number;
+  _id: string;
+}
+
+export interface ReserveHotelInfo {
+  productId: string;
+  bookingNum: number;
+  discount: number;
+  roomTypeInfo: RoomType;
+  date: {
+    checkinTime: Date;
+    checkoutTime: Date;
+  };
+}
+
+export interface Review {
+  _id: string;
+  createAt: string;
+  product: string;
+  rating: number;
+  review: string;
+  user: string | null;
 }
 
 export interface Hotel {
@@ -37,8 +70,10 @@ export interface Hotel {
   summary: string;
   viewPorts: ViewPorts[];
   accommodate: number;
-  roomType: roomType[];
+  roomType: RoomType[];
   stars: number;
+  reviews: Review[];
+  service: Service;
 }
 
 export type AllHotelMap = { [key: string]: Hotel };
@@ -57,15 +92,15 @@ type AllHotelQueryLte = {
 };
 
 export interface AllHoteFilterObj extends BaseRangeQuery, AllHotelQueryGte, AllHotelQueryLte {
-  'service[in]'?: string[];
+  'service[in]'?: Service;
   page?: number;
   limit?: number;
   country?: string;
   name?: string;
   id?: string;
   people: number;
-  startDate: Date;
-  endDate: Date;
+  starttime: Date;
+  endtime: Date;
   room?: number;
 }
 
@@ -73,5 +108,5 @@ export type OptionsType = {
   price: { max: number; min: number };
   ratingAverage: number;
   stars: number;
-  service: string[];
+  service: Service;
 };

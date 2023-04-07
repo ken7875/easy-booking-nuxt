@@ -1,5 +1,5 @@
 <template>
-  <div class="rounded-[8px] border-1 overflow-hidden h-full bg-white">
+  <div class="rounded-[8px] border overflow-hidden h-full bg-white">
     <div :class="['flex h-full w-full', { 'flex-col': !isHorizontal }]">
       <template v-if="$slots.header">
         <slot name="header"></slot>
@@ -12,8 +12,10 @@
       </template>
     </div>
     <template v-if="$slots.detail">
-      <h3>{{ detailType.title }}</h3>
-      <slot name="detail"></slot>
+      <div class="px-[15px]">
+        <h3 class="text-[1.3rem] font-bold mt-[10px] mb-[15px]">{{ detailType.title }}</h3>
+        <slot name="detail"></slot>
+      </div>
     </template>
   </div>
 </template>

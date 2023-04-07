@@ -1,16 +1,21 @@
 <template>
-  <div class="checkbox-wrap d-flex align-items-center">
+  <div class="flex items-center">
     <input
       type="checkbox"
-      class="w-[17px] h-[17px]"
+      :class="['w-[25px] h-[25px]', $attrs.class]"
       :checked="modelValue"
       @change="$emit('update:modelValue', ($event.target as HTMLInputElement)?.checked)"
     />
-    <label :for="label" class="ms-2">{{ label }}</label>
+    <label :for="label" class="ml-2 text-[1.2rem]">{{ label }}</label>
   </div>
   <p v-if="error" class="error">{{ error }}</p>
 </template>
 
+<script lang="ts">
+export default {
+  inheritAttrs: false
+};
+</script>
 <script setup lang="ts">
 interface Props {
   label?: string;

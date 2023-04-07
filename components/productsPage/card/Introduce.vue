@@ -15,5 +15,5 @@ const props = defineProps<Props>();
 const hotelStore = useHotel();
 const { allHotelMap } = storeToRefs(hotelStore);
 
-const description = computed(() => allHotelMap.value[props.id].description || []);
+const description = computed(() => allHotelMap.value[props.id]?.description || []);
 </script>

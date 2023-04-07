@@ -1,19 +1,16 @@
 <template>
-  <div class="flex items-center">
-    <label :for="label">{{ label }}</label>
-    <input
-      v-bind="$attrs"
-      :value="modelValue"
-      :class="['input', { isError: error }]"
-      @input="$emit('update:modelValue', ($event.target as HTMLInputElement)?.value)"
-      :placeholder="placeholder"
-    />
-    <p v-if="error" class="error">{{ error }}</p>
-  </div>
+  <label :for="label">{{ label }}</label>
+  <input
+    v-bind="$attrs"
+    :value="modelValue"
+    :class="['input', { isError: error }]"
+    @input="$emit('update:modelValue', ($event.target as HTMLInputElement)?.value)"
+    :placeholder="placeholder"
+  />
+  <p v-if="error" class="text-red-500 font-bold">{{ error }}</p>
 </template>
 
 <script lang="ts">
-// use normal <script> to declare options
 export default {
   inheritAttrs: false
 };
@@ -49,14 +46,3 @@ defineProps<Props>();
 //   }
 // };
 </script>
-
-<!-- <style lang="scss" scoped>
-.input {
-  @include input;
-  height: 40px;
-  width: 100%;
-}
-.isError {
-  border: 1px solid red;
-}
-</style> -->

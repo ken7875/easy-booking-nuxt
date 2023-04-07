@@ -10,6 +10,9 @@ import { onBeforeUnmount } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useModal } from '@/store/modal';
 import FilterModal from '~~/components/filterTool/FilterModal.vue';
+import Leaflet from '~~/components/Leaflet.vue';
+import ViewPortsModal from '~~/components/hotelDetailPage/ViewPortsModal.vue';
+
 import type { Component } from 'vue';
 
 interface Comp {
@@ -23,7 +26,9 @@ onBeforeUnmount(() => {
 });
 
 const componentsList: Comp = {
-  FilterModal
+  FilterModal,
+  Leaflet,
+  ViewPortsModal
 };
 const dyComp = computed(() => componentsList[curModal.value] || null);
 </script>

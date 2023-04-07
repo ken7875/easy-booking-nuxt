@@ -15,12 +15,6 @@ import HotProducts from '~~/components/homePage/HotProducts.vue';
 // import LazyWarterFull from '~~/components/homePage/Waterfull.vue';
 import hotCountry from '~~/components/homePage/HotCountry.vue';
 import allService from '~~/components/homePage/AllService.vue';
-import { useStore } from '~~/store/index';
-import { storeToRefs } from 'pinia';
-
-const { useHotel } = useStore();
-const hotelStore = useHotel();
-const { allHotels } = storeToRefs(hotelStore);
 // const { getAllHotels } = hotelStore;
 
 // const getAsyncComp = async () => {

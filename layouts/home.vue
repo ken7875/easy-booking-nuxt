@@ -91,15 +91,23 @@ const gsapAnimation = () => {
 onMounted(() => {
   gsapAnimation();
 });
+const refreshAndKillTl = () => {
+  if (tl) {
+    tl?.restart();
+    tl2?.restart();
+    tl3?.restart();
 
-onBeforeUnmount(() => {
-  if (tl !== null) {
     tl?.kill();
     tl2?.kill();
     tl3?.kill();
+
     tl = null;
     tl2 = null;
     tl3 = null;
   }
+};
+
+onBeforeUnmount(() => {
+  refreshAndKillTl();
 });
 </script>

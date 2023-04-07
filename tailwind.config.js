@@ -12,19 +12,19 @@ module.exports = {
   ],
   theme: {
     extend: {
-      flex: {
-        hotProducts: 'calc(25% - 24px) 0 0'
-      },
       borderWidth: {
         DEFAULT: '1px'
       },
       colors: {
         primary: 'rgb(239 68 68)',
         secondary: '#007bff',
-        darkLight: '#dee2e6'
+        darkLight: '#dee2e6',
+        gary: '#808080'
       },
       zIndex: {
-        navbar: '100'
+        navbar: '100',
+        messageShadow: '1000',
+        message: '1001'
       },
       keyframes: {
         cardFadeIn: {

@@ -3,7 +3,7 @@
     <div class="datePicker-head">
       <button
         :class="[
-          'adjust bg-transparent bg-transparent border-0 p-0 text-[1.25rem]',
+          'adjust bg-transparent border-0 p-0 text-[1.25rem]',
           adjustBtn === 'prev' ? 'mr-[15px]' : 'order-2 ml-[15px]'
         ]"
         @click.prevent="emit('adjustDate', adjustBtn)"

@@ -6,11 +6,16 @@
     <main class="h-fit">
       <slot />
     </main>
-    <footer>456</footer>
+    <footer v-show="!showFooter">456</footer>
   </div>
 </template>
 
 <script setup>
 import '~~/assets/css/tailwinds.css';
 import Navbar from './components/Navbar.vue';
+import { useRoute } from 'vue-router';
+
+const route = useRoute();
+
+const showFooter = computed(() => route.path.includes('auth'));
 </script>

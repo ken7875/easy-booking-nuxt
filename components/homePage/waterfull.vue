@@ -35,7 +35,6 @@
 <script setup lang="ts">
 import gsap from 'gsap';
 import Button from '~~/components/Button.vue';
-import { Hotel } from 'model/hotel';
 import throttle from '~~/utils/throttle';
 import { storeToRefs } from 'pinia';
 import { useHotel } from '~~/store/hotel';

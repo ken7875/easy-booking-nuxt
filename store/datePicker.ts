@@ -1,10 +1,8 @@
 import { defineStore } from 'pinia';
-
 interface State {
   date: {
     isoDate: Date[];
     openCalendar: boolean;
-    arrowPos: string;
   };
 }
 
@@ -20,8 +18,7 @@ export const useDatePicker = defineStore('datePicker', {
       date: {
         // 傳給後端的時間格式
         isoDate: [new Date(), new Date(new Date().setDate(new Date().getDate() + 1))],
-        openCalendar: false,
-        arrowPos: '20%'
+        openCalendar: false
       }
     };
   },
@@ -33,13 +30,19 @@ export const useDatePicker = defineStore('datePicker', {
         // this.date.formatDate[0] = dateRange
         this.date.isoDate[0] = dateRangeISO;
         this.date.openCalendar = openCalendar;
-        this.date.arrowPos = '60%';
       } else if (dateOrder === 'to') {
         // this.date.formatDate[1] = dateRange
         this.date.isoDate[1] = dateRangeISO;
         this.date.openCalendar = false;
-        this.date.arrowPos = '20%';
       }
+    }
+  },
+  persist: {
+    key: 'hotel-date-range',
+    storage: process.client ? sessionStorage : undefined,
+    paths: ['date.isoDate'],
+    afterRestore: (ctx) => {
+      console.log(ctx, 'ctx123');
     }
   }
 });

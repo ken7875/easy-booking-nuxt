@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
-import { getAllHotelsApi } from '~~/api/index';
-import { Hotel, AllHotelMap, AllHoteFilterObj, OptionsType } from '~~/model/hotel';
+import { getAllHotelsApi } from '~~/api/hotel';
+import { Hotel, AllHotelMap, AllHoteFilterObj } from '~~/model/hotel';
 import { getProductApi } from '@/api/hotel';
 
 interface State {
@@ -39,7 +39,9 @@ export const useHotel = defineStore('hotelStore', {
         viewPorts: [],
         accommodate: 0,
         roomType: [],
-        stars: 0
+        stars: 0,
+        service: [],
+        reviews: []
       },
       hotHotels: [],
       baseUrl,
@@ -65,16 +67,16 @@ export const useHotel = defineStore('hotelStore', {
         room: 0,
         page: 1,
         limit: 10,
-        startDate: new Date(),
-        endDate: new Date(+new Date() + 86400000)
+        starttime: new Date(),
+        endtime: new Date(+new Date() + 86400000)
       },
       baseServices: ['游泳池', '健身房', '停車場', '機場接送', '酒吧', '溫泉', '禁菸房', '景觀', '提供早餐', '免費網路']
     };
   },
   actions: {
-    async getAllHotels(filterObj: AllHoteFilterObj) {
-      const hotelData = await getAllHotelsApi(filterObj);
-      this.allHotels = hotelData?.data?.data;
+    async getAllHotels(filterObj?: AllHoteFilterObj) {
+      const hotelData = await getAllHotelsApi<Hotel[]>(filterObj);
+      this.allHotels.push(...hotelData?.data?.data);
       this.hotelTotal = hotelData.total;
       this.curHotelNum = hotelData.result;
     },
@@ -97,20 +99,11 @@ export const useHotel = defineStore('hotelStore', {
         default:
           break;
       }
-    },
-    async getHotelById(id: string) {
-      const hotelData = await getProductApi(id);
-      console.log(hotelData, 'asdasd');
-      this.hotel = hotelData.data.data;
     }
   },
   getters: {
     allHotelMap(): AllHotelMap {
-      const map: AllHotelMap = {
-        id: {
-          ...this.allHotels[0]
-        }
-      };
+      const map: AllHotelMap = {};
       this.allHotels.forEach((item: Hotel) => {
         map![item.id] = {
           ...item

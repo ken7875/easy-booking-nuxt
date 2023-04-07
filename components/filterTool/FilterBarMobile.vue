@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex rounded-[8px] shadow-[0_4px_16px_rgba(0,0,0,0.3)] my-[15px] mx-auto w-[90%] lg:hidden"
+    class="flex items-center rounded-[8px] shadow-[0_4px_16px_rgba(0,0,0,0.3)] my-[15px] mx-auto w-[90%] lg:hidden"
     v-if="isMobile || isTablet"
   >
     <div class="flex-[1_1_0] p-[10px]" @click="$emit('openMap')">

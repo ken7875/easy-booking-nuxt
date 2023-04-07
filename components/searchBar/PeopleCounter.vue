@@ -15,15 +15,18 @@
     </template>
     <template #dropDownList>
       <ul class="w-[250px]">
-        <li class="flex justify-between items-center mb-[50px]">
-          <p class="nowrap">成人</p>
+        <li class="flex justify-between items-center mb-[50px]" v-for="(item, i) in optionListDomArray" :key="i">
+          <p class="nowrap">{{ item }}</p>
           <div class="flex items-center justify-between w-[70%]">
-            <button class="" @click.prevent="add('adult')">+</button>
-            <input type="number" v-model="tempOptions.adult" class="w-[50px] text-center border-1 border-darkLight" />
-            <button class="button__none" @click.prevent="minus('adult')">-</button>
+            <Button :bgColor="'button__none'" @click.prevent="minus(i)">-</Button>
+            <input type="number" v-model="tempOptions[i]" class="w-[50px] text-center border-1 border-darkLight" />
+            <Button :bgColor="'button__none'" @click.prevent="add(i)">+</Button>
           </div>
         </li>
-        <li class="flex justify-between items-center mb-[50px]">
+        <li>
+          <button class="button__secondary w-full" @click.prevent="save">確定</button>
+        </li>
+        <!-- <li class="flex justify-between items-center mb-[50px]">
           <p class="nowrap">兒童</p>
           <div class="flex items-center justify-between w-[70%]">
             <button class="button__none" @click.prevent="add('child')">+</button>
@@ -38,23 +41,28 @@
             <input type="number" v-model="tempOptions.room" class="w-[50px] text-center border-1 border-darkLight" />
             <button class="button__none" @click.prevent="minus('room')">-</button>
           </div>
-        </li>
-        <li>
-          <button class="button__secondary w-full" @click.prevent="save">確定</button>
-        </li>
+        </li> -->
       </ul>
     </template>
   </DropDownMenu>
 </template>
 
 <script setup lang="ts">
+import Button from '../Button.vue';
 import DropDownMenu from '../DropDownMenu.vue';
+
 interface Option {
   room: number;
   adult: number;
   child: number;
   people: number;
 }
+
+const optionListDomArray = reactive<Record<keyof Omit<Option, 'people'>, string>>({
+  room: '房間',
+  adult: '成人',
+  child: '兒童'
+});
 
 const options = reactive<Option>({
   room: 1,

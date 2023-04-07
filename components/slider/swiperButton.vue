@@ -1,10 +1,20 @@
 <template>
-  <div class="absolute top-[50%] left-[50%] translate-x-[-53%] translate-y-[-50%] z-50">
+  <div :class="['absolute z-50', buttonPosition]">
     <button @click="change(curIdx - 1)" class="float-left swiper-button">
-      <i class="bi bi-dash-circle-fill text-[2.5rem] swiper-icon text-red-500"></i>
+      <client-only>
+        <font-awesome-icon
+          :icon="['fas', 'circle-chevron-left']"
+          class="lg:text-[2.5rem] text-[2rem] swiper-icon text-red-500"
+        ></font-awesome-icon>
+      </client-only>
     </button>
     <button @click="change(curIdx + 1)" class="float-right swiper-button">
-      <i class="bi bi-plus-circle-fill text-[2.5rem] swiper-icon text-red-500"></i>
+      <client-only>
+        <font-awesome-icon
+          :icon="['fas', 'circle-chevron-right']"
+          class="lg:text-[2.5rem] text-[2rem] swiper-icon text-red-500"
+        ></font-awesome-icon>
+      </client-only>
     </button>
   </div>
 </template>
@@ -19,6 +29,11 @@ const props = defineProps({
   curIdx: {
     type: Number,
     default: 0,
+    require: true
+  },
+  buttonPosition: {
+    type: String,
+    default: '',
     require: true
   }
 });

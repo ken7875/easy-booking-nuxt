@@ -6,3 +6,8 @@ node_modules
 .output
 .env
 dist
+.devcontainer
+.vscode
+.dockerignore
+.gitignore
+dockerfile

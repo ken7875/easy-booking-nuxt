@@ -13,7 +13,7 @@
       <div
         :class="[
           'w-0 absolute top-[-3%] duration-300 ease-linear border-l-[11px] border-l-transparent border-r-[11px] border-r-transparent border-b-[11px] border-b-[#000]',
-          dateOrder === 'from' ? 'left-[10%]' : 'left-[60%]'
+          dateOrder === 'from' ? 'lg:left-[10%] left-[5%]' : 'lg:left-[35%] left-[20%]'
         ]"
       ></div>
       <Panel
@@ -88,18 +88,14 @@ const openCalendar = ref(false);
 const dateOrder = ref('from');
 const datepicker = ref<HTMLElement | null>(null);
 // 預設時間為今天到昨天
-const arrowPos = ref('20%');
+// const arrowPos = ref('20%');
 
 const openCalendarHandler = (option: string) => {
   openCalendar.value = true;
   nextTick(() => {
     if (option === 'from') {
-      arrowPos.value = '20%';
-      datepicker.value?.style?.setProperty('--pos', arrowPos.value);
       dateOrder.value = option;
     } else {
-      arrowPos.value = '60%';
-      datepicker.value?.style?.setProperty('--pos', arrowPos.value);
       dateOrder.value = option;
     }
   });
@@ -127,7 +123,6 @@ const showDateRange = ref({
 watch(
   dateRange,
   (val) => {
-    arrowPos.value = val.arrowPos;
     openCalendar.value = val.openCalendar;
     showDateRange.value.star = val.isoDate[0];
     showDateRange.value.end = val.isoDate[1];

@@ -1,16 +1,25 @@
 <template>
   <div class="relative">
-    <div :class="['flex', 'w-full', 'h-full', 'items-center', spacing, 'swiper-slide']">
-      <slot name="swiperItem" :mountedData="mountedData" :curIdx="curIdx"></slot>
+    <!-- spacing -->
+    <div :class="['w-full h-full', spacing]">
+      <transition-group name="flip-list" tag="div" class="flex w-full h-full">
+        <div
+          v-for="(item, index) in mountedData"
+          :key="item.id"
+          :class="[{ invisible: index === 0 || index === mountedData.length - 1 }, slideItemWidth, gap]"
+        >
+          <slot name="swiperItem" :slideItem="{ ...item }" :index="index" :totalLen="mountedData.length"></slot>
+        </div>
+      </transition-group>
       <swiperButton
         :dataLeng="mountedData.length"
         :curIdx="curIdx"
         @changeIdx="change"
         :class="buttonWidth"
+        :buttonPosition="buttonPosition"
       ></swiperButton>
     </div>
   </div>
-  <!-- <div>{{ loopData[0] }}</div> -->
 </template>
 
 <script setup lang="ts">
@@ -29,23 +38,50 @@ const myprops = defineProps({
   buttonWidth: {
     type: String,
     default: '0'
+  },
+  dataLeng: {
+    type: Number,
+    default: 0,
+    require: true
+  },
+  slideItemWidth: {
+    type: String,
+    default: ''
+  },
+  gap: {
+    type: String,
+    default: ''
+  },
+  buttonPosition: {
+    type: String,
+    default: '',
+    require: true
   }
 });
 
 // const slots = useSlots();
 const { data, spacing, buttonWidth } = toRefs(myprops);
-const initData = ref<Hotel[]>([]);
-initData.value = data.value as Hotel[];
+
+const initData = ref<any[]>([]);
+initData.value = data.value as any[];
 
 const loopData = computed(() => {
-  const result: Hotel[] = [];
+  const result: any[] = [];
+  // 每個slider的id，讓transition-group能運作
+  let number = 0;
   if (initData.value.length > 0) {
     while (result.length < 9) {
-      initData.value.forEach((item: Hotel) => {
-        result.push({ ...item });
+      initData.value.forEach((item: any) => {
+        number++;
+        if (typeof item === 'object') {
+          result.push({ ...item, id: number });
+        } else {
+          result.push({ item, id: number });
+        }
       });
     }
   }
+  console.log(result, 'result result result');
   return result;
 });
 
@@ -53,6 +89,7 @@ const curIdx = ref(0);
 
 const mountedData = computed(() => {
   const prevIdx = curIdx.value - 4;
+  console.log(prevIdx, 'prevIdx');
   const showData = loopData.value.slice(0, prevIdx);
   const result = loopData.value.slice(prevIdx).concat(showData);
 
@@ -63,5 +100,16 @@ const change = (idx: number) => {
   let limit = mountedData.value.length - 1;
   let newIdx = idx > limit ? 0 : idx < 0 ? mountedData.value.length - 1 : idx;
   curIdx.value = newIdx;
+  emit('change');
 };
+
+const emit = defineEmits<{
+  (e: 'change'): void;
+}>();
 </script>
+
+<style scoped>
+.flip-list-move {
+  transition: transform 0.3s;
+}
+</style>

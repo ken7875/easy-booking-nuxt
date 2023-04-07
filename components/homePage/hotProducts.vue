@@ -9,47 +9,45 @@
       Hot Hotel
     </h3>
     <slider
-      :spacing="`ml-[calc(-1*25%*2.5)]`"
-      :data="hotHotelData.data.data"
-      :buttonWidth="'w-[26%]'"
+      :spacing="`ml-[calc(-25%*2.5)]`"
+      :data="hotHotelData?.data?.data"
+      :buttonWidth="'w-[calc(26%)]'"
+      :buttonPosition="'top-[50%] left-[50%] translate-x-[calc(-50%-12px)] translate-y-[-50%]'"
+      :slide-item-width="'flex-[25%_0_0]'"
       class="h-[67%] absolute top-[60%] translate-y-[-50%]"
+      @change="sliderChange"
     >
-      <template #swiperItem="{ mountedData }">
-        <transition-group name="flip-list" tag="div" class="flex w-full items-center h-full">
-          <div
-            v-for="(hotel, i) in mountedData"
-            :key="hotel.id"
+      <template v-slot:swiperItem="{ slideItem, index, totalLen }">
+        <div
+          :class="['h-full z-10 w-[calc(100%-24px)]', { 'invisible z-[-1]': index === 0 || index === totalLen - 1 }]"
+          ref="cardWraps"
+        >
+          <card
+            :key="isSliderChange"
             :class="[
-              'mr-[24px] h-full z-10 flex-hotProducts',
-              { 'invisible z-[-1]': i === 0 || i === mountedData.length - 1 }
+              { 'animate-cardFadeInAnimate': index === 4 },
+              { 'shadow-xl shadow-black': index === 4 },
+              { 'opacity-50': index !== 4 },
+              index === 4 ? 'bg-white' : 'bg-[#212121]',
+              'duration-300 ease-linear'
             ]"
-            ref="cardWraps"
           >
-            <card
-              :class="[
-                { 'animate-cardFadeInAnimate': i === 4 },
-                { 'shadow-xl shadow-black': i === 4 },
-                { 'opacity-50': i !== 4 },
-                i === 4 ? 'bg-white' : 'bg-[#212121]',
-                'ease-linear',
-                'duration-300'
-              ]"
-            >
-              <template #header>
-                <img :src="hotel.images[0]" alt="hotelImg" class="w-full h-full object-cover object-center" />
-              </template>
-              <template #body>
-                <h3 :class="['text-[2rem]', i === 4 ? 'text-black' : 'text-white', 'mb-[16px]']">{{ hotel.name }}</h3>
-                <p :class="[i === 4 ? 'text-black' : 'text-white', 'mb-[16px]']">{{ hotel.summary }}</p>
-                <p :class="[i === 4 ? 'text-black' : 'text-white', 'mb-[16px]']">評分: {{ hotel.ratingAverage }}</p>
-                <p :class="[i === 4 ? 'text-black' : 'text-white', 'mb-[16px]']">最低價格: {{ hotel.price }}</p>
-                <div class="">
-                  <button></button>
-                </div>
-              </template>
-            </card>
-          </div>
-        </transition-group>
+            <template #header>
+              <img :src="slideItem.images[0]" alt="hotelImg" class="w-full h-[220px] object-cover object-center" />
+            </template>
+            <template #body>
+              <h3 :class="['text-[2rem]', index === 4 ? 'text-black' : 'text-white', 'mb-[16px]']">
+                {{ slideItem.name }}
+                {{ slideItem.id }}
+              </h3>
+              <p :class="[index === 4 ? 'text-black' : 'text-white', 'mb-[16px]']">{{ slideItem.summary }}</p>
+              <p :class="[index === 4 ? 'text-black' : 'text-white', 'mb-[16px]']">
+                評分: {{ slideItem.ratingAverage }}
+              </p>
+              <p :class="[index === 4 ? 'text-black' : 'text-white', 'mb-[16px]']">最低價格: {{ slideItem.price }}</p>
+            </template>
+          </card>
+        </div>
       </template>
     </slider>
   </div>
@@ -58,16 +56,23 @@
 <script setup lang="ts">
 import slider from '../slider/slider.vue';
 import card from '../card/index.vue';
-import { Hotel } from '~~/model/hotel';
 import { getHotHotels } from '@/api/hotel';
+import { Hotel } from '~~/model/hotel';
 
 const {
   data: hotHotelData,
   pending,
   error
-} = await useAsyncData('hotHotelData', () => getHotHotels(), {
+} = await useAsyncData('hotHotel', () => getHotHotels<Hotel[]>(), {
   lazy: true
 });
+
+// console.log(hotHotelData.value?.data.data);
+
+const isSliderChange = ref(0);
+const sliderChange = () => {
+  isSliderChange.value++;
+};
 
 let hotProductsWrapRef = ref<HTMLElement | null>(null);
 
@@ -101,7 +106,7 @@ onBeforeUnmount(() => {
 });
 </script>
 
-<style scoped>
+<style>
 .flip-list-move {
   transition: transform 0.5s;
 }
