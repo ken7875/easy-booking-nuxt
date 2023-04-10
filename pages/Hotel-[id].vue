@@ -204,7 +204,7 @@
     </section>
     <div
       :class="[
-        'fixed lg:translate-y-[150px] translate-y-[250px] bottom-0 left-0 w-full h-auto bg-white py-[30px] shadow-[1px_-5px_3px_#CED4DA] duration-1000',
+        'fixed lg:translate-y-[150px] z-[1000] translate-y-[250px] bottom-0 left-0 w-full h-auto bg-white py-[30px] shadow-[1px_-5px_3px_#CED4DA] duration-1000',
         { '!translate-y-0': barOpen }
       ]"
     >
@@ -253,7 +253,7 @@
 </template>
 
 <script setup lang="ts">
-import { getProductApi } from '@/api/hotel';
+import { getProductApi } from '~~/api/hotel';
 import { storeToRefs } from 'pinia';
 import { useStore } from '~~/store/index';
 import icon from '~~/utils/icon';
@@ -326,7 +326,8 @@ const reserveHotelInfo = reactive<ReserveHotelInfo>({
   date: {
     checkinTime: date.value.isoDate[0],
     checkoutTime: date.value.isoDate[1]
-  }
+  },
+  paid: 0
 });
 
 const openReserve = (productInfo: RoomType) => {
@@ -337,12 +338,13 @@ const openReserve = (productInfo: RoomType) => {
     checkinTime: date.value.isoDate[0],
     checkoutTime: date.value.isoDate[1]
   };
+  reserveHotelInfo.paid = reserveHotelInfo.roomTypeInfo.price * reserveHotelInfo.bookingNum;
 };
 
 const reserve = () => {
   setReserHotelInfo(reserveHotelInfo);
-  let path = token.value ? '/booking/reserveForm' : '/auth/login';
-  console.log(token.value, 'token token token');
+  let path = token.value ? '/Booking/Form' : '/Login';
+  // JSON.stringify(reserveHotelInfo)
   router.push(path);
 };
 

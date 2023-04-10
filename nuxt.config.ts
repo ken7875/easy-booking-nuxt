@@ -13,6 +13,16 @@ export default defineNuxtConfig({
     public: {
       apiBase: process.env.NODE_ENV === 'development' ? process.env.API_BASE_URL : process.env.API_BASE_URL_PROD
     }
+  },
+  nitro: {
+    storage: {
+      redis: {
+        driver: 'redis',
+        port: 6379, // Redis port
+        host: '127.0.0.1', // Redis host
+        db: 0 // Defaults to 0
+      }
+    }
   }
   // app: {
   //   baseURL: '/home/'

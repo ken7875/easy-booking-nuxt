@@ -1,3 +1,3 @@
 <template>
-  <div>Form</div>
+  <div>confirm</div>
 </template>

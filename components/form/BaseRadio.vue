@@ -19,7 +19,6 @@ interface Props {
   modelValue: string | number | boolean;
   error?: string;
   placeholder?: string;
-  options: any[];
   value: string | number | boolean;
 }
 

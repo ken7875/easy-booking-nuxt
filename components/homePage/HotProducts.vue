@@ -56,7 +56,7 @@
 <script setup lang="ts">
 import slider from '../slider/Slider.vue';
 import card from '../card/index.vue';
-import { getHotHotels } from '@/api/hotel';
+import { getHotHotels } from '~~/api/hotel';
 import { Hotel } from '~~/model/hotel';
 
 const {

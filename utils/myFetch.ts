@@ -11,9 +11,11 @@ interface Options {
   responseType?: 'blob' | 'json';
 }
 
-export default <T>(url: string, options: Options): Promise<T> => {
+export default <T>(url: string, options: Options, islocalServer = false): Promise<T> => {
+  const localServerUrl =
+    process.env.NODE_ENV === 'production' ? 'https://easy-booking-go.netlify.app/' : 'http://localhost:3000';
   const runtimeConfig = useRuntimeConfig();
-  const baseURL = runtimeConfig.public.apiBase;
+  const baseURL = !islocalServer ? runtimeConfig.public.apiBase : localServerUrl;
   const apiFetch = $fetch.create({ baseURL, responseType: options.responseType || 'json' });
   const authToken = tokenCookie.getTokenCookie();
   return apiFetch(url, {

@@ -46,6 +46,7 @@ export interface ReserveHotelInfo {
     checkinTime: Date;
     checkoutTime: Date;
   };
+  paid: number;
 }
 
 export interface Review {

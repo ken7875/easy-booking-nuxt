@@ -1,5 +1,5 @@
 <template>
-  <div class="flex items-center h-[calc(100vh-6.5rem)] bg-[url('/img/usa.jpg')] bg-center">
+  <div class="flex items-center h-[calc(100vh-6.5rem)] bg-[url('/img/usa.jpg')] bg-center lg:bg-none">
     <div class="lg:w-[60%] w-full h-full relative">
       <div
         v-for="item in carouselItem"
@@ -61,13 +61,13 @@ import Button from '~~/components/Button.vue';
 import { loginApi } from '~~/api/auth';
 import { LoginForm, UserInfo } from '~~/model/auth';
 import { useRouter } from 'vue-router';
-import { useStore } from '~~/store';
+import { useStore } from '~~/store/index';
 import { tokenCookie } from '~~/utils/cookies';
 import gsap from 'gsap';
 import type { ComponentPublicInstance } from 'vue';
 import { useField, useForm } from 'vee-validate';
 import { object } from 'yup';
-import { loginAcValidate, passwordValidate } from '@/utils/validate';
+import { loginAcValidate, passwordValidate } from '~~/utils/validate';
 
 const router = useRouter();
 
@@ -141,7 +141,7 @@ const login = async () => {
         userInfo
       });
 
-      router.push('/booking/reserveForm');
+      router.push('/Booking');
     } catch (error) {
       console.log(error);
     }

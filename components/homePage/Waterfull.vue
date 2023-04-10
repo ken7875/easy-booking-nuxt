@@ -88,7 +88,7 @@ const waterfullAnimation = (el: HTMLElement, rowIdx: number) => {
 const router = useRouter();
 
 const goProductsPage = throttle(() => {
-  router.push('/hotel/Hotels');
+  router.push('/Hotels');
 });
 
 onBeforeUnmount(() => {

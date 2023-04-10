@@ -76,7 +76,7 @@
                       <span class="leading-[1] text-[0.5rem]">每晚</span>
                       <p class="text-[0.8rem] my-[15px]">剩下x間空房</p>
                     </div>
-                    <router-link :to="`/hotel/Hotel-${hotel.id}`" class="button button__outline-primary"
+                    <router-link :to="`/Hotel-${hotel.id}`" class="button button__outline-primary"
                       >查看房間詳情</router-link
                     >
                   </div>
@@ -90,7 +90,7 @@
                   <p class="leading-[1] text-[0.5rem] text-end">每晚</p>
                 </div>
                 <p class="text-end text-[0.8rem] my-[15px]">剩下x間空房</p>
-                <router-link :to="`/hotel/Hotel-${hotel.id}`" class="button button__outline-primary"
+                <router-link :to="`/Hotel-${hotel.id}`" class="button button__outline-primary"
                   >查看房間詳情</router-link
                 >
               </div>
@@ -132,7 +132,7 @@ import FilterBarPc from '~~/components/filterTool/FilterBarPc.vue';
 import FilterBarMobile from '~~/components/filterTool/FilterBarMobile.vue';
 import gsap from 'gsap';
 import { AllHoteFilterObj } from '~~/model/hotel';
-import Loading from '@/components/Loading.vue';
+import Loading from '~~/components/Loading.vue';
 import type { Component } from 'vue';
 
 definePageMeta({

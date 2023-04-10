@@ -29,7 +29,7 @@
 <script setup lang="ts">
 // import { storeToRefs } from "pinia";
 // import { computed } from "vue";
-import { useModal } from '@/store/modal';
+import { useModal } from '~~/store/modal';
 
 const modalStore = useModal();
 const { toggleModal } = modalStore;

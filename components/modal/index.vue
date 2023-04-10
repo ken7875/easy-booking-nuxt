@@ -8,7 +8,7 @@
 <script setup lang="ts">
 import { onBeforeUnmount } from 'vue';
 import { storeToRefs } from 'pinia';
-import { useModal } from '@/store/modal';
+import { useModal } from '~~/store/modal';
 import FilterModal from '~~/components/filterTool/FilterModal.vue';
 import Leaflet from '~~/components/Leaflet.vue';
 import ViewPortsModal from '~~/components/hotelDetailPage/ViewPortsModal.vue';

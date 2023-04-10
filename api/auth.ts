@@ -1,4 +1,4 @@
-import myFetch from '@/utils/myFetch';
+import myFetch from '~~/utils/myFetch';
 import { LoginForm, UserInfo } from '~~/model/auth';
 
 interface loginResponse {

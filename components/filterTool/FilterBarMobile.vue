@@ -13,7 +13,7 @@
 </template>
 
 <script setup lang="ts">
-import { useStore } from '@/store/index';
+import { useStore } from '~~/store/index';
 
 const { isMobile, isTablet } = useDevice();
 

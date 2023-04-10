@@ -51,6 +51,16 @@ module.exports = {
       animation: {
         cardFadeInAnimate: 'cardFadeIn 0.5s ease-in-out both',
         changeBgMode: 'changeBgMode 0.5s'
+      },
+      container: {
+        center: true,
+        screens: {
+          sm: '600px',
+          md: '728px',
+          lg: '984px',
+          xl: '1140px',
+          '2xl': '1140px'
+        }
       }
     },
     perspectiveLevel: {
