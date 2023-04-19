@@ -11,7 +11,7 @@
         <NuxtLink class="text-white font-bold mr-5" to="/">註冊</NuxtLink>
       </li>
       <li>
-        <NuxtLink class="text-white font-bold mr-5" to="/hotel/Hotels">所有產品</NuxtLink>
+        <NuxtLink class="text-white font-bold mr-5" to="/Hotels">所有產品</NuxtLink>
       </li>
       <li>
         <NuxtLink class="text-white font-bold mr-5" to="/">關於我們</NuxtLink>

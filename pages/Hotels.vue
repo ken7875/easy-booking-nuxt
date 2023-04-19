@@ -108,12 +108,7 @@
     >
       <div class="close absolute top-[2%] right-[2%] z-[1000]" @click="toggleMap.closeMap">X</div>
       <client-only>
-        <LazyLeaflet
-          v-if="allHotels.length > 0"
-          :id="detailType.id || allHotels[0]?.id"
-          ref="leaflet"
-          class="z-[100]"
-        />
+        <LazyLeaflet v-if="mapData.markers.length > 0" class="z-[100]" />
       </client-only>
     </article>
   </div>
@@ -131,7 +126,7 @@ import SearchBar from '~~/components/searchBar/index.vue';
 import FilterBarPc from '~~/components/filterTool/FilterBarPc.vue';
 import FilterBarMobile from '~~/components/filterTool/FilterBarMobile.vue';
 import gsap from 'gsap';
-import { AllHoteFilterObj } from '~~/model/hotel';
+import { AllHoteFilterObj, Hotel } from '~~/model/hotel';
 import Loading from '~~/components/Loading.vue';
 import type { Component } from 'vue';
 
@@ -146,10 +141,15 @@ const pageData = reactive({
   limit: 10
 });
 
-const { useHotel } = useStore();
+const { useHotel, useLeaflet } = useStore();
+
 const hotelStore = useHotel();
 const { getAllHotels } = hotelStore;
-const { allHotels, allHotelMap, hotelFilterObj, hotelTotal, curHotelNum } = storeToRefs(hotelStore);
+const { allHotels, allHotelMap, hotelFilterObj, hotelTotal, curHotelNum, hotelsCoordinatesData } =
+  storeToRefs(hotelStore);
+
+const leafletStore = useLeaflet();
+const { setMarkers, setCenterMarker } = leafletStore;
 
 // 篩選條件改變需要初始的資料
 const resetFilterData = () => {
@@ -158,7 +158,6 @@ const resetFilterData = () => {
     allHotels: []
   });
 
-  console.log(pageData, 'pageData'); // 等等記得reset pageData
   pageData.page = 1;
   pageData.limit = 10;
 
@@ -275,24 +274,35 @@ const detailType = ref<detailType>({
   title: ''
 });
 
-const leaflet = ref();
+// 地圖需要資料
+interface MapData {
+  markers: number[][];
+}
+const mapData = reactive<MapData>({
+  markers: []
+});
 
 const checkProduct = (id: string, title?: keyof CurComp): void => {
-  console.log(id, allHotelMap.value, 'id allmap');
   if (title) {
     renderComp.value = curComp[title];
   }
+
   detailType.value = { id, title: title || '' };
+
   const [lat, lng] = [
     allHotelMap.value[id]?.locations?.coordinates[1],
     allHotelMap.value[id]?.locations?.coordinates[0]
   ];
 
-  leaflet.value?.triggerPopup([lat, lng]);
+  mapData.markers = hotelsCoordinatesData.value;
+  setMarkers(mapData.markers);
+  setCenterMarker([lat, lng]);
+
+  console.log(lat, lng, 'asdasd');
 };
 
 // 地圖開關動畫
-const { isMobile, isTablet, isDesktop } = useDevice();
+const { isMobile, isDesktop } = useDevice();
 
 interface ToggleMap {
   tl: GSAPTimeline | null;

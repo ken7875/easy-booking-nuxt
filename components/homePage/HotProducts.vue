@@ -9,11 +9,11 @@
       Hot Hotel
     </h3>
     <slider
-      :spacing="`ml-[calc(-25%*2.5)]`"
+      :spacing="`lg:ml-[calc(-25%*2.5)] ml-[calc(-400%+12px)]`"
       :data="hotHotelData?.data?.data"
-      :buttonWidth="'w-[calc(26%)]'"
-      :buttonPosition="'top-[50%] left-[50%] translate-x-[calc(-50%-12px)] translate-y-[-50%]'"
-      :slide-item-width="'flex-[25%_0_0]'"
+      :buttonWidth="'lg:w-[calc(26%)] w-full'"
+      :buttonPosition="'top-[50%] left-[50%] lg:translate-x-[calc(-50%-12px)] translate-x-[-50%] translate-y-[-50%]'"
+      :slide-item-width="'lg:flex-[25%_0_0] flex-[100%_0_0]'"
       class="h-[67%] absolute top-[60%] translate-y-[-50%]"
       @change="sliderChange"
     >

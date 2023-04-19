@@ -81,7 +81,7 @@ const loopData = computed(() => {
       });
     }
   }
-  console.log(result, 'result result result');
+
   return result;
 });
 
@@ -89,7 +89,6 @@ const curIdx = ref(0);
 
 const mountedData = computed(() => {
   const prevIdx = curIdx.value - 4;
-  console.log(prevIdx, 'prevIdx');
   const showData = loopData.value.slice(0, prevIdx);
   const result = loopData.value.slice(prevIdx).concat(showData);
 

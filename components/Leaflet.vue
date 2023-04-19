@@ -1,11 +1,5 @@
 <template>
-  <l-map
-    :useGlobalLeaflet="false"
-    v-model:zoom="mapInit.zoom"
-    :center="mapInit.coordinates"
-    ref="L"
-    class="h-full w-full"
-  >
+  <l-map :useGlobalLeaflet="false" v-model:zoom="mapInit.zoom" :center="marker" ref="L" class="h-full w-full">
     <l-tile-layer
       url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -22,48 +16,50 @@
 </template>
 
 <script setup lang="ts">
-import { storeToRefs } from 'pinia';
+// import { storeToRefs } from 'pinia';
 import { useStore } from '~~/store';
 import { LMap, LTileLayer, LMarker, LPopup } from '@vue-leaflet/vue-leaflet';
 import 'leaflet/dist/leaflet.css';
-import { Hotel } from '~~/model/hotel';
+import { storeToRefs } from 'pinia';
 
-const { useHotel } = useStore();
+const { useLeaflet } = useStore();
 
-const hotelStore = useHotel();
-const { allHotels, allHotelMap } = storeToRefs(hotelStore);
+const leafLetStore = useLeaflet();
+const { setCenterMarker } = leafLetStore;
+const { markers, marker } = storeToRefs(leafLetStore);
 
 const L = ref<any>(null);
 
 interface MapInit {
-  markers: any;
   zoom: number;
-  coordinates: number[];
+  // coordinates: number[];
 }
 
-interface Props {
-  id: string;
-}
+// interface Props {
+//   markers: any[];
+// }
 
-const props = defineProps<Props>();
+// const props = defineProps<Props>();
+// const { markers } = toRefs(props);
+
+// map center
+console.log(markers.value, 'markers.value');
+const [lat, lng] = [markers.value[0][0], markers.value[0][1]];
+setCenterMarker([lat, lng]);
 const mapInit = reactive<MapInit>({
-  markers: [],
-  zoom: 14,
-  coordinates: [
-    allHotelMap.value[props.id]?.locations?.coordinates[1],
-    allHotelMap.value[props.id]?.locations?.coordinates[0]
-  ]
+  zoom: 14
+  // coordinates: [lat, lng]
 });
 
-const markers = computed(() =>
-  allHotels.value.map((hotel: Hotel) => [hotel.locations.coordinates[1], hotel.locations.coordinates[0]])
-);
+// const markers = computed(() =>
+//   allHotels.value.map((hotel: Hotel) => [hotel.locations.coordinates[1], hotel.locations.coordinates[0]])
+// );
 
-const triggerPopup = (latlng: number[]) => {
-  mapInit.coordinates = latlng;
-};
+// const triggerPopup = (latlng: number[]) => {
+//   mapInit.coordinates = latlng;
+// };
 
-defineExpose({
-  triggerPopup
-});
+// defineExpose({
+//   triggerPopup
+// });
 </script>

@@ -2,23 +2,27 @@ import { defineStore } from 'pinia';
 import { Hotel } from '~~/model/hotel';
 
 interface State {
-  mapObj: any;
-  markers: any;
+  markers: number[][];
+  marker: number[];
   zoom: number;
-  coordinates: number[];
 }
 
 // const L = () => import('leaflet');
 export const useLeaflet = defineStore('leafletStore', {
   state: (): State => {
     return {
-      mapObj: {},
       markers: [],
-      zoom: 14,
-      coordinates: []
+      marker: [],
+      zoom: 14
     };
   },
   actions: {
+    setMarkers(markers: number[][]) {
+      this.markers = markers;
+    },
+    setCenterMarker(marker: number[]) {
+      this.marker = marker;
+    }
     // init() {
     //   // 地圖
     //   this.mapObj = L.map('map', {

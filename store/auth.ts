@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { tokenCookie } from '~~/utils/cookies';
+// import { tokenCookie } from '~~/utils/cookies';
 import { UserInfo } from '~~/model/auth';
 
 interface State {
@@ -9,10 +9,14 @@ interface State {
 
 export const useAuth = defineStore('auth', {
   state: (): State => ({
-    token: '',
+    token: useCookie<string | null>('easy-booking-token').value,
     userInfo: null
   }),
-  actions: {},
+  actions: {
+    logout() {
+      this.token = null;
+    }
+  },
   persist: {
     key: 'user-info',
     storage: process.client ? localStorage : undefined,

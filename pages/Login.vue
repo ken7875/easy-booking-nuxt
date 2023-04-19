@@ -134,7 +134,7 @@ const login = async () => {
       const userInfo = loginRes.data.user;
       const token = loginRes.token;
 
-      tokenCookie.setTokenCookie(token);
+      tokenCookie().setTokenCookie(token);
 
       authStore.$patch({
         token,

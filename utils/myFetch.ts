@@ -1,4 +1,4 @@
-import { tokenCookie } from './cookies';
+// import { tokenCookie } from './cookies';
 
 const store = () => import('~~/store/index');
 // const { useMessage } = useStore();
@@ -11,18 +11,20 @@ interface Options {
   responseType?: 'blob' | 'json';
 }
 
-export default <T>(url: string, options: Options, islocalServer = false): Promise<T> => {
-  const localServerUrl = process.env.NODE_ENV === 'production' ? '' : 'http://localhost:3000';
+export default <T>(url: string, options: Options): Promise<T> => {
   const runtimeConfig = useRuntimeConfig();
-  const baseURL = !islocalServer ? runtimeConfig.public.apiBase : localServerUrl;
+  const baseURL = runtimeConfig.public.apiBase;
   const apiFetch = $fetch.create({ baseURL, responseType: options.responseType || 'json' });
-  const authToken = tokenCookie.getTokenCookie();
+  const authToken = useCookie('easy-booking-token');
+  // console.log(tokenCookie().getTokenCookie(), 'asdjlkjaklsdjlaksdjlakjdlaksjd');
   return apiFetch(url, {
     ...options,
-    async onRequest({ options }) {
+    async onRequest({ request, options }) {
+      console.log(authToken, 'authtoken');
       if (authToken) {
-        options.headers = new Headers(options.headers);
-        options.headers.append('Authorization', authToken.value);
+        const headersInit: HeadersInit = {};
+        options.headers = headersInit;
+        options.headers.Authorization = `Bearer ${authToken.value}`;
       }
     },
     async onRequestError({ request, options, error }) {

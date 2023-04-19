@@ -9,18 +9,13 @@
       <div class="text-[2rem] absolute top-[3px] right-[10px]" @click="closePopoutFunc">
         <font-awesome-icon :icon="['fas', 'xmark']" />
       </div>
-      <div class="pt-[3.5rem]">
-        <!-- <TagGroup v-if="tags.length > 1" /> -->
-        <!-- <img
-          src="@/assets/images/modal/back.png"
-          class="backBtn"
-          v-show="goHomePage"
-          @click="goBack"
-        /> -->
-        <div class="text-center text-[1.5rem] font-bold mb-[2rem]">
+      <div class="pt-[2.5rem] h-full overflow-hidden">
+        <div class="text-center text-[1.5rem] font-bold mb-[1.5rem] h-[1.5rem]">
           <slot name="title" />
         </div>
-        <slot />
+        <div class="overflow-scroll h-[calc(100%-3rem)]">
+          <slot />
+        </div>
       </div>
     </div>
   </div>

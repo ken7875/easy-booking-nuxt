@@ -3,7 +3,7 @@ import { setActivePinia, createPinia } from 'pinia';
 import { shallowMount } from '@vue/test-utils';
 import { createTestingPinia } from '@pinia/testing';
 import flushPromises from 'flush-promises';
-import Hotels from '~~/pages/hotel/Hotels.vue';
+import Hotels from '~~/pages/Hotels.vue';
 import { useHotel } from '~~/store/hotel';
 import throttle from '~~/utils/throttle.ts';
 let wrapper;

@@ -19,5 +19,5 @@ export const email = string()
   .required('信箱為必填欄位');
 
 export const phone = string()
-  .matches(/^09\d{8}$/)
+  .matches(/^09\d{8}$/, '手機格式錯誤')
   .required('手機為必填欄位');

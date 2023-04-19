@@ -1,7 +1,6 @@
 <template>
   <div>
     <component :is="dyComp"></component>
-    <!-- <Declare v-if="curModal === 'Declare'" /> -->
   </div>
 </template>
 
@@ -10,8 +9,10 @@ import { onBeforeUnmount } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useModal } from '~~/store/modal';
 import FilterModal from '~~/components/filterTool/FilterModal.vue';
-import Leaflet from '~~/components/Leaflet.vue';
+import Leaflet from '~~/components/LeafletModal.vue';
 import ViewPortsModal from '~~/components/hotelDetailPage/ViewPortsModal.vue';
+import AirportPickUp from '~~/components/homePage/serviceModal/AirportPickUp.vue';
+import Hotels from '~~/components/homePage/serviceModal/Hotels.vue';
 
 import type { Component } from 'vue';
 
@@ -28,7 +29,9 @@ onBeforeUnmount(() => {
 const componentsList: Comp = {
   FilterModal,
   Leaflet,
-  ViewPortsModal
+  ViewPortsModal,
+  AirportPickUp,
+  Hotels
 };
 const dyComp = computed(() => componentsList[curModal.value] || null);
 </script>

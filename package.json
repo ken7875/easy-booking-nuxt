@@ -79,6 +79,7 @@
     "@vue-leaflet/vue-leaflet": "^0.8.4",
     "@vueuse/integrations": "^9.13.0",
     "autoprefixer": "^10.4.12",
+    "decimal.js": "^10.4.3",
     "flush-promises": "^1.0.2",
     "gsap": "^3.11.3",
     "jsdom": "^21.1.1",

@@ -111,6 +111,12 @@ export const useHotel = defineStore('hotelStore', {
       });
 
       return map;
+    },
+    hotelsCoordinatesData(): number[][] {
+      return this.allHotels.map((hotel: Hotel) => {
+        const [lat, lng] = [hotel.locations.coordinates[1], hotel.locations.coordinates[0]];
+        return [lat, lng];
+      });
     }
   }
 });

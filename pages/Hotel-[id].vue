@@ -1,86 +1,12 @@
 <template>
   <div>
     <section class="lg:w-[1140px] w-full mx-auto">
-      <div
-        v-if="isDesktop"
-        class="w-full grid grid-cols-5 auto-rows-auto gap-x-[15px] gap-y-[15px] h-[450px] my-[50px]"
-      >
-        <div
-          class="bg-center bg-cover bg-no-repeat col-[1_/_4] row-[1_/_5]"
-          :style="{ backgroundImage: `url(${hotelDetailData?.images[0]})` }"
-        ></div>
-        <div
-          class="bg-center bg-cover bg-no-repeat col-[4_/_6] row-[1_/_3]"
-          :style="{ backgroundImage: `url(${hotelDetailData?.images[1]})` }"
-        ></div>
-        <div
-          class="bg-center bg-cover bg-no-repeat col-[4_/_5] row-[3_/_4]"
-          :style="{ backgroundImage: `url(${hotelDetailData?.images[2]})` }"
-        ></div>
-        <div
-          class="bg-center bg-cover bg-no-repeat col-[5_/_6] row-[3_/_4]"
-          :style="{ backgroundImage: `url(${hotelDetailData?.images[3]})` }"
-        ></div>
-        <div
-          class="bg-center bg-cover bg-no-repeat col-[4_/_5] row-[4_/_5]"
-          :style="{ backgroundImage: `url(${hotelDetailData?.images[4]})` }"
-        ></div>
-        <div
-          class="bg-center bg-cover bg-no-repeat col-[5_/_6] row-[4_/_5] relative hover:pointer"
-          :style="{ backgroundImage: `url(${hotelDetailData?.images[5]})` }"
-        >
-          <div
-            class="flex items-center justify-center absolute top-0 left-0 bg-[rgba(0,0,0,0.3)] h-full w-full hover:cursor-pointer"
-          >
-            <p class="text-[1.25rem] text-white">查看更多</p>
-          </div>
-        </div>
-      </div>
-      <div class="overflow-hidden" v-else>
-        <Slider
-          :data="hotelDetailData?.images"
-          :slide-item-width="'flex-[calc(100%)_0_0]'"
-          :spacing="'ml-[-200%]'"
-          :buttonPosition="'top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]'"
-          :buttonWidth="'w-full'"
-          class="h-[250px]"
-        >
-          <template #swiperItem="{ slideItem, index }">
-            <img :src="slideItem.item" :alt="`${hotelDetailData?.name}${index}`" class="w-[100%] h-full" />
-            <!-- <p>{{ slideItem }} {{ index }}</p> -->
-          </template>
-        </Slider>
-      </div>
+      <ImageGroup :hotelDetailData="hotelDetailData || null" :height="'h-[450px]'" />
     </section>
     <section class="lg:w-[1140px] w-full mx-auto">
       <div class="w-full grid grid-cols-5 auto-rows-auto gap-x-[15px] gap-y-[15px]">
         <article class="lg:col-[1_/_4] col-[1_/_6] px-[20px] lg:px-0">
-          <div class="lg:flex lg:items-center">
-            <h2 class="mr-3 text-[2rem]">{{ hotelDetailData?.name }}</h2>
-            <div class="flex items-center">
-              <div
-                class="mr-[8px] h-[18px] bg-contain bg-[url('/img/star.png')]"
-                :style="{ width: `${hotelDetailData?.stars ? 18 * hotelDetailData?.stars : 0}px` }"
-              ></div>
-              <span>({{ hotelDetailData?.ratingAverage }})</span>
-            </div>
-          </div>
-          <span v-textSlice:[sliceNum]="hotelDetailData?.description"></span>
-          <span v-show="!isTextShow">...</span>
-          <span class="text-secondary ml-[5px] cursor-pointer" @click="seeMore">{{
-            !isTextShow ? '閱讀更多' : '隱藏內容'
-          }}</span>
-          <div class="border border-darkLight px-[15px] mt-[20px]">
-            <h3 class="text-[1.3rem] mb-[8px]">免費設施</h3>
-            <div class="flex flex-wrap">
-              <p v-for="(service, i) in hotelDetailData?.service" :key="i" class="mb-0 mr-[20px]">
-                <client-only>
-                  <font-awesome-icon :icon="icon(service)" class="mr-2" />
-                </client-only>
-                <span>{{ service }}</span>
-              </p>
-            </div>
-          </div>
+          <HotelInformation :hotelDetailData="hotelDetailData || null" />
           <template v-if="!isDesktop">
             <div class="mt-[20px] overflow-hidden">
               <h3 class="text-[1.3rem] mb-[8px]">所有評論</h3>
@@ -112,7 +38,6 @@
               <li class="flex-[1_1_0] text-center">照片</li>
               <li class="flex-[1_1_0] text-center">房型</li>
               <li class="flex-[1_1_0] text-center">人數</li>
-              <!-- TODO 新增幾晚價錢 -->
               <li class="flex-[1_1_0] text-center">價錢</li>
               <li class="flex-[1_1_0] text-center">訂房</li>
             </ul>
@@ -174,7 +99,13 @@
         <article class="col-[4_/_6] overflow-hidden" v-if="isDesktop">
           <Card>
             <template v-slot:header>
-              <div class="h-[30%]">
+              <div class="h-[30%] relative hover:scale-110 duration-300" @click="openModal('map')">
+                <div
+                  class="bg-[rgba(0,0,0,0.2)] w-full h-full absolute top-0 left-0 flex justify-center items-center cursor-pointer"
+                >
+                  <p class="text-[2rem] text-white">查看地圖</p>
+                </div>
+
                 <img src="/img/checkMap.png" alt="map" class="object-cover object-top w-full h-full" />
               </div>
             </template>
@@ -215,7 +146,7 @@
         </p>
         <div class="lg:flex lg:items-center w-full lg:w-fit">
           <div class="flex items-center justify-between">
-            <p class="mx-2">2 晚</p>
+            <p class="mx-2">{{ reserveHotelInfo.day }} 晚</p>
             <div class="mx-2 flex items-center">
               <Button
                 class="button__none"
@@ -266,6 +197,8 @@ import { useRouter, useRoute } from 'vue-router';
 import { Hotel } from '~~/model/Hotel';
 import Reviews from '~~/components/hotelDetailPage/Reviews.vue';
 import ViewPorts from '~~/components/hotelDetailPage/ViewPorts.vue';
+import ImageGroup from '~~/components/hotelDetailPage/ImageGroup.vue';
+import HotelInformation from '~~/components/hotelDetailPage/HotelInformation.vue';
 
 const device = useDevice();
 const { isDesktop } = device;
@@ -273,7 +206,7 @@ const { isDesktop } = device;
 const route = useRoute();
 const router = useRouter();
 
-const { useDatePicker, useBooking, useAuth, useModal } = useStore();
+const { useDatePicker, useBooking, useAuth, useModal, useLeaflet } = useStore();
 
 const datePickerStore = useDatePicker();
 const { date } = storeToRefs(datePickerStore);
@@ -286,13 +219,15 @@ const { token } = storeToRefs(authStore);
 
 const { toggleModal, modalType } = useModal();
 
+const leafletStore = useLeaflet();
+const { setCenterMarker, setMarkers } = leafletStore;
+
 const hotelId = ref<string>(route.params.id as string);
 const { data: hotelDetail, pending } = await useAsyncData('hotelDetail', () => getProductApi<Hotel>(hotelId.value), {
   initialCache: false
 });
 
 const hotelDetailData = ref(hotelDetail.value?.data?.data);
-const PeopleCounterInstance = ref();
 
 const showServiceId = ref({
   id: '',
@@ -309,6 +244,7 @@ const checkServiceHandler = (id: string) => {
 };
 
 const barOpen = ref(false);
+const dayTotal = (+new Date(date.value.isoDate[1]) - +new Date(date.value.isoDate[0])) / 86400 / 1000;
 const reserveHotelInfo = reactive<ReserveHotelInfo>({
   productId: '',
   bookingNum: 1,
@@ -323,6 +259,7 @@ const reserveHotelInfo = reactive<ReserveHotelInfo>({
     roomNum: 0,
     _id: ''
   },
+  day: dayTotal,
   date: {
     checkinTime: date.value.isoDate[0],
     checkoutTime: date.value.isoDate[1]
@@ -348,21 +285,13 @@ const reserve = () => {
   router.push(path);
 };
 
-const sliceNum = ref(315);
-const isTextShow = ref(false);
-const seeMore = () => {
-  isTextShow.value = !isTextShow.value;
-  if (isTextShow.value) {
-    sliceNum.value = hotelDetailData.value?.description?.toString()?.length as number;
-  } else {
-    sliceNum.value = 315;
-  }
-};
-
 const openModal = (type: string) => {
   toggleModal(true);
   if (type === 'map') {
+    const coordinates = hotelDetailData.value?.locations?.coordinates;
+    const [lng, lat] = coordinates!;
     modalType('Leaflet');
+    setMarkers([[lat, lng]]);
   } else if (type === 'viewPorts') {
     modalType('ViewPortsModal');
   }

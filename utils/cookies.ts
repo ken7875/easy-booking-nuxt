@@ -1,14 +1,18 @@
-import { useCookies } from '@vueuse/integrations/useCookies';
-
-const cookie = useCookies();
-
-// token
-export const tokenCookie = {
-  getTokenCookie: () => cookie.get('easy-booking-token'),
-  setTokenCookie: (token: string) => {
-    cookie.set('easy-booking-token', token);
+// import { useCookies } from '@vueuse/integrations/useCookies';
+// console.log(token, 'token');
+// // token
+export const tokenCookie = () => ({
+  token: useCookie<string | null>('easy-booking-token'),
+  getTokenCookie() {
+    console.log(this, 'this');
   },
-  removeTokenCookie: () => {
-    cookie.remove('easy-booking-token');
+  // return process.client ? cookie.get('easy-booking-token') : parseCookies();
+  setTokenCookie(payload: string) {
+    this.token.value = payload;
+  },
+  // process.client ? cookie.set('easy-booking-token', token) : setCookie();
+  removeTokenCookie() {
+    // cookie.remove('easy-booking-token');
+    this.token.value = null;
   }
-};
+});

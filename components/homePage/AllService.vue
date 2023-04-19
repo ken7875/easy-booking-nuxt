@@ -1,191 +1,124 @@
 <template>
   <section
-    class="w-[calc(4000px)] lg:h-[150vh] h-[100vh] bg-homeScrollImg relative bg-black overflow-hidden"
-    ref="scrollListWrapRef"
+    class="bg-homeScrollImg relative bg-black overflow-hidden grid lg:grid-cols-5 grid-cols-3 rows-auto p-[1px] w-full py-[20px]"
   >
     <div
-      class="bg-[#E033FF] rounded-[50%] w-[50vw] h-[50vw] blur-[2px] bgBlur absolute translate-x-[50%] translate-y-[25%]"
-    ></div>
-    <div
-      class="flex justify-center w-full lg:h-[350px] h-[250px] absolute lg:top-[6%] top-[35%] left-[-10%] rotate-[15deg] perspective-20"
-      ref="cardWrapRef1"
+      :class="[' ml-[-1px] relative']"
+      :style="isMobile ? { 'grid-column': `${i % 3}/${(i % 3) + 1}` } : { 'grid-column': `${i % 5}/${(i % 5) + 1}` }"
+      v-for="i in 15"
+      :key="i"
+      @click="openServiceDetail(randomImgPosition.indexOf(i))"
     >
-      <!-- :style="{
-          transform: `rotateY(${service.rotateY}) translate3d(${service.transform3d})`
-        }" -->
-      <!-- :class="[
-          'lg:w-[400px] lg:h-[350px] p-[16px] transform-3d translate-z-[500px]',
-          { '!w-[29rem]': idx === 5, '!w-[36rem]': idx === 6 }
-        ]" -->
-      <div v-for="(service, idx) in serviceAryLoop" :key="idx" class="lg:w-[400px] h-full p-[16px]">
-        <Cards :body-height="'h-full'">
-          <template #body>
-            <div
-              :class="[
-                service.img,
-                'bg-cover bg-center h-full w-full flex items-center px-[20px] relative before:bg-black before:opacity-[0.3] before:absolute before:w-full before:h-full before:top-0 before:left-0'
-              ]"
-            >
-              <div class="static z-10">
-                <p class="text-white text-[40px]">{{ service.title }}</p>
-                <p class="text-white">
-                  Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vel obcaecati error distinctio labore
-                  quibusdam nihil nulla placeat culpa deserunt ad?
-                </p>
-              </div>
-            </div>
-          </template>
-        </Cards>
+      <div v-border class="absolute top-0 left-0 w-full h-[0.5px] bg-white z-[2]"></div>
+      <div v-border class="absolute top-0 left-0 w-[1px] h-full bg-white z-[2]"></div>
+      <div class="flex">
+        <div class="w-[25px] h-[25px] relative">
+          <div v-border class="absolute bottom-0 left-0 w-full h-[0.5px] bg-white"></div>
+          <div v-border class="absolute top-0 right-0 w-[1px] h-full bg-white"></div>
+        </div>
+        <p class="text-white" v-if="randomImgPosition.indexOf(i) > -1">
+          {{ allServiceAry[randomImgPosition.indexOf(i)]?.title }}
+        </p>
       </div>
-    </div>
-    <div
-      class="flex justify-center w-full lg:h-[350px] h-[250px] absolute lg:top-[52%] top-[80%] left-[-10%] rotate-[15deg] perspective-20"
-      ref="cardWrapRef2"
-    >
-      <div v-for="(service, idx) in serviceAryLoop" :key="idx" class="lg:w-[400px] h-full p-[16px]">
-        <Cards :body-height="'h-full'">
-          <template #body>
-            <div
-              :class="[
-                service.img,
-                'bg-cover bg-center h-full w-full flex items-center px-[20px] relative before:bg-black before:opacity-[0.3] before:absolute before:w-full before:h-full before:top-0 before:left-0'
-              ]"
-            >
-              <div class="static z-10">
-                <p class="text-white text-[40px]">{{ service.title }}</p>
-                <p class="text-white">
-                  Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vel obcaecati error distinctio labore
-                  quibusdam nihil nulla placeat culpa deserunt ad?
-                </p>
-              </div>
-            </div>
-          </template>
-        </Cards>
+      <div class="w-[calc(100%-24px)] ml-[24px] h-[calc(100%-26px)] relative group overflow-hidden">
+        <div v-border class="absolute top-0 left-0 w-full h-[0.5px] bg-white z-[2]"></div>
+        <div v-border class="absolute top-0 left-0 w-[1px] h-full bg-white z-[2]"></div>
+        <img
+          :src="`/img/${allServiceAry[randomImgPosition.indexOf(i)]?.img}.jpg`"
+          alt=""
+          class="w-full h-full group-hover:scale-110 duration-300 z-[1]"
+          v-if="randomImgPosition.includes(i)"
+        />
+        <div
+          class="absolute top-0 left-0 w-full h-full group-hover:flex hidden justify-center items-center bg-[rgba(0,0,0,0.3)]"
+          v-if="randomImgPosition.indexOf(i) > -1"
+        >
+          <p class="lg:text-[1.8rem] text-[1rem] text-white">
+            {{
+              allServiceAry[randomImgPosition.indexOf(i)]?.modalName
+                ? allServiceAry[randomImgPosition.indexOf(i)]?.title
+                : '功能尚未開放'
+            }}
+          </p>
+        </div>
       </div>
+      <div
+        v-border
+        class="absolute bottom-0 left-0 w-full h-[0.5px] bg-white z-[2]"
+        v-if="isMobile ? i / 12 > 1 : i / 8 > 1"
+      ></div>
     </div>
-    <div
-      class="flex justify-center w-full lg:h-[350px] h-[250px] absolute lg:bottom-[-11%] bottom-[-30%] left-[-10%] rotate-[15deg] perspective-20"
-      ref="cardWrapRef3"
-    >
-      <div v-for="(service, idx) in serviceAryLoop" :key="idx" class="lg:w-[400px] h-full p-[16px]">
-        <Cards :body-height="'h-full'">
-          <template #body>
-            <div
-              :class="[
-                service.img,
-                'bg-cover bg-center h-full w-full flex items-center px-[20px] relative before:bg-black before:opacity-[0.3] before:absolute before:w-full before:h-full before:top-0 before:left-0'
-              ]"
-            >
-              <div class="static z-10">
-                <p class="text-white text-[40px]">{{ service.title }}</p>
-                <p class="text-white">
-                  Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vel obcaecati error distinctio labore
-                  quibusdam nihil nulla placeat culpa deserunt ad?
-                </p>
-              </div>
-            </div>
-          </template>
-        </Cards>
-      </div>
-    </div>
-    <div class="absolute top-0 left-0 w-full h-full bg-[#000] opacity-[0.5]"></div>
   </section>
 </template>
 
 <script setup lang="ts">
-import Cards from '~~/components/card/index.vue';
+import { useStore } from '~~/store/index';
 
+const { useModal, useMessage } = useStore();
+const modalStore = useModal();
+const msgStore = useMessage();
+
+const { isMobile } = useDevice();
+
+// 'B&B'
+// 'AirTicket'
+// 'AirTicketAndHotel'
+// 'Rent'
 const allServiceAry = ref([
   {
     title: '所有飯店',
-    img: 'bg-[url("/img/cars.jpg")]',
-    rotateY: '16deg',
-    transform3d: '238px, 0, 215px'
+    img: 'cars',
+    modalName: 'Hotels'
   },
   {
     title: '私人民宿',
-    img: 'bg-[url("/img/villa.jpg")]',
-    rotateY: '17deg',
-    // translateZ: '300px',
-    transform3d: '240px, 0, 90px'
+    img: 'villa',
+    modalName: null
   },
   {
     title: '機票',
-    img: 'bg-[url("/img/airplane.jpg")]',
-    rotateY: '-22deg',
-    // translateZ: '300px',
-    transform3d: '200px, 0, -7px'
+    img: 'airplane',
+    modalName: null
   },
   {
     title: '機票 + 酒店',
-    img: 'bg-[url("/img/airplaneAndHotel.jpg")]',
-    rotateY: '-75deg',
-    // translateZ: '300px',
-    transform3d: '305px, 0, 56px'
+    img: 'airplaneAndHotel',
+    modalName: null
   },
   {
     title: '月租住宿',
-    img: 'bg-[url("/img/monthlyRend.jpg")]',
-    rotateY: '8deg',
-    // translateZ: '300px',
-    transform3d: '280px, 0, 236px'
+    img: 'monthlyRend',
+    modalName: null
+  },
+  {
+    title: '機場接送',
+    img: 'monthlyRend',
+    modalName: 'AirportPickUp'
+  },
+  {
+    title: '優惠活動',
+    img: 'villa',
+    modalName: null
   }
 ]);
 
-const serviceAryLoop = computed(() => allServiceAry.value.concat(allServiceAry.value));
+const randomImgPosition = computed(() => [1, 3, 5, 7, 9, 11, 15]);
+const serviceModalType = ref('');
 
-// gsap animation
+const { modalType, toggleModal } = modalStore;
 
-let tl: GSAPTimeline | null = null;
-let tl2: GSAPTimeline | null = null;
+const { openMsg } = msgStore;
 
-const scrollListWrapRef = ref<HTMLElement | null>(null);
-const cardWrapRef1 = ref<HTMLElement | null>(null);
-const cardWrapRef2 = ref<HTMLElement | null>(null);
-const cardWrapRef3 = ref<HTMLElement | null>(null);
+const openServiceDetail = (idx: number) => {
+  if (allServiceAry.value[idx]?.modalName === null) {
+    openMsg({
+      content: '此功能尚未開放'
+    });
+    return;
+  }
+  serviceModalType.value = allServiceAry.value[idx]?.modalName as string;
 
-// 卡片水平移動
-const cardMoveAnimation = () => {
-  tl = useScrollAnimation({
-    // snap: 1 / countryListAry.length,
-    start: '-=15%',
-    end: '+=190%',
-    trigger: scrollListWrapRef.value,
-    scrub: 1
-  });
-
-  tl?.fromTo(cardWrapRef1.value, { x: 0 }, { x: -500 });
-  tl?.fromTo(cardWrapRef2.value, { x: -500 }, { x: 0 }, '<');
-  tl?.fromTo(cardWrapRef3.value, { x: 0 }, { x: -500 }, '<');
+  toggleModal(true);
+  modalType(serviceModalType.value);
 };
-// 卡片3d效果
-// let cardListAry = ref<HTMLElement[] | null>(null);
-
-// rotateY(12deg) translateZ(27px) 3
-// rotateY(7deg) translateZ(-35px) 4
-// rotateY(0deg) translateZ(-55px) 5
-
-// const card3dMove = () => {
-//   tl2 = gsap.timeline({
-//     scrollTrigger: {
-//       start: '-=15%',
-//       end: '+=150%',
-//       trigger: '',
-//       scrub: 1
-//     }
-//   });
-
-//   // cardListAry.forEach((el) => {
-//   //   tl2?.fromTo(el);
-//   // });
-// };
-
-onMounted(() => {
-  cardMoveAnimation();
-});
-
-onBeforeUnmount(() => {
-  tl?.kill();
-  tl = null;
-});
 </script>

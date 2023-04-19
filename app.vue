@@ -13,7 +13,7 @@ import Modal from './components/modal/index.vue';
 import Message from './components/Message.vue';
 import { useStore } from '~~/store/index';
 import { storeToRefs } from 'pinia';
-import { tokenCookie } from '~~/utils/cookies';
+// import { tokenCookie } from '~~/utils/cookies';
 
 useHead({
   link: [
@@ -33,7 +33,18 @@ const modalStore = useModal();
 const { isModalOpen } = storeToRefs(modalStore);
 const authStore = useAuth();
 authStore.$patch({
-  token: tokenCookie.getTokenCookie()
+  token: useCookie('easy-booking-token').value
+});
+
+const htmlDom = process.client ? document.querySelector('html') : null;
+watch(isModalOpen, (val) => {
+  if (htmlDom) {
+    if (val) {
+      htmlDom.style.overflow = 'hidden';
+    } else {
+      htmlDom.style.overflow = 'unset';
+    }
+  }
 });
 </script>
 
