@@ -8,7 +8,7 @@
     <FilterBarMobile @open-map="toggleMap.openMap.apply(toggleMap)" class="sticky top-[6.5rem] z-[2] h-[3rem]" />
     <article class="lg:w-[50%] w-full lg:px-[20px] relative">
       <div
-        class="flex z-[1] h-[70px] justify-center lg:justify-between sticky lg:top-[13rem] top-[6.5rem] left-0 self-start overflow-hidden bg-white py-[15px]"
+        class="flex z-[1] h-[70px] justify-center items-center lg:justify-between sticky lg:top-[13rem] top-[9.5rem] left-0 self-start overflow-hidden bg-white"
       >
         <p>找到的飯店總數:{{ hotelTotal }}</p>
         <button
@@ -74,7 +74,9 @@
                         >$ {{ hotel.price }}</span
                       >
                       <span class="leading-[1] text-[0.5rem]">每晚</span>
-                      <p class="text-[0.8rem] my-[15px]">剩下x間空房</p>
+                      <p class="text-[0.8rem] my-[15px]">
+                        剩下 <span class="text-primary">{{ calcRoomRemainNums(hotel.id) }}</span> 間空房
+                      </p>
                     </div>
                     <router-link :to="`/Hotel-${hotel.id}`" class="button button__outline-primary"
                       >查看房間詳情</router-link
@@ -126,7 +128,7 @@ import SearchBar from '~~/components/searchBar/index.vue';
 import FilterBarPc from '~~/components/filterTool/FilterBarPc.vue';
 import FilterBarMobile from '~~/components/filterTool/FilterBarMobile.vue';
 import gsap from 'gsap';
-import { AllHoteFilterObj, Hotel } from '~~/model/hotel';
+import { AllHoteFilterObj, RoomType } from '~~/model/hotel';
 import Loading from '~~/components/Loading.vue';
 import type { Component } from 'vue';
 
@@ -210,6 +212,13 @@ watch(
   }
 );
 
+// 計算房間剩餘數量
+const calcRoomRemainNums = (id: string) => {
+  return allHotelMap.value[id].roomType.reduce((acc, cur) => {
+    return (acc += cur.remainRoom);
+  }, 0);
+};
+
 const removeScrollListener = () => {
   window.removeEventListener('scroll', throttleScroll);
   htmlDom = null;
@@ -278,6 +287,7 @@ const detailType = ref<detailType>({
 interface MapData {
   markers: number[][];
 }
+
 const mapData = reactive<MapData>({
   markers: []
 });

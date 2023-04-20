@@ -1,11 +1,21 @@
 <template>
-  <div class="w-full flex justify-between items-center h-[6.5rem] px-5 bg-black">
+  <div class="w-full flex justify-between items-center h-[6.5rem] px-5 bg-black relative">
     <h2 class="text-[1.5rem] text-white font-[900] mx-auto lg:mx-0">
       <NuxtLink to="/">
         <span class="block text-white text-center lg:text-left">Easy</span>
         <span class="block text-white">Booking</span>
       </NuxtLink>
     </h2>
+    <div
+      class="block lg:hidden absolute top-[50%] right-[5%] translate-y-[-50%] w-[50px] h-[50px] overflow-hidden rounded-[50%]"
+      v-if="token"
+      @click="toggleMenuHandler(true)"
+    >
+      <img :src="(avatar as string)" alt="avatar" />
+      <div class="absolute bottom-0 left-0 w-full bg-[rgba(0,0,0,0.7)]">
+        <p class="text-white text-[0.8rem] text-center">點我</p>
+      </div>
+    </div>
     <ul class="hidden md:flex items-center">
       <li
         v-if="token"
@@ -22,12 +32,6 @@
       <li v-else>
         <NuxtLink to="/login" class="text-white font-bold mr-5">登入</NuxtLink>
         <NuxtLink class="text-white font-bold mr-5" to="/">註冊</NuxtLink>
-      </li>
-      <li>
-        <NuxtLink class="text-white font-bold mr-5" to="/Hotels">所有產品</NuxtLink>
-      </li>
-      <li>
-        <NuxtLink class="text-white font-bold mr-5" to="/">關於我們</NuxtLink>
       </li>
     </ul>
     <ToggleMenu @closeMenu="toggleMenuHandler" v-if="toggleMenu"></ToggleMenu>

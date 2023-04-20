@@ -49,6 +49,12 @@
           </div>
           <div class="border-b-2 border-white w-0 lg:group-hover:w-full duration-300 origin-left"></div>
         </li>
+        <li class="group text-white text-[2.5rem] lg:mb-[40px] mb-[30px] overflow-hidden">
+          <div v-surface>
+            <NuxtLink class="text-white font-bold mr-5" to="/Hotels">所有產品</NuxtLink>
+          </div>
+          <div class="border-b-2 border-white w-0 lg:group-hover:w-full duration-300 origin-left"></div>
+        </li>
       </ul>
     </li>
   </ul>
