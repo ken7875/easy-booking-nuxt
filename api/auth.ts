@@ -8,13 +8,14 @@ interface loginResponse {
     user: UserInfo;
   };
 }
+
 export const loginApi = (body: LoginForm): Promise<loginResponse> =>
   myFetch<loginResponse>('/user/login', {
     method: 'POST',
     body
   });
 
-export const getAvatarApi = (id: string) =>
+export const getAvatarApi = (id: string): Promise<Blob> =>
   myFetch(`/user/avatar/${id}`, {
     method: 'GET',
     responseType: 'blob'

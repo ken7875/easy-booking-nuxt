@@ -9,7 +9,7 @@
           <h1
             class="logo absolute z-20 lg:top-[50%] lg:left-[15%] lg:translate-x-0 lg:translate-y-0 left-[50%] top-[25%] translate-x-[-50%] translate-y-[-50%] text-2xl font-bold"
           >
-            <p class="text-white">Easy</p>
+            <p class="text-white text-center lg:text-left">Easy</p>
             <p class="text-white">Booking</p>
           </h1>
         </div>

@@ -53,10 +53,12 @@
 
 <script setup lang="ts">
 import { useStore } from '~~/store/index';
+import { storeToRefs } from 'pinia';
 
-const { useModal, useMessage } = useStore();
+const { useModal, useMessage, useAuth } = useStore();
 const modalStore = useModal();
 const msgStore = useMessage();
+const authStore = useAuth();
 
 const { isMobile } = useDevice();
 
@@ -68,37 +70,44 @@ const allServiceAry = ref([
   {
     title: '所有飯店',
     img: 'cars',
-    modalName: 'Hotels'
+    modalName: 'Hotels',
+    auth: false
   },
   {
     title: '私人民宿',
     img: 'villa',
-    modalName: null
+    modalName: null,
+    auth: false
   },
   {
     title: '機票',
     img: 'airplane',
-    modalName: null
+    modalName: null,
+    auth: true
   },
   {
     title: '機票 + 酒店',
     img: 'airplaneAndHotel',
-    modalName: null
+    modalName: null,
+    auth: true
   },
   {
     title: '月租住宿',
     img: 'monthlyRend',
-    modalName: null
+    modalName: null,
+    auth: false
   },
   {
     title: '機場接送',
     img: 'monthlyRend',
-    modalName: 'AirportPickUp'
+    modalName: 'AirportPickUp',
+    auth: true
   },
   {
     title: '優惠活動',
     img: 'villa',
-    modalName: null
+    modalName: null,
+    auth: false
   }
 ]);
 
@@ -109,10 +118,18 @@ const { modalType, toggleModal } = modalStore;
 
 const { openMsg } = msgStore;
 
+const { token } = storeToRefs(authStore);
+
 const openServiceDetail = (idx: number) => {
   if (allServiceAry.value[idx]?.modalName === null) {
     openMsg({
       content: '此功能尚未開放'
+    });
+    return;
+  }
+  if (allServiceAry.value[idx]?.auth && !token.value) {
+    openMsg({
+      content: '請先登入'
     });
     return;
   }

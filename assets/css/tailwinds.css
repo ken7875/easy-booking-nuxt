@@ -60,7 +60,7 @@
       @apply bg-secondary border border-secondary text-white bg-secondary;
     }
     &__outline-primary{
-      @apply bg-transparent text-primary hover:bg-primary hover:text-white;
+      @apply bg-transparent text-primary hover:bg-primary hover:text-white border border-primary;
     }
     &__outline-darkLight{
       @apply bg-transparent text-black hover:bg-[#dee2e6]
@@ -71,7 +71,7 @@
     &__none{
       @apply bg-transparent border-0 text-black;
     }
-    /* &__outline-danger{s
+    /* &__outline-danger{
       @include button(transparent) {
         border: 1px solid $danger;
         color: $danger;
