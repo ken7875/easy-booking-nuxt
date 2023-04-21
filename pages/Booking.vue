@@ -10,11 +10,14 @@ import ProgressBar from '~~/components/bookingPage/ProgressBar.vue';
 import { useRoute } from 'vue-router';
 
 definePageMeta({
-  middleware: defineNuxtRouteMiddleware((to) => {
-    if (to.path === '/Booking') {
-      return navigateTo('/Booking/Form');
-    }
-  })
+  middleware: [
+    function (to) {
+      if (to.path === '/Booking') {
+        return navigateTo('/Booking/Form');
+      }
+    },
+    'auth'
+  ]
 });
 
 const route = useRoute();

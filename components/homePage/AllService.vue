@@ -120,6 +120,8 @@ const { openMsg } = msgStore;
 
 const { token } = storeToRefs(authStore);
 
+const router = useRouter();
+
 const openServiceDetail = (idx: number) => {
   if (allServiceAry.value[idx]?.modalName === null) {
     openMsg({
@@ -130,6 +132,8 @@ const openServiceDetail = (idx: number) => {
   if (allServiceAry.value[idx]?.auth && !token.value) {
     openMsg({
       content: '請先登入'
+    }).then(() => {
+      router.push('/Login');
     });
     return;
   }

@@ -59,10 +59,10 @@ import BaseInput from '~~/components/form/BaseInput.vue';
 import Button from '~~/components/Button.vue';
 // import BaseCheckbox from '~~/components/form/BaseCheckbox.vue';
 import { loginApi } from '~~/api/auth';
-import { LoginForm, UserInfo } from '~~/model/auth';
 import { useRouter } from 'vue-router';
 import { useStore } from '~~/store/index';
-import { tokenCookie } from '~~/utils/cookies';
+import { storeToRefs } from 'pinia';
+import { tokenCookie, userIdCookie } from '~~/utils/cookies';
 import gsap from 'gsap';
 import type { ComponentPublicInstance } from 'vue';
 import { useField, useForm } from 'vee-validate';
@@ -111,8 +111,12 @@ const carouselItem = [
 
 const remember = ref(false);
 
-const { useAuth } = useStore();
+const { useAuth, useBooking } = useStore();
 const authStore = useAuth();
+const { setUserInfo } = authStore;
+
+const bookingStore = useBooking();
+const { reserveHotelInfo } = storeToRefs(bookingStore);
 
 const validationSchema = object({
   account: loginAcValidate,
@@ -135,13 +139,14 @@ const login = async () => {
       const token = loginRes.token;
 
       tokenCookie().setTokenCookie(token);
+      userIdCookie().setUserIdCookie(userInfo.id);
 
-      authStore.$patch({
-        token,
-        userInfo
-      });
+      setUserInfo({ token, userInfo });
 
-      router.push('/Booking');
+      const path = reserveHotelInfo.value.productId ? '/Booking' : '/';
+      console.log(reserveHotelInfo.value.productId, 'path');
+
+      router.push(path);
     } catch (error) {
       console.log(error);
     }
