@@ -1,6 +1,10 @@
 <template>
   <div>
-    <h2 class="font-bold lg:text-[2rem] text-[1.8rem] text-center my-[25px]">我的訂單</h2>
+    <h2
+      class="font-bold lg:text-[2rem] text-[1.8rem] h-[5rem] sticky top-[6.5rem] bg-white left-0 flex items-center justify-center"
+    >
+      我的訂單
+    </h2>
     <div class="lg:container flex items-top px-[20px] lg:px-0">
       <ul class="mx-auto lg:w-[50%] w-full">
         <li v-for="order in ordersList" :key="order._id" class="mb-[20px]">
@@ -70,13 +74,13 @@
         </li>
       </ul>
       <div
-        class="lg:w-[65%] lg:h-full w-full h-[80vh] lg:ml-[15px] pb-[20px] shadow-[2px_2px_2px_2px_rgba(0,0,0,0.2)] lg:relative fixed top-[57%] left-[50%] lg:top-0 lg:left-0 translate-x-[-50%] translate-y-[-50%] lg:translate-x-0 lg:translate-y-0 bg-white"
+        class="lg:w-[65%] lg:h-[calc(100vh-12rem)] w-full h-[84%] lg:ml-[15px] pb-[10px] shadow-[2px_2px_2px_2px_rgba(0,0,0,0.2)] lg:sticky lg:top-[11.5rem] lg:left-0 lg:translate-x-0 lg:translate-y-0 fixed top-[45%] left-[50%] translate-x-[-50%] translate-y-[calc(-50%+6.5rem)] bg-white"
         v-if="isHotelDetailOpen"
       >
         <client-only>
           <font-awesome-icon
             :icon="['fas', 'circle-xmark']"
-            class="absolute top-[-4%] right-[-1%] z-[1000] text-[1.5rem]"
+            class="absolute top-[-2%] right-0 z-[1000] text-[1.5rem]"
             @click="isHotelDetailOpen = false"
           />
         </client-only>

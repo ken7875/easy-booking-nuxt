@@ -1,8 +1,12 @@
 <template>
   <div>
-    <h2 class="font-bold lg:text-[2rem] text-[1.8rem] text-center my-[25px]">我的訂單</h2>
+    <h2
+      class="font-bold lg:text-[2rem] text-[1.8rem] h-[5rem] sticky top-[6.5rem] text-center bg-white flex justify-center items-center"
+    >
+      我的訂單
+    </h2>
     <div class="lg:container flex items-top px-[20px] lg:px-0">
-      <ul class="mx-auto lg:w-[50%] h-[68vh] w-full overflow-x-scroll">
+      <ul class="mx-auto lg:w-[50%] h-full w-full">
         <Suspense>
           <li v-for="pickUp in pickUpList" :key="pickUp._id" class="mb-[20px]">
             <Card class="px-[20px]">
@@ -51,7 +55,7 @@
         </Suspense>
       </ul>
       <div
-        class="lg:w-[65%] w-full h-auto lg:ml-[15px] pb-[20px] shadow-[2px_2px_2px_2px_rgba(0,0,0,0.2)] lg:relative fixed top-[57%] left-[50%] lg:top-0 lg:left-0 translate-x-[-50%] translate-y-[-50%] lg:translate-x-0 lg:translate-y-0 bg-white"
+        class="lg:w-[65%] w-full lg:h-[calc(100vh-12rem)] h-full lg:ml-[15px] pb-[20px] shadow-[2px_2px_2px_2px_rgba(0,0,0,0.2)] fixed top-[57%] left-[50%] translate-x-[-50%] translate-y-[-50%] lg:sticky lg:top-[11.5rem] lg:left-0 lg:translate-x-0 lg:translate-y-0 bg-white"
         v-if="isMapOpen"
       >
         <client-only>

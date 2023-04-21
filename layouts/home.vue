@@ -3,7 +3,7 @@
     <header class="nav fixed top-0 left-0 opacity-0 z-[110] w-full">
       <Navbar />
     </header>
-    <div class="navbar w-full h-screen bg-black mb-[130vh] z-[120] overflow-x-hidden">
+    <div class="navbar w-full h-screen bg-black mb-[130vh] z-[100] overflow-x-hidden">
       <div class="h-full grid grid-cols-8">
         <div class="lg:col-span-3 col-span-full h-full">
           <h1
