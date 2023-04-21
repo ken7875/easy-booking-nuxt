@@ -1,7 +1,6 @@
 <template>
   <div>
     <h2 class="font-bold lg:text-[2rem] text-[1.8rem] text-center my-[25px]">我的訂單</h2>
-    <p v-if="pending">loading...</p>
     <div class="lg:container flex items-top px-[20px] lg:px-0">
       <ul class="mx-auto lg:w-[50%] w-full">
         <li v-for="order in ordersList" :key="order._id" class="mb-[20px]">
@@ -109,11 +108,15 @@ import ImageGroup from '~~/components/hotelDetailPage/ImageGroup.vue';
 import HotelInformation from '~~/components/hotelDetailPage/HotelInformation.vue';
 import Loading from '~~/components/Loading.vue';
 
+definePageMeta({
+  middleware: 'auth'
+});
+
 const { useAuth } = useStore();
 const authStore = useAuth();
 const { userInfo } = storeToRefs(authStore);
 
-const { data: ordersData, pending } = await useAsyncData('ordersList', () => getOrdersApi<OrderDetail[]>(), {
+const { data: ordersData } = await useAsyncData('ordersList', () => getOrdersApi<OrderDetail[]>(), {
   initialCache: false,
   lazy: true
 });

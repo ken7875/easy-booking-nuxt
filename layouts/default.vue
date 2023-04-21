@@ -6,7 +6,6 @@
     <main class="h-fit">
       <slot />
     </main>
-    <footer v-show="!showFooter">456</footer>
   </div>
 </template>
 

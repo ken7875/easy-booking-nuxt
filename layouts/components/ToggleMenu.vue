@@ -55,6 +55,12 @@
           </div>
           <div class="border-b-2 border-white w-0 lg:group-hover:w-full duration-300 origin-left"></div>
         </li>
+        <li class="group text-white text-[2.5rem] lg:mb-[40px] mb-[30px] overflow-hidden">
+          <div v-surface>
+            <p class="text-white font-bold mr-5" @click="logout">登出</p>
+          </div>
+          <div class="border-b-2 border-white w-0 lg:group-hover:w-full duration-300 origin-left"></div>
+        </li>
       </ul>
     </li>
   </ul>
@@ -62,6 +68,10 @@
 
 <script setup lang="ts">
 import gsap from 'gsap';
+import { useStore } from '~~/store/index';
+
+const { useAuth } = useStore();
+const { logout } = useAuth();
 
 const title = ref('Easy Booking');
 

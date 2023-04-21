@@ -1,4 +1,4 @@
-// import { tokenCookie } from './cookies';
+import { tokenCookie } from './cookies';
 
 const store = () => import('~~/store/index');
 // const { useMessage } = useStore();
@@ -15,7 +15,7 @@ export default <T>(url: string, options: Options): Promise<T> => {
   const runtimeConfig = useRuntimeConfig();
   const baseURL = runtimeConfig.public.apiBase;
   const apiFetch = $fetch.create({ baseURL, responseType: options.responseType || 'json' });
-  const authToken = useCookie('easy-booking-token');
+  const authToken = tokenCookie().getTokenCookie();
   // console.log(tokenCookie().getTokenCookie(), 'asdjlkjaklsdjlaksdjlakjdlaksjd');
   return apiFetch(url, {
     ...options,

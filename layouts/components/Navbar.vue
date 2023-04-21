@@ -6,28 +6,28 @@
         <span class="block text-white">Booking</span>
       </NuxtLink>
     </h2>
-    <div
-      class="block lg:hidden absolute top-[50%] right-[5%] translate-y-[-50%] w-[50px] h-[50px] overflow-hidden rounded-[50%]"
-      v-if="token"
-      @click="toggleMenuHandler(true)"
-    >
-      <img :src="(avatar as string)" alt="avatar" />
-      <div class="absolute bottom-0 left-0 w-full bg-[rgba(0,0,0,0.7)]">
-        <p class="text-white text-[0.8rem] text-center">點我</p>
-      </div>
-    </div>
-    <ul class="hidden md:flex items-center">
-      <li
+    <div class="flex items-center lg:hidden absolute top-[50%] right-[5%] translate-y-[-50%]">
+      <div
+        class="relative w-[50px] h-[50px] overflow-hidden rounded-[50%] mr-[8px]"
         v-if="token"
         @click="toggleMenuHandler(true)"
-        class="w-[50px] h-[50px] overflow-hidden rounded-[50%] mr-[10px] cursor-pointer"
       >
-        <div class="relative">
+        <img :src="(avatar as string)" alt="avatar" />
+        <div class="absolute bottom-0 left-0 w-full bg-[rgba(0,0,0,0.7)]">
+          <p class="text-white text-[0.8rem] text-center">點我</p>
+        </div>
+      </div>
+      <p class="text-white">{{ userInfo?.name }}</p>
+    </div>
+    <ul class="hidden md:flex items-center">
+      <li v-if="token" @click="toggleMenuHandler(true)" class="flex items-center">
+        <div class="relative w-[50px] h-[50px] overflow-hidden rounded-[50%] cursor-pointer mr-[10px]">
           <img :src="(avatar as string)" alt="avatar" />
           <div class="absolute bottom-0 left-0 w-full bg-[rgba(0,0,0,0.7)]">
             <p class="text-white text-[0.8rem] text-center">點我</p>
           </div>
         </div>
+        <p class="text-white mr-[10px]">{{ userInfo?.name }}</p>
       </li>
       <li v-else>
         <NuxtLink to="/login" class="text-white font-bold mr-5">登入</NuxtLink>
