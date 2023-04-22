@@ -1,30 +1,28 @@
 <template>
-  <div>
-    <label :for="label">{{ label }}</label>
-    <select
-      :id="label"
-      class="input"
-      :value="modelValue"
-      v-bind="{
+  <label :for="label">{{ label }}</label>
+  <select
+    :id="label"
+    class="input"
+    :value="modelValue"
+    v-bind="{
         ...$attrs,
         onChange: ($event) => $emit('update:modelValue', ($event.target as HTMLInputElement)?.value)
       }"
+  >
+    <!-- JSON.stringify(option.value) === JSON.stringify(modelValue) -->
+    <option value="" disabled :selected="!modelValue" class="text-gray bg-white" v-if="defaultOption">
+      {{ defaultOption }}
+    </option>
+    <option
+      :value="option.value ? option.value : option.content"
+      v-for="(option, i) in options"
+      :key="i"
+      :selected="modelValue?.toString() === (option.value ? option.value?.toString() : option.content?.toString())"
     >
-      <!-- JSON.stringify(option.value) === JSON.stringify(modelValue) -->
-      <option value="" disabled :selected="!modelValue" class="text-gray bg-white" v-if="defaultOption">
-        {{ defaultOption }}
-      </option>
-      <option
-        :value="option.value ? option.value : option.content"
-        v-for="(option, i) in options"
-        :key="i"
-        :selected="modelValue?.toString() === (option.value ? option.value?.toString() : option.content?.toString())"
-      >
-        <template v-for="content in option.content" :key="content">{{ content }}</template>
-      </option>
-    </select>
-    <p v-if="error" class="error">{{ error }}</p>
-  </div>
+      <template v-for="content in option.content" :key="content">{{ content }}</template>
+    </option>
+  </select>
+  <p v-if="error" class="error">{{ error }}</p>
 </template>
 
 <script setup lang="ts">

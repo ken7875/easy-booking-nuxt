@@ -130,7 +130,7 @@ const { handleSubmit, errors } = useForm({
 const { value: account } = useField<string>('account', undefined, { initialValue: '' });
 const { value: password } = useField<string>('password', undefined, { initialValue: '' });
 
-const login = async () => {
+const login = () => {
   handleSubmit(async (values) => {
     console.log(values);
     try {

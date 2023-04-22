@@ -33,33 +33,81 @@
       <ul class="lg:block">
         <li class="group text-white text-[2.5rem] lg:mb-[40px] mb-[30px] overflow-hidden">
           <div v-surface>
-            <NuxtLink to="/OrderList">房間訂單</NuxtLink>
+            <NuxtLink
+              to="/OrderList"
+              :class="{ 'cursor-default': $route.path === '/OrderList' }"
+              @click="$emit('closeMenu', false)"
+              >房間訂單</NuxtLink
+            >
           </div>
-          <div class="border-b-2 border-white w-0 lg:group-hover:w-full duration-300 origin-left"></div>
+          <div
+            :class="[
+              'border-b-2 border-white w-0 duration-300 origin-left',
+              { 'group-hover:w-full': $route.path !== '/OrderList' }
+            ]"
+          ></div>
         </li>
         <li class="group text-white text-[2.5rem] lg:mb-[40px] mb-[30px] overflow-hidden">
           <div v-surface>
-            <NuxtLink to="/PickUpOrder">乘車訂單</NuxtLink>
+            <NuxtLink
+              to="/PickUpOrder"
+              :class="{ 'cursor-default': $route.path === '/PickUpOrder' }"
+              @click="$emit('closeMenu', false)"
+              >乘車訂單</NuxtLink
+            >
           </div>
-          <div class="border-b-2 border-white w-0 lg:group-hover:w-full duration-300 origin-left"></div>
+          <div
+            :class="[
+              'border-b-2 border-white w-0 duration-300 origin-left',
+              { 'group-hover:w-full': $route.path !== '/PickUpOrder' }
+            ]"
+          ></div>
         </li>
         <li class="group text-white text-[2.5rem] lg:mb-[40px] mb-[30px] overflow-hidden">
           <div v-surface>
-            <NuxtLink to="/">個人資訊</NuxtLink>
+            <NuxtLink
+              to="/UserInfo"
+              :class="{ 'cursor-default': $route.path === '/UserInfo' }"
+              @click="$emit('closeMenu', false)"
+              >個人資訊</NuxtLink
+            >
           </div>
-          <div class="border-b-2 border-white w-0 lg:group-hover:w-full duration-300 origin-left"></div>
+          <div
+            :class="[
+              'border-b-2 border-white w-0 duration-300 origin-left',
+              { 'group-hover:w-full': $route.path !== '/UserInfo' }
+            ]"
+          ></div>
         </li>
         <li class="group text-white text-[2.5rem] lg:mb-[40px] mb-[30px] overflow-hidden">
           <div v-surface>
-            <NuxtLink class="text-white font-bold mr-5" to="/Hotels">所有產品</NuxtLink>
+            <NuxtLink
+              to="/Hotels"
+              :class="['text-white font-bold mr-5', { 'cursor-default': $route.path === '/Hotels' }]"
+              @click="$emit('closeMenu', false)"
+              >所有產品</NuxtLink
+            >
           </div>
-          <div class="border-b-2 border-white w-0 lg:group-hover:w-full duration-300 origin-left"></div>
+          <div
+            :class="[
+              'border-b-2 border-white w-0 duration-300 origin-left',
+              { 'group-hover:w-full': $route.path !== '/Hotels' }
+            ]"
+          ></div>
         </li>
         <li class="group text-white text-[2.5rem] lg:mb-[40px] mb-[30px] overflow-hidden">
           <div v-surface>
-            <p class="text-white font-bold mr-5" @click="logout">登出</p>
+            <p
+              class="text-white font-bold mr-5 cursor-pointer"
+              @click="
+                logout();
+                $emit('closeMenu', false);
+              "
+            >
+              登出
+            </p>
           </div>
-          <div class="border-b-2 border-white w-0 lg:group-hover:w-full duration-300 origin-left"></div>
+          <div class="border-b-2 border-white w-0 duration-300 origin-left group-hover:w-full"></div>
         </li>
       </ul>
     </li>

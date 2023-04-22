@@ -1,17 +1,13 @@
 <template>
-  <label :for="label">{{ label }}</label>
-  <div v-bind="$attrs" class="flex items-center">
-    <input
-      :value="modelValue"
-      :class="['w-full input h-[2.5rem]', { isError: error }]"
-      @input="$emit('update:modelValue', ($event.target as HTMLInputElement)?.value)"
-      :placeholder="placeholder"
-    />
-    <Button @click="buttonEvent" v-if="buttonText" class="w-[20%] ml-[15px] h-[2.5rem]" type="button">{{
-      buttonText
-    }}</Button>
-  </div>
-  <p v-if="error" class="text-red-500 font-bold">{{ error }}</p>
+  <label :for="label" :class="{ block: blockLabel }">{{ label }}</label>
+  <input
+    v-bind="$attrs"
+    :value="modelValue"
+    :class="['w-full input h-[2.5rem]', { isError: error }]"
+    @input="$emit('update:modelValue', ($event.target as HTMLInputElement)?.value)"
+    :placeholder="placeholder"
+  />
+  <p v-if="error" class="text-red-500 font-bold mt-[20px]">{{ error }}</p>
 </template>
 
 <script lang="ts">
@@ -28,16 +24,18 @@ interface Props {
   modelValue: string | number;
   error?: string;
   placeholder?: string;
-  buttonText?: string;
+  blockLabel?: boolean;
 }
 
-defineProps<Props>();
+withDefaults(defineProps<Props>(), {
+  blockLabel: false
+});
 
-const emit = defineEmits(['update:modelValue', 'buttonEvent']);
+// const emit = defineEmits(['update:modelValue', 'buttonEvent']);
 
-const buttonEvent = () => {
-  emit('buttonEvent');
-};
+// const buttonEvent = () => {
+//   emit('buttonEvent');
+// };
 // import BaseErrorMsg from './BaseErrorMsg';
 // export default {
 //   inheritAttrs: false,

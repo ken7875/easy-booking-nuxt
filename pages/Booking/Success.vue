@@ -8,7 +8,7 @@
     <Lottery class="mx-auto mb-[100px]" />
     <div class="flex justify-between">
       <router-link to="/order" class="button button__primary">查看訂單</router-link>
-      <router-link to="/products" class="button button__primary">回首頁</router-link>
+      <router-link to="/" class="button button__primary">回首頁</router-link>
     </div>
   </div>
 </template>

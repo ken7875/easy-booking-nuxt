@@ -120,10 +120,10 @@
               placeholder="請填入您的優惠碼"
               type="text"
               :error="errors.coupon"
-              class="w-full"
-              :buttonEvent="getCoupon"
-              :button-text="'輸入'"
+              :blockLabel="true"
+              class="w-[80%]"
             />
+            <Button class="button button__secondary w-[20%] inline-block" @click="getCoupon">輸入</Button>
           </div>
           <fieldset class="mb-[20px]">
             <legend>是否為商務旅遊</legend>
@@ -196,19 +196,23 @@ const { value: phone } = useField('phone', undefined, { initialValue: '' });
 const { value: isBusiness } = useField('isBusiness', undefined, { initialValue: false });
 const { value: asking } = useField('asking', undefined, { initialValue: '' });
 
-const submit = handleSubmit(() => {
-  const form = {
-    lastName: lastName.value,
-    firstName: firstName.value,
-    email: email.value,
-    coupon: coupon.value,
-    phone: phone.value,
-    isBusiness: isBusiness.value,
-    asking: asking.value
-  };
+const submit = handleSubmit(async () => {
+  try {
+    const form = {
+      lastName: lastName.value,
+      firstName: firstName.value,
+      email: email.value,
+      coupon: coupon.value,
+      phone: phone.value,
+      isBusiness: isBusiness.value,
+      asking: asking.value
+    };
 
-  setBookingForm(form);
-  router.push('/booking/confirm');
+    await setBookingForm(form);
+    router.push('/booking/confirm');
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 const getCoupon = () => {

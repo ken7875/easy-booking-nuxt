@@ -3,7 +3,7 @@
     <h2
       class="font-bold lg:text-[2rem] text-[1.8rem] h-[5rem] sticky top-[6.5rem] bg-white left-0 flex items-center justify-center"
     >
-      我的訂單
+      飯店訂單
     </h2>
     <div class="lg:container flex items-top px-[20px] lg:px-0">
       <ul class="mx-auto lg:w-[50%] w-full">

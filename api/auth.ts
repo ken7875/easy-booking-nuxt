@@ -1,5 +1,6 @@
 import myFetch from '~~/utils/myFetch';
 import { LoginForm, UserInfo } from '~~/model/auth';
+import { BaseResponse } from '~~/model/api';
 
 interface loginResponse {
   status: string;
@@ -21,7 +22,16 @@ export const getAvatarApi = (id: string): Promise<Blob> =>
     responseType: 'blob'
   });
 
-export const getUserApi = () =>
+export const getUserApi = (): Promise<BaseResponse<UserInfo>> =>
   myFetch('/user/me', {
     method: 'GET'
+  });
+
+export const updateUserApi = (
+  id: string,
+  body: Pick<UserInfo, 'gender' | 'address' | 'country' | 'phone'>
+): Promise<BaseResponse<UserInfo>> =>
+  myFetch(`/user/${id}`, {
+    method: 'PATCH',
+    body
   });

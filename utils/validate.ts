@@ -21,3 +21,11 @@ export const email = string()
 export const phone = string()
   .matches(/^09\d{8}$/, '手機格式錯誤')
   .required('手機為必填欄位');
+
+export const userName = string().min(5).required();
+
+export const gender = string().required();
+
+export const country = string().required();
+
+export const address = string().required();
