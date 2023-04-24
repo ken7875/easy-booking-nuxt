@@ -120,12 +120,11 @@ const { useAuth } = useStore();
 const authStore = useAuth();
 const { userInfo } = storeToRefs(authStore);
 
-const { data: ordersData } = await useAsyncData('ordersList', () => getOrdersApi<OrderDetail[]>(), {
+const { data: ordersData, error } = await useAsyncData('ordersList', () => getOrdersApi<OrderDetail[]>(), {
   initialCache: false,
   lazy: true
 });
 
-console.log(ordersData.value, 'jdaskldjalsdj');
 const ordersList = ref(ordersData.value?.data?.data);
 
 const deleteOrder = (id: string) => {

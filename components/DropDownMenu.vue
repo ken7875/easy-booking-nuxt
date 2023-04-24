@@ -2,7 +2,7 @@
   <div class="relative dropdownWrap" @click="openOption = true">
     <slot name="trigger" />
     <div
-      class="bg-white py-[20px] px-[15px] absolute top-[115%] left-0 z-[10] shadow-[3px_3px_15px_#CED4DA]"
+      class="bg-white py-[20px] px-[15px] absolute top-[115%] left-0 translate-x-[-50%] lg:translate-x-0 z-[10] shadow-[3px_3px_15px_#CED4DA]"
       v-show="openOption"
     >
       <slot name="dropDownList" />

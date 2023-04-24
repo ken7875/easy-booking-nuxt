@@ -20,8 +20,7 @@ export default <T>(url: string, options: Options): Promise<T> => {
   return apiFetch(url, {
     ...options,
     async onRequest({ request, options }) {
-      console.log(authToken, 'authtoken');
-      if (authToken) {
+      if (authToken.value) {
         const headersInit: HeadersInit = {};
         options.headers = headersInit;
         options.headers.Authorization = `Bearer ${authToken.value}`;
@@ -39,7 +38,7 @@ export default <T>(url: string, options: Options): Promise<T> => {
       store().then((res) => {
         const store = res.useStore();
         const { openMsg } = store.useMessage();
-
+        console.log(response._data, 'sadasdasds');
         openMsg({
           title: '錯誤',
           content: response._data?.message

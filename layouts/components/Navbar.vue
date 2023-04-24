@@ -43,6 +43,7 @@ import { useStore } from '~~/store/index';
 import { storeToRefs } from 'pinia';
 import { getAvatarApi } from '~~/api/auth';
 import ToggleMenu from './ToggleMenu.vue';
+import { userIdCookie } from '~~/utils/cookies';
 
 const { useAuth } = useStore();
 const authStore = useAuth();
@@ -51,8 +52,14 @@ const { token, userInfo } = storeToRefs(authStore);
 
 const avatar = ref<string | ArrayBuffer | null>('');
 
+const id = userIdCookie().getUserIdCookie();
+
 const getAvatar = async () => {
-  const file = await getAvatarApi(userInfo.value?.id as string);
+  if (!id.value) {
+    return;
+  }
+
+  const file = await getAvatarApi(id.value);
   const reader = new FileReader();
   reader.readAsDataURL(file);
   reader.onload = () => {

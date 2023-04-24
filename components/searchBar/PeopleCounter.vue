@@ -14,7 +14,7 @@
       </div>
     </template>
     <template #dropDownList>
-      <ul class="w-[250px]">
+      <ul class="lg:w-[250px] w-[320px]">
         <li class="flex justify-between items-center mb-[50px]" v-for="(item, i) in optionListDomArray" :key="i">
           <p class="nowrap">{{ item }}</p>
           <div class="flex items-center justify-between w-[70%]">

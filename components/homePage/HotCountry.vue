@@ -65,11 +65,13 @@
           <li
             v-for="(country, idx) in hotCountryMap"
             :key="idx"
-            class="lg:w-[8%] w-full px-[20px] lg:relative lg:mr-[8%] lg:even:top-[6vw] mb-[80px]"
+            class="lg:w-[8%] w-full px-[20px] lg:relative lg:mr-[8%] lg:even:top-[16%] 2xl:even:top-[30%] mb-[80px]"
             ref="countryList"
           >
             <div
-              :class="['lg:absolute lg:w-[30vw] w-full z-10 rounded-[16px] duration-300 lg:translate-x-[50px] flex']"
+              :class="[
+                '2xl:w-full lg:absolute lg:w-[30vw] w-full z-10 rounded-[16px] duration-300 lg:translate-x-[50px] flex'
+              ]"
             >
               <h3 class="text-[3.5rem] mr-[10px] font-bold self-end">{{ country.name }}</h3>
               <p class="text-[1.2rem]">{{ country.description }}</p>
@@ -83,7 +85,6 @@
 
 <script setup lang="ts">
 import { Hotel } from '~~/model/hotel';
-import throttle from '~~/utils/throttle';
 import gsap from 'gsap';
 
 // interface HotCountry {

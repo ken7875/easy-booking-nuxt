@@ -18,7 +18,7 @@
     <div
       class="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] z-[-1] w-[98%] h-[10px] border-2 border-black"
     >
-      <div class="duration-[2000ms] h-[7px] bg-[#00DD00]"></div>
+      <div class="h-[7px] bg-[#00DD00]" :style="{ width: `${finishBarWidth}%` }"></div>
     </div>
   </div>
 </template>

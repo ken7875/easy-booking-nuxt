@@ -143,6 +143,7 @@ const chooseServiceArray = ref<string[]>([]);
 // const emit = defineEmits(['updateProducts']);
 
 const updateProducts = throttle((value: any, type: string) => {
+  console.log(type, value);
   filterHandler(type, value);
 
   // emit('updateProducts', true);

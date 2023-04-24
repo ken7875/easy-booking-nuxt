@@ -1,17 +1,24 @@
 <template>
   <div class="w-[350px] border border-black shadow-[2px_2px_2px_2px_rgba(0,0,0,0.2)]">
-    <div class="datePicker-head">
+    <div class="text-center py-[20px] px-0 flex jusitfy-center items-center">
       <button
         :class="[
           'adjust bg-transparent border-0 p-0 text-[1.25rem]',
-          adjustBtn === 'prev' ? 'mr-[15px]' : 'order-2 ml-[15px]'
+          adjustBtn === 'prev' ? 'ml-[15px]' : 'order-2 mr-[15px]'
         ]"
         @click.prevent="emit('adjustDate', adjustBtn)"
       >
         <font-awesome-icon :icon="['fa-solid', 'angle-left']" v-if="props.adjustBtn === 'prev'" />
         <font-awesome-icon :icon="['fa-solid', 'angle-right']" v-else />
       </button>
-      <p>{{ `${calendarDateProps.year}年${calendarDateProps.month + 1}月` }}</p>
+      <p class="mx-auto">{{ `${calendarDateProps.year}年${calendarDateProps.month + 1}月` }}</p>
+      <!-- 此為手機板型next按鈕 -->
+      <button
+        :class="['adjust bg-transparent border-0 p-0 text-[1.25rem] block lg:hidden mr-[15px]']"
+        @click.prevent="emit('adjustDate', 'next')"
+      >
+        <font-awesome-icon :icon="['fa-solid', 'angle-right']" />
+      </button>
     </div>
     <div class="flex">
       <p v-for="date in dates" :key="date" class="grow text-center">{{ date }}</p>
@@ -20,8 +27,12 @@
       <div
         v-for="(date, idx) in renderDate"
         :key="idx"
-        @click="getDateRange(date)"
-        class="flex-[2_2_14.2%] px-[10px] py-[10px] text-center cursor-pointer"
+        @click="getDateRange(date, idx)"
+        :class="[
+          'flex-[2_2_14.2%] px-[10px] py-[10px] text-center cursor-pointer',
+          { 'bg-secondary-light': +dateData.isoDate[0] < +date.fdate && +dateData.isoDate[1] > +date.fdate },
+          { 'bg-secondary': +dateData.isoDate[0] === +date.fdate || +dateData.isoDate[1] === +date.fdate }
+        ]"
       >
         {{ date.date }}
       </div>
@@ -33,10 +44,15 @@
 import { ref, computed } from 'vue';
 import { useStore } from '~~/store/index';
 import { DateType } from './type';
+import { storeToRefs } from 'pinia';
+
+const device = useDevice();
+const { isMobileOrTablet } = device;
 
 const { useDatePicker } = useStore();
 const datePickerStore = useDatePicker();
 const { getDate } = datePickerStore;
+const { date: dateData } = storeToRefs(datePickerStore);
 
 interface Props {
   adjustBtn: string;
@@ -53,8 +69,8 @@ const dates = ref(['日', '一', '二', '三', '四', '五', '六']);
 
 // 每個月的第一天
 const firstDay = computed(() => {
-  const mDate = new Date(calendarDateProps.value.year, calendarDateProps.value.month, 1);
-  const date = new Date(calendarDateProps.value.year, calendarDateProps.value.month, 1 - mDate.getDay());
+  const mDate = new Date(calendarDateProps.value.year, calendarDateProps.value.month, 1, 0, 0, 0);
+  const date = new Date(calendarDateProps.value.year, calendarDateProps.value.month, 1 - mDate.getDay(), 0, 0, 0);
 
   return {
     year: date.getFullYear(),
@@ -69,7 +85,7 @@ type RenderDate = DateType & { fdate: Date };
 const renderDate = computed<RenderDate[]>(() => {
   const allDate = [];
   for (let i = 0; i < 42; i++) {
-    const date = new Date(firstDay.value.year, firstDay.value.month, firstDay.value.date + i);
+    const date = new Date(firstDay.value.year, firstDay.value.month, firstDay.value.date + i, 0, 0, 0);
     allDate.push({
       year: date.getFullYear(),
       month: date.getMonth(),
@@ -87,7 +103,7 @@ const emit = defineEmits<{
   (e: 'update:dateOrder', dateOrderReverse: string): void;
 }>();
 
-const getDateRange = (date: RenderDate) => {
+const getDateRange = (date: RenderDate, idx: number) => {
   const dateOrderReverse = dateOrder.value === 'from' ? 'to' : 'from';
   emit('update:dateOrder', dateOrderReverse);
   getDate({

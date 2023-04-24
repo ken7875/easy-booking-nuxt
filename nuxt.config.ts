@@ -23,6 +23,11 @@ export default defineNuxtConfig({
         db: 0 // Defaults to 0
       }
     }
+  },
+  vite: {
+    esbuild: {
+      pure: process.env.NODE_ENV === 'production' ? ['console.log', 'debugger'] : []
+    }
   }
   // app: {
   //   baseURL: '/home/'

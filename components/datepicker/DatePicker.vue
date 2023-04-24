@@ -1,10 +1,16 @@
 <template>
-  <div class="border border-[#dee2e6] lg:rounded-[8px] rounded-none bg-white">
+  <div class="border border-[#dee2e6] lg:rounded-[8px] rounded-none bg-white z-[50]">
     <div class="flex border-1 border-[#dee2e6] h-full w-full">
-      <div class="dateInput border-r border-[#dee2e6]" @click="openCalendarHandler('from')">
+      <div
+        :class="['dateInput border-r border-[#dee2e6]', { 'bg-darkLight': dateOrder === 'from' && openCalendar }]"
+        @click="openCalendarHandler('from')"
+      >
         <p v-timeFormat="showDateRange.star"></p>
       </div>
-      <div class="dateInput" @click="openCalendarHandler('to')">
+      <div
+        :class="['dateInput', { 'bg-darkLight': dateOrder === 'to' && openCalendar }]"
+        @click="openCalendarHandler('to')"
+      >
         <p v-timeFormat="showDateRange.end"></p>
       </div>
     </div>
@@ -12,7 +18,7 @@
       <!-- 三角形指標 -->
       <div
         :class="[
-          'w-0 absolute top-[-3%] duration-300 ease-linear border-l-[11px] border-l-transparent border-r-[11px] border-r-transparent border-b-[11px] border-b-[#000]',
+          'lg:block hidden w-0 absolute top-[-3%] duration-300 ease-linear border-l-[11px] border-l-transparent border-r-[11px] border-r-transparent border-b-[11px] border-b-[#000]',
           dateOrder === 'from' ? 'lg:left-[10%] left-[5%]' : 'lg:left-[35%] left-[20%]'
         ]"
       ></div>
@@ -27,6 +33,7 @@
         v-model:dateOrder="dateOrder"
         adjustBtn="next"
         @adjustDate="adjustDate"
+        v-if="isDesktop"
       />
     </div>
   </div>
@@ -38,6 +45,9 @@ import { ref, watch, reactive, nextTick } from 'vue';
 import Panel from './DatePanel.vue';
 import { useStore } from '~~/store/index';
 import { storeToRefs } from 'pinia';
+
+const device = useDevice();
+const { isDesktop } = device;
 
 const { useDatePicker } = useStore();
 const datePickerStore = useDatePicker();

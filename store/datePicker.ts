@@ -14,10 +14,17 @@ interface DateParams {
 
 export const useDatePicker = defineStore('datePicker', {
   state: (): State => {
+    const defaultStartDate = new Date();
+    defaultStartDate.setHours(0, 0, 0, 0);
+
+    const defaultEndDate = new Date();
+    defaultEndDate.setDate(new Date().getDate() + 1);
+    defaultEndDate.setHours(0, 0, 0, 0);
+
     return {
       date: {
         // 傳給後端的時間格式
-        isoDate: [new Date(), new Date(new Date().setDate(new Date().getDate() + 1))],
+        isoDate: [defaultStartDate, defaultEndDate],
         openCalendar: false
       }
     };

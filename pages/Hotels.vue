@@ -182,11 +182,13 @@ const isHotelApiLoading = ref(false);
 // 取得所有飯店api
 const getAllHotelsHandler = async (resetData: boolean, filterObj: AllHoteFilterObj) => {
   if (resetData) {
+    // 更新篩選條件時需要讓page回到第一頁
     resetFilterData();
   }
 
   isHotelApiLoading.value = true;
 
+  console.log(filterObj, 'filterObj');
   await getAllHotels(filterObj);
 
   isHotelApiLoading.value = false;

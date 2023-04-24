@@ -5,7 +5,7 @@
         <p>篩選條件</p>
       </template>
       <template #default>
-        <div class="flex-[1_1_0%] pr-[10px] h-full mb-[40px] border-y border-[#E6EAEA] px-[1.5rem] py-[10px]">
+        <div class="pr-[10px] mb-[40px] border-y border-[#E6EAEA] px-[1.5rem] py-[10px]">
           <p class="mb-[20px]">價格範圍</p>
           <RangeSlider
             @updateProducts="updateProducts($event, 'price')"
@@ -13,9 +13,7 @@
             :min="hotelFilterObj['price[gte]']!"
           />
         </div>
-        <div
-          class="flex-[1_1_0%] h-full flex items-center justify-between mb-[40px] border-y border-[#E6EAEA] px-[1.5rem] py-[10px]"
-        >
+        <div class="flex items-center justify-between mb-[40px] border-y border-[#E6EAEA] px-[1.5rem] py-[10px]">
           <div class="w-[50%] border-r border-[#E6EAEA]">
             <p class="mb-[20px]">評分</p>
             <BaseSelect
@@ -35,7 +33,7 @@
             />
           </div>
         </div>
-        <div class="filter-item flex-[1_1_0%] h-full flex items-center border-y border-[#E6EAEA] px-[1.5rem] py-[10px]">
+        <div class="filter-item flex items-center border-y border-[#E6EAEA] px-[1.5rem] py-[10px]">
           <div class="w-full">
             <p class="mb-[20px]">其他條件</p>
             <DropDownMenu>
