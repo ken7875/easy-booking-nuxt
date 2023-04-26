@@ -1,5 +1,5 @@
 import myFetch from '~~/utils/myFetch';
-import { LoginForm, UserInfo } from '~~/model/auth';
+import { LoginForm, UserInfo, SignUpInfo } from '~~/model/auth';
 import { BaseResponse } from '~~/model/api';
 
 interface loginResponse {
@@ -12,6 +12,12 @@ interface loginResponse {
 
 export const loginApi = (body: LoginForm): Promise<loginResponse> =>
   myFetch<loginResponse>('/user/login', {
+    method: 'POST',
+    body
+  });
+
+export const signUpApi = (body: SignUpInfo): Promise<SignUpInfo> =>
+  myFetch<SignUpInfo>('/user/signup', {
     method: 'POST',
     body
   });

@@ -1,7 +1,8 @@
 import { defineStore } from 'pinia';
-// import { tokenCookie } from '~~/utils/cookies';
-import { UserInfo } from '~~/model/auth';
+import { UserInfo, LoginForm } from '~~/model/auth';
 import { tokenCookie, userIdCookie } from '~~/utils/cookies';
+import { loginApi } from '~~/api/auth';
+
 interface State {
   token: string | null;
   userInfo: UserInfo | null;
@@ -13,6 +14,16 @@ export const useAuth = defineStore('auth', {
     userInfo: null
   }),
   actions: {
+    async login({ account, password }: LoginForm) {
+      const loginRes = await loginApi({ account, password });
+      const userInfo = loginRes.data.user;
+      const token = loginRes.token;
+
+      tokenCookie().setItem(token);
+      userIdCookie().setItem(userInfo.id);
+
+      this.setUserInfo({ token, userInfo });
+    },
     setUserInfo({ token, userInfo }: { token: string; userInfo: UserInfo }) {
       this.token = token;
       this.userInfo = { ...userInfo };
@@ -23,8 +34,8 @@ export const useAuth = defineStore('auth', {
       if (process.client) {
         localStorage.removeItem('user-info');
       }
-      tokenCookie().removeTokenCookie();
-      userIdCookie().removeUserIdCookie();
+      tokenCookie().removeItem();
+      userIdCookie().removeItem();
     }
   },
   persist: {

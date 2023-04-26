@@ -1,3 +1,5 @@
+import svgLoader from 'vite-svg-loader';
+
 // https://v3.nuxtjs.org/api/configuration/nuxt.config
 export default defineNuxtConfig({
   buildModules: ['@pinia/nuxt'],
@@ -27,7 +29,8 @@ export default defineNuxtConfig({
   vite: {
     esbuild: {
       pure: process.env.NODE_ENV === 'production' ? ['console.log', 'debugger'] : []
-    }
+    },
+    plugins: [svgLoader({ defaultImport: 'url' })]
   }
   // app: {
   //   baseURL: '/home/'

@@ -154,6 +154,7 @@ import icon from '~~/utils/icon';
 import { useField, useForm } from 'vee-validate';
 import * as validate from '~~/utils/validate';
 import Button from '~~/components/Button.vue';
+import { object } from 'yup';
 
 const router = useRouter();
 
@@ -173,12 +174,12 @@ const initialValues = {
   asking: bookingForm.value?.asking ?? ''
 };
 
-const validationSchema = {
+const validationSchema = object({
   lastName: validate.lastName,
   firstName: validate.firstName,
   email: validate.email,
   phone: validate.phone
-};
+});
 
 // 表單驗證
 const formValidate = useForm({

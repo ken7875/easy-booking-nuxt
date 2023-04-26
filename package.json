@@ -90,6 +90,7 @@
     "universal-cookie": "^4.0.4",
     "unplugin-auto-import": "^0.15.1",
     "vee-validate": "^4.8.4",
+    "vite-svg-loader": "^4.0.0",
     "vue-jest": "^3.0.7",
     "yup": "^1.0.2"
   }

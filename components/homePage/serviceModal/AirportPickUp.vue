@@ -52,6 +52,7 @@ import { Hotel } from '~~/model/hotel';
 import { storeToRefs } from 'pinia';
 import calcDistance from '~~/utils/calcDistance';
 import { Decimal } from 'decimal.js';
+import { object } from 'yup';
 
 const { useMessage, useHotel, useLeaflet } = useStore();
 
@@ -61,10 +62,10 @@ const { allHotels } = storeToRefs(hotelStore);
 const leafletStore = useLeaflet();
 const { setMarkers, setCenterMarker } = leafletStore;
 
-const validationSchema = {
+const validationSchema = object({
   airport: string().required(),
   hotel: string().required()
-};
+});
 
 const formValidate = useForm({
   validationSchema

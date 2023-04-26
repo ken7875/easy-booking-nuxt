@@ -67,7 +67,7 @@
                       </li>
                       <li class="flex items-center justify-center flex-[1_1_0]">
                         <client-only>
-                          <font-awesome-icon icon="user-large" class="me-1" v-for="i in type.person" :key="i" />
+                          <font-awesome-icon icon="user-large" class="mr-1" v-for="i in type.person" :key="i" />
                         </client-only>
                         <!-- <font-awesome-icon icon="user-large" class="ms-1 text-sm-sm" v-for="i in type.person.child" :key="i"/> -->
                       </li>

@@ -15,7 +15,11 @@
       <div class="h-[0.5px] w-full bg-black" v-border></div>
     </div>
     <div class="flex lg:h-[calc(100%-4.5rem)] h-auto pt-[1.5rem]">
+      <airplaneSvg class="airplaneSvg w-[100px] h-[100px] translate-x-[-5%]" />
       <div class="w-[20%] h-full hidden md:block">
+        <!-- <client-only>
+          <airplaneSvg />
+        </client-only> -->
         <ul class="flex flex-col justify-between h-full">
           <li
             class="group hover:scale-[1.2] transition-transform duration-500 lg:text-[2.5rem] text-[1.5rem] lg:px-[3rem] px-[0.8rem] whitespace-nowrap cursor-pointer menuList"
@@ -86,14 +90,11 @@
 <script setup lang="ts">
 import { Hotel } from '~~/model/hotel';
 import gsap from 'gsap';
-
-// interface HotCountry {
-//   id: number;
-//   name: string;
-//   products: Hotel[];
-//   description: string;
-//   img: string;
-// }
+import { CSSPlugin } from 'gsap-trial/CSSPlugin';
+import { MotionPathPlugin } from 'gsap/MotionPathPlugin';
+import airplaneSvg from '~~/assets/svg/airplane.svg?component';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { duration } from 'moment';
 
 type HotCountry = Pick<Hotel, 'name' | 'description' | 'images'> & { id: number };
 
@@ -169,9 +170,6 @@ let tl3: GSAPTimeline | null = null; // 卡片橫移
 let scrollWrap = ref<HTMLElement | null>(null);
 let countryList = ref(null);
 
-let frontCard = ref<HTMLElement[] | null>(null);
-let backCard = ref<HTMLElement[] | null>(null);
-
 const { isDesktop, isMobile } = useDevice();
 // 橫向移動動畫
 const horizatialScrollAnimation = () => {
@@ -223,9 +221,77 @@ const mobileScrollAnimation = () => {
   tl2?.fromTo(countryListAry[5], { scale: 0 }, { scale: 1 });
 };
 
+// 飛機動畫
+gsap.registerPlugin(MotionPathPlugin);
+gsap.registerPlugin(ScrollTrigger);
+
+let airplaneTl;
+let airplaneScrollTl;
+
+const airplaneSvgDom = ref<HTMLElement | null>(null);
+const AirplaneAnimation = () => {
+  let countryListAry: HTMLElement[] = gsap.utils.toArray(countryList.value); // 國家卡片
+  let endPos = (scrollWrap.value?.offsetWidth as number) || 100; // 水平捲動結束位置
+  let end = `+=${endPos}`;
+
+  airplaneTl = gsap.timeline();
+
+  const airplanePath = {
+    duration: 10,
+    repeat: 12,
+    repeatDelay: 3,
+    ease: 'power1.inOut',
+    motionPath: {
+      autoRotate: true,
+      path: [
+        { x: 100, y: 20 },
+        { x: 300, y: 100 },
+        { x: 500, y: 180 },
+        { x: 750, y: 10 },
+        { x: 350, y: 0 },
+        { x: 600, y: 150 },
+        { x: 800, y: 50 },
+        { x: window.innerWidth, y: 100 }
+      ]
+    }
+    // motionPath:{
+    //   path: "#path",
+    //   align: "#path",
+    //   autoRotate: true,
+    //   alignOrigin: [0.5, 0.5]
+    // }
+  };
+
+  airplaneScrollTl = useScrollAnimation({
+    pin: true,
+    // snap: 1 / countryListAry.length,
+    start: '0%',
+    end,
+    trigger: scrollWrap.value,
+    scrub: 1
+  });
+
+  airplaneScrollTl?.to('.airplaneSvg', {
+    motionPath: {
+      autoRotate: true,
+      path: [
+        { x: 100, y: 20 },
+        { x: 300, y: 100 },
+        { x: 500, y: 180 },
+        { x: 750, y: 10 },
+        { x: 350, y: 0 },
+        { x: 600, y: 150 },
+        { x: 800, y: 50 },
+        { x: window.innerWidth, y: 100 }
+      ]
+    }
+  });
+};
+
 onMounted(() => {
   if (isDesktop) {
     horizatialScrollAnimation();
+    AirplaneAnimation();
   } else {
     mobileScrollAnimation();
   }

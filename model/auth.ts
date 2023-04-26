@@ -19,3 +19,22 @@ export interface UserInfo {
   role: string;
   unDrawCoupon: number;
 }
+
+export interface SignUpInfo {
+  account: string;
+  password: string;
+  confirmPassword: string;
+  identityId: string;
+  name: string;
+  phone: string;
+  email: string;
+  gender: string;
+  country: string;
+  address: string;
+}
+
+export type StepOneSignUpInfo = Pick<SignUpInfo, 'account' | 'password' | 'confirmPassword'>;
+export type StepTwoSignUpInfo = Pick<
+  SignUpInfo,
+  'identityId' | 'name' | 'phone' | 'email' | 'country' | 'address' | 'gender'
+>;

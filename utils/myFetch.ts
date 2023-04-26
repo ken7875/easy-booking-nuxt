@@ -15,15 +15,15 @@ export default <T>(url: string, options: Options): Promise<T> => {
   const runtimeConfig = useRuntimeConfig();
   const baseURL = runtimeConfig.public.apiBase;
   const apiFetch = $fetch.create({ baseURL, responseType: options.responseType || 'json' });
-  const authToken = tokenCookie().getTokenCookie();
-  // console.log(tokenCookie().getTokenCookie(), 'asdjlkjaklsdjlaksdjlakjdlaksjd');
+  const authToken = tokenCookie().getItem();
+
   return apiFetch(url, {
     ...options,
     async onRequest({ request, options }) {
-      if (authToken.value) {
+      if (authToken) {
         const headersInit: HeadersInit = {};
         options.headers = headersInit;
-        options.headers.Authorization = `Bearer ${authToken.value}`;
+        options.headers.Authorization = `Bearer ${authToken}`;
       }
     },
     async onRequestError({ request, options, error }) {

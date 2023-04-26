@@ -13,7 +13,6 @@ import Modal from './components/modal/index.vue';
 import Message from './components/Message.vue';
 import { useStore } from '~~/store/index';
 import { storeToRefs } from 'pinia';
-// import { tokenCookie } from '~~/utils/cookies';
 
 useHead({
   link: [

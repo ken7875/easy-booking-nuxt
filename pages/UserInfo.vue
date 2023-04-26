@@ -71,6 +71,7 @@ import BaseSelect from '~~/components/form/BaseSelect.vue';
 import { getUserApi, updateUserApi } from '~~/api/auth';
 import { useField, useForm } from 'vee-validate';
 import * as validate from '~~/utils/validate';
+import { object } from 'yup';
 
 const { useMessage } = useStore();
 const msgStore = useMessage();
@@ -111,12 +112,12 @@ const openUpdate = () => {
   }
 };
 
-const validationSchema = {
+const validationSchema = object({
   gender: validate.gender,
   address: validate.address,
   country: validate.country,
   phone: validate.phone
-};
+});
 
 const initialValues = {
   gender: tempUserInfo.value.gender,

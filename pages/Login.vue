@@ -62,7 +62,6 @@ import { loginApi } from '~~/api/auth';
 import { useRouter } from 'vue-router';
 import { useStore } from '~~/store/index';
 import { storeToRefs } from 'pinia';
-import { tokenCookie, userIdCookie } from '~~/utils/cookies';
 import gsap from 'gsap';
 import type { ComponentPublicInstance } from 'vue';
 import { useField, useForm } from 'vee-validate';
@@ -113,7 +112,7 @@ const remember = ref(false);
 
 const { useAuth, useBooking } = useStore();
 const authStore = useAuth();
-const { setUserInfo } = authStore;
+const { login: loginRequest } = authStore;
 
 const bookingStore = useBooking();
 const { reserveHotelInfo } = storeToRefs(bookingStore);
@@ -134,14 +133,7 @@ const login = () => {
   handleSubmit(async (values) => {
     console.log(values);
     try {
-      const loginRes = await loginApi({ account: account.value, password: password.value });
-      const userInfo = loginRes.data.user;
-      const token = loginRes.token;
-
-      tokenCookie().setTokenCookie(token);
-      userIdCookie().setUserIdCookie(userInfo.id);
-
-      setUserInfo({ token, userInfo });
+      await loginRequest({ account: account.value, password: password.value });
 
       const path = reserveHotelInfo.value.productId ? '/Booking' : '/';
       console.log(reserveHotelInfo.value.productId, 'path');
