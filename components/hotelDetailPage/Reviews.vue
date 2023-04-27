@@ -16,7 +16,8 @@
         </template>
         <template #body>
           <div class="h-[100px] p-[15px]">
-            <p>{{ slideItem.review }}</p>
+            <p v-textSlice:[textNum]="slideItem.review" class="inline"></p>
+            <span>...</span>
           </div>
         </template>
       </Card>
@@ -31,5 +32,8 @@ import { Review } from '~~/model/hotel';
 interface Props {
   reviews: Review[];
 }
+
 defineProps<Props>();
+
+const textNum = 20;
 </script>

@@ -194,7 +194,7 @@ import Card from '~~/components/card/index.vue';
 import Slider from '~~/components/slider/Slider.vue';
 import Button from '~~/components/Button.vue';
 import { useRouter, useRoute } from 'vue-router';
-import { Hotel } from '~~/model/Hotel';
+import { Hotel } from '~~/model/hotel';
 import Reviews from '~~/components/hotelDetailPage/Reviews.vue';
 import ViewPorts from '~~/components/hotelDetailPage/ViewPorts.vue';
 import ImageGroup from '~~/components/hotelDetailPage/ImageGroup.vue';

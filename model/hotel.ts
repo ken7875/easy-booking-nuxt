@@ -56,7 +56,11 @@ export interface Review {
   product: string;
   rating: number;
   review: string;
-  user: string | null;
+  user: {
+    name: string;
+    id: string;
+    _id: string;
+  };
 }
 
 export interface Hotel {
