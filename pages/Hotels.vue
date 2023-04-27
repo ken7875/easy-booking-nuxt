@@ -41,7 +41,10 @@
                   <span v-if="hotel.stars >= 3">{{ hotel.stars }}級飯店</span>
                 </div>
                 <div
-                  class="pl-[10px] py-[8px] border-y border-[#dee2e6] flex items-center"
+                  :class="[
+                    'pl-[10px] py-[8px] border-y border-[#dee2e6] flex items-center',
+                    { 'bg-darkLight': detailType.title === '詳細介紹' && detailType.id === hotel.id }
+                  ]"
                   @click="checkProduct(hotel.id, '詳細介紹')"
                 >
                   <p class="block mr-[5px]">{{ hotel.locations.address }}</p>
@@ -52,7 +55,13 @@
                     ]"
                   />
                 </div>
-                <div class="pl-[10px] py-[8px] flex items-center" @click="checkProduct(hotel.id, '所有評論')">
+                <div
+                  :class="[
+                    'pl-[10px] py-[8px] flex items-center',
+                    { 'bg-darkLight': detailType.title === '所有評論' && detailType.id === hotel.id }
+                  ]"
+                  @click="checkProduct(hotel.id, '所有評論')"
+                >
                   <p class="mb-0 w-100 mr-[5px]">
                     <span class="badge bg-success">
                       {{ hotel.ratingAverage }}
@@ -78,9 +87,7 @@
                         剩下 <span class="text-primary">{{ calcRoomRemainNums(hotel.id) }}</span> 間空房
                       </p>
                     </div>
-                    <router-link :to="`/Hotel-${hotel.id}`" class="button button__outline-primary"
-                      >查看房間詳情</router-link
-                    >
+                    <NuxtLink :to="`/Hotel-${hotel.id}`" class="button button__outline-primary">查看房間詳情</NuxtLink>
                   </div>
                 </div>
               </div>
@@ -295,6 +302,12 @@ const mapData = reactive<MapData>({
 });
 
 const checkProduct = (id: string, title?: keyof CurComp): void => {
+  if (detailType.value.title === title && detailType.value.id === id) {
+    renderComp.value = null;
+    detailType.value.id = '';
+    detailType.value.title = '';
+    return;
+  }
   if (title) {
     renderComp.value = curComp[title];
   }

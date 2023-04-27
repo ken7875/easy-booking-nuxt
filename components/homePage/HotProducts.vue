@@ -19,7 +19,10 @@
     >
       <template v-slot:swiperItem="{ slideItem, index, totalLen }">
         <div
-          :class="['h-full z-10 w-[calc(100%-24px)]', { 'invisible z-[-1]': index === 0 || index === totalLen - 1 }]"
+          :class="[
+            'h-full z-10 w-[calc(100%-24px)] relative',
+            { 'invisible z-[-1]': index === 0 || index === totalLen - 1 }
+          ]"
           ref="cardWraps"
         >
           <card
@@ -38,13 +41,19 @@
             <template #body>
               <h3 :class="['text-[2rem]', index === 4 ? 'text-black' : 'text-white', 'mb-[16px]']">
                 {{ slideItem.name }}
-                {{ slideItem.id }}
               </h3>
               <p :class="[index === 4 ? 'text-black' : 'text-white', 'mb-[16px]']">{{ slideItem.summary }}</p>
               <p :class="[index === 4 ? 'text-black' : 'text-white', 'mb-[16px]']">
                 評分: {{ slideItem.ratingAverage }}
               </p>
               <p :class="[index === 4 ? 'text-black' : 'text-white', 'mb-[16px]']">最低價格: {{ slideItem.price }}</p>
+            </template>
+            <template #footer>
+              <div class="border-t border-darkLight w-full absolute bottom-0 p-[10px] flex justify-end">
+                <NuxtLink :to="`/Hotel-${slideItem._id}`" class="button button__outline-primary w-[30%]"
+                  >查看房間</NuxtLink
+                >
+              </div>
             </template>
           </card>
         </div>

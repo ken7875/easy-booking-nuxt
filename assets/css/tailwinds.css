@@ -72,7 +72,7 @@
       @apply bg-transparent border-0 text-black;
     }
     /* &__outline-danger{
-      @include button(transparent) {a
+      @include button(transparent) {
         border: 1px solid $danger;
         color: $danger;
       }

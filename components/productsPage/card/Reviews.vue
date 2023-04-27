@@ -28,7 +28,7 @@
 
 <script setup lang="ts">
 import { getProductApi } from '~~/api/hotel';
-import { Review, Hotel } from '~~/model/hotel';
+import { Hotel } from '~~/model/hotel';
 
 interface Props {
   id: string;
