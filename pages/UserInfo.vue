@@ -1,11 +1,31 @@
 <template>
-  <div>
+  <div class="mb-[30px]">
     <h2
       class="font-bold lg:text-[2rem] text-[1.8rem] h-[5rem] sticky top-[6.5rem] bg-white left-0 flex items-center justify-center mb-[40px]"
     >
       個人資訊
     </h2>
-    <form class="mx-auto w-[40%]" @submit.prevent="submit">
+    <div class="mb-[30px]">
+      <div class="relative z-[-1] lg:w-[150px] lg:h-[150px] w-[100px] h-[100px] overflow-hidden rounded-[50%] mx-auto">
+        <form class="w-full h-full">
+          <label for="customFile" class="w-full h-full text-white text-[1rem] block cursor-pointer relative">
+            <img :src="(avatar as string)" alt="avatar" v-if="avatar" />
+            <div class="w-full h-full bg-darkLight flex justify-center items-center" v-else>
+              <client-only>
+                <font-awesome-icon icon="user-large" class="text-[#ccccccc7] lg:text-[5rem] text-[3.5rem]" />
+              </client-only>
+            </div>
+          </label>
+          <input class="hidden" id="customFile" ref="fileDom" type="file" accept="image/*" @change="choosePhoto" />
+        </form>
+        <div
+          class="absolute left-0 bottom-0 w-full lg:h-[40px] h-[30px] bg-[rgba(0,0,0,0.7)] flex justify-center items-center"
+        >
+          <p class="text-[1rem] text-white font-bold">更換頭貼</p>
+        </div>
+      </div>
+    </div>
+    <form class="mx-auto lg:w-[40%] w-full px-[30px]" @submit.prevent="submit">
       <div class="flex justify-between mb-[40px]">
         <p>帳號</p>
         <p>{{ tempUserInfo?.account }}</p>
@@ -72,21 +92,27 @@ import { getUserApi, updateUserApi } from '~~/api/auth';
 import { useField, useForm } from 'vee-validate';
 import * as validate from '~~/utils/validate';
 import { object } from 'yup';
+import { storeToRefs } from 'pinia';
 
-const { useMessage } = useStore();
+definePageMeta({
+  middleware: 'auth'
+});
+
+const { useMessage, useAuth, useModal } = useStore();
+
 const msgStore = useMessage();
 const { openMsg } = msgStore;
 
 const { data: userInfoData } = await useAsyncData('getUserInfo', () => getUserApi());
 
-if (!userInfoData.value?.data) {
+if (!userInfoData.value) {
   throw createError({
     statusCode: 500,
-    statusMessage: '系統錯誤'
+    statusMessage: 'Something going wrong QQ!'
   });
 }
 
-const tempUserInfo = ref({ ...userInfoData.value.data.data });
+const tempUserInfo = ref({ ...userInfoData.value?.data.data });
 
 const genderOptions = ref([
   {
@@ -155,14 +181,52 @@ const submit = handleSubmit(async (values) => {
     console.log(tempUserInfo.value, updateData.data?.data);
     openUpdate();
 
-    // gender.value = updateData.data?.data?.gender;
-    // address.value = updateData.data?.data?.address;
-    // country.value = updateData.data?.data?.country;
-    // phone.value = updateData.data?.data?.phone;
-
     isUpdate.value = false;
   } catch (error) {
     openUpdate();
   }
 });
+
+// 上傳頭貼功能
+const tempPhoto = ref<string | ArrayBuffer | null | undefined>('');
+
+const authStore = useAuth();
+const { avatar } = storeToRefs(authStore);
+
+const modalStore = useModal();
+const { toggleModal, modalType } = modalStore;
+
+const choosePhoto = (e: any) => {
+  const file = e.target.files[0];
+
+  const reader = new FileReader();
+  reader.readAsDataURL(file);
+  console.log(file);
+  transToFormData(file);
+
+  reader.onload = (e) => {
+    tempPhoto.value = e.target?.result;
+    if (tempPhoto.value) {
+      authStore.$patch({
+        checkImg: tempPhoto.value
+      });
+      toggleModal(true);
+      modalType({ components: 'UploadImageModal', width: '30%' });
+    } else {
+      openMsg({
+        title: '錯誤',
+        content: '照片上傳失敗'
+      });
+    }
+  };
+};
+
+const transToFormData = async (file: Blob) => {
+  const createFile = new FormData();
+  createFile.append('photo', file);
+
+  authStore.$patch({
+    formData: createFile
+  });
+};
 </script>

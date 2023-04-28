@@ -288,10 +288,10 @@ const openModal = (type: string) => {
   if (type === 'map') {
     const coordinates = hotelDetailData.value?.locations?.coordinates;
     const [lng, lat] = coordinates!;
-    modalType('Leaflet');
+    modalType({ components: 'Leaflet' });
     setMarkers([[lat, lng]]);
   } else if (type === 'viewPorts') {
-    modalType('ViewPortsModal');
+    modalType({ components: 'ViewPortsModal' });
   }
 };
 </script>

@@ -4,19 +4,21 @@ interface State {
   curModal: string;
   childView: string;
   isModalOpen: boolean;
+  width: string | undefined;
 }
 
 export const useModal = defineStore('modalStore', {
   state: (): State => ({
     curModal: '',
     childView: '',
-    isModalOpen: false
+    isModalOpen: false,
+    width: ''
   }),
   actions: {
-    modalType(components: string, childName = '') {
+    modalType({ components, width }: { components: string; width?: string }) {
       // components: 開啟組件名稱，childName: 子元件切換
       this.curModal = components;
-      this.childView = childName;
+      this.width = width;
     },
     toggleModal(boolean: boolean) {
       this.isModalOpen = boolean;

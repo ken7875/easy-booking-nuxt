@@ -24,7 +24,7 @@ const { toggleModal, modalType } = useModal();
 
 const openFilterModal = () => {
   toggleModal(true);
-  modalType('FilterModal');
+  modalType({ components: 'FilterModal' });
 };
 
 defineEmits(['openMap']);

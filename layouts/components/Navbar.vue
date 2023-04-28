@@ -48,36 +48,18 @@
 <script setup lang="ts">
 import { useStore } from '~~/store/index';
 import { storeToRefs } from 'pinia';
-import { getAvatarApi } from '~~/api/auth';
 import ToggleMenu from './ToggleMenu.vue';
-import { userIdCookie } from '~~/utils/cookies';
 
 const { useAuth } = useStore();
 const authStore = useAuth();
 
-const { token, userInfo } = storeToRefs(authStore);
+const { token, userInfo, avatar } = storeToRefs(authStore);
+const { getAvatar } = authStore;
 
-const avatar = ref<string | ArrayBuffer | null>('');
-
-const id = userIdCookie().getItem();
-
-const getAvatar = async () => {
-  if (!id) {
-    return;
-  }
-
-  try {
-    const file = await getAvatarApi(id);
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => {
-      avatar.value = reader.result;
-      console.log(avatar.value, 'avatar.value');
-    };
-  } catch (error) {
-    avatar.value = '';
-  }
+const getAvatarHandler = async () => {
+  await getAvatar();
 };
+
 const toggleMenu = ref(false);
 
 const toggleMenuHandler = (bool: boolean) => {
@@ -87,7 +69,7 @@ watch(
   token,
   (val) => {
     if (val) {
-      getAvatar();
+      getAvatarHandler();
     }
   },
   {

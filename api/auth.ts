@@ -35,9 +35,11 @@ export const getUserApi = (): Promise<BaseResponse<UserInfo>> =>
 
 export const updateUserApi = (
   id: string,
-  body: Pick<UserInfo, 'gender' | 'address' | 'country' | 'phone'>
-): Promise<BaseResponse<UserInfo>> =>
-  myFetch(`/user/${id}`, {
+  body: Pick<UserInfo, 'gender' | 'address' | 'country' | 'phone'> | FormData
+): Promise<BaseResponse<UserInfo>> => {
+  console.log(body, 'body');
+  return myFetch(`/user/${id}`, {
     method: 'PATCH',
     body
   });
+};

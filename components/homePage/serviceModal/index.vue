@@ -28,7 +28,7 @@ const componentsList: Comp = {
 
 onMounted(() => {
   toggleModal(true);
-  modalType('ServiceModal');
+  modalType({ components: 'ServiceModal' });
 });
 const dyComp = computed(() => componentsList[curModal.value] || null);
 </script>

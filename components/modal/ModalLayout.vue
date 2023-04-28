@@ -4,7 +4,10 @@
     @click.stop.self.prevent="closePopoutFunc"
   >
     <div
-      class="bg-white rounded-[8px] w-[90%] h-[90vh] relative top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]"
+      :class="[
+        'bg-white rounded-[8px] h-[90vh] relative top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]',
+        widthComputed
+      ]"
     >
       <div class="text-[2rem] absolute top-[3px] right-[10px]" @click="closePopoutFunc">
         <font-awesome-icon :icon="['fas', 'xmark']" />
@@ -24,10 +27,15 @@
 <script setup lang="ts">
 // import { storeToRefs } from "pinia";
 // import { computed } from "vue";
+import { storeToRefs } from 'pinia';
 import { useModal } from '~~/store/modal';
 
 const modalStore = useModal();
 const { toggleModal } = modalStore;
+const { width } = storeToRefs(modalStore);
+console.log(width.value, 'width.value');
+
+const widthComputed = computed(() => (width.value ? `w-[${width.value}]` : 'w-[90%]'));
 // const { childView } = storeToRefs(modalStore);
 // const modalType = {
 //   longContent: require("@/assets/images/modal/pop_box4.png"),

@@ -13,6 +13,7 @@ import Leaflet from '~~/components/LeafletModal.vue';
 import ViewPortsModal from '~~/components/hotelDetailPage/ViewPortsModal.vue';
 import AirportPickUp from '~~/components/homePage/serviceModal/AirportPickUp.vue';
 import Hotels from '~~/components/homePage/serviceModal/Hotels.vue';
+import UploadImageModal from '~~/components/UploadImageModal.vue';
 
 import type { Component } from 'vue';
 
@@ -31,7 +32,8 @@ const componentsList: Comp = {
   Leaflet,
   ViewPortsModal,
   AirportPickUp,
-  Hotels
+  Hotels,
+  UploadImageModal
 };
 const dyComp = computed(() => componentsList[curModal.value] || null);
 </script>

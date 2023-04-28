@@ -140,6 +140,6 @@ const openServiceDetail = (idx: number) => {
   serviceModalType.value = allServiceAry.value[idx]?.modalName as string;
 
   toggleModal(true);
-  modalType(serviceModalType.value);
+  modalType({ components: serviceModalType.value });
 };
 </script>
