@@ -14,7 +14,11 @@
         <p v-timeFormat="showDateRange.end"></p>
       </div>
     </div>
-    <div class="flex absolute bg-white datepicker" v-if="openCalendar" ref="datepicker">
+    <div
+      class="absolute shadow-[0px_1px_2px_3px_rgba(0,0,0,0.2)] bg-white datepicker"
+      v-if="openCalendar"
+      ref="datepicker"
+    >
       <!-- 三角形指標 -->
       <div
         :class="[
@@ -22,19 +26,48 @@
           dateOrder === 'from' ? 'lg:left-[10%] left-[5%]' : 'lg:left-[35%] left-[20%]'
         ]"
       ></div>
-      <Panel
-        :calendarDateProps="firstCalendarDate"
-        v-model:dateOrder="dateOrder"
-        adjustBtn="prev"
-        @adjustDate="adjustDate"
-      />
-      <Panel
-        :calendarDateProps="secondCalendarDate"
-        v-model:dateOrder="dateOrder"
-        adjustBtn="next"
-        @adjustDate="adjustDate"
-        v-if="isDesktop"
-      />
+      <div class="flex">
+        <Panel
+          :calendarDateProps="firstCalendarDate"
+          v-model:dateOrder="dateOrder"
+          adjustBtn="prev"
+          @adjustDate="adjustDate"
+          class="lg:mr-[15px]"
+        />
+        <Panel
+          :calendarDateProps="secondCalendarDate"
+          v-model:dateOrder="dateOrder"
+          adjustBtn="next"
+          @adjustDate="adjustDate"
+          v-if="isDesktop"
+        />
+      </div>
+      <div class="flex items-center mt-[8px] border-t border-darkLight p-[8px]">
+        <p
+          class="border border-darkLight rounded-[15px] px-[8px] py-[4px] text-[0.9rem] mr-[10px]"
+          @click="setSpecifyDate('tonight')"
+        >
+          今晚
+        </p>
+        <p
+          class="border border-darkLight rounded-[15px] px-[8px] py-[4px] text-[0.9rem] mr-[10px]"
+          @click="setSpecifyDate('tomorrow night')"
+        >
+          明晚
+        </p>
+        <p
+          class="border border-darkLight rounded-[15px] px-[8px] py-[4px] text-[0.9rem] mr-[10px]"
+          @click="setSpecifyDate('this week')"
+        >
+          這週末
+        </p>
+        <p
+          class="border border-darkLight rounded-[15px] px-[8px] py-[4px] text-[0.9rem] mr-[10px]"
+          @click="setSpecifyDate('next week')"
+        >
+          下週末
+        </p>
+      </div>
     </div>
   </div>
 </template>
@@ -51,9 +84,11 @@ const { isDesktop } = device;
 
 const { useDatePicker } = useStore();
 const datePickerStore = useDatePicker();
-const { date: dateRange } = storeToRefs(datePickerStore);
-const date = new Date();
 
+const { getDate } = datePickerStore;
+const { date: dateRange } = storeToRefs(datePickerStore);
+
+const date = new Date();
 const firstCalendarDate = reactive({
   year: date.getFullYear(),
   month: date.getMonth(),
@@ -109,6 +144,38 @@ const openCalendarHandler = (option: string) => {
       dateOrder.value = option;
     }
   });
+};
+
+const getSpecifyDate = (dateType: string) => {
+  let oneDayMillisecond = 86400000;
+  const defaultDate = new Date().setHours(0, 0, 0, 0);
+  console.log(defaultDate, 'defaultDate');
+
+  let date = [new Date(defaultDate), new Date(defaultDate + oneDayMillisecond)];
+
+  switch (dateType) {
+    case 'tomorrow night':
+      date = [new Date(defaultDate + oneDayMillisecond), new Date(defaultDate + oneDayMillisecond * 2)];
+      break;
+
+    case 'this week':
+      date = [new Date(defaultDate + oneDayMillisecond * 7), new Date(defaultDate + oneDayMillisecond * 8)];
+      break;
+
+    case 'next week':
+      date = [new Date(defaultDate + oneDayMillisecond * 14), new Date(defaultDate + oneDayMillisecond * 15)];
+      break;
+  }
+
+  return date;
+};
+
+const setSpecifyDate = (dateType: string) => {
+  const date: Date[] = getSpecifyDate(dateType);
+  console.log(date);
+
+  getDate({ dateRangeISO: date[0], openCalendar: true, dateOrder: 'from' });
+  getDate({ dateRangeISO: date[1], openCalendar: false, dateOrder: 'to' });
 };
 
 const closeDatepicker = (e: Event) => {
