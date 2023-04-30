@@ -1,6 +1,13 @@
-# Nuxt 3 Minimal Starter
 
-Look at the [nuxt 3 documentation](https://v3.nuxtjs.org) to learn more.
+
+# easy booking
+
+##簡介
+個人作品，無任何商業用途。
+
+demo網址: [easy-booking-nuxt.vercel.app](https://easy-booking-nuxt.vercel.app/)
+
+
 
 ## Setup
 
