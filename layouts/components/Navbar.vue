@@ -6,7 +6,7 @@
         <span class="block text-white">Booking</span>
       </NuxtLink>
     </h2>
-    <div class="flex items-center lg:hidden absolute top-[50%] right-[5%] translate-y-[-50%]">
+    <!-- <div class="flex items-center lg:hidden absolute top-[50%] right-[5%] translate-y-[-50%]">
       <div
         class="relative w-[50px] h-[50px] overflow-hidden rounded-[50%] mr-[8px]"
         v-if="token"
@@ -17,8 +17,8 @@
           <p class="text-white text-[0.8rem] text-center">點我</p>
         </div>
       </div>
-      <p class="text-white">{{ userInfo?.name }}</p>
-    </div>
+      <p class="text-white" v-textSlice:[2]="userInfo?.name"></p>
+    </div> -->
     <ul class="flex items-center absolute right-[2%] lg:static">
       <li v-if="token" @click="toggleMenuHandler(true)" class="flex items-center">
         <div class="relative w-[50px] h-[50px] overflow-hidden rounded-[50%] cursor-pointer mr-[10px]">
@@ -34,7 +34,10 @@
             <p class="text-white text-[0.8rem] text-center">點我</p>
           </div>
         </div>
-        <p class="text-white mr-[10px]">{{ userInfo?.name }}</p>
+        <div class="mr-[10px] flex items-baseline">
+          <p class="text-white" v-textSlice:[5]="userInfo?.name"></p>
+          <span class="text-white" v-show="userInfo?.name?.length && userInfo?.name?.length > 5">...</span>
+        </div>
       </li>
       <li v-else>
         <NuxtLink to="/login" class="text-white font-bold mr-5">登入</NuxtLink>
@@ -65,6 +68,7 @@ const toggleMenu = ref(false);
 const toggleMenuHandler = (bool: boolean) => {
   toggleMenu.value = bool;
 };
+
 watch(
   token,
   (val) => {

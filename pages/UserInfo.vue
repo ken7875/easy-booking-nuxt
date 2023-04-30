@@ -6,7 +6,7 @@
       個人資訊
     </h2>
     <div class="mb-[30px]">
-      <div class="relative z-[-1] lg:w-[150px] lg:h-[150px] w-[100px] h-[100px] overflow-hidden rounded-[50%] mx-auto">
+      <div class="relative lg:w-[150px] lg:h-[150px] w-[100px] h-[100px] overflow-hidden rounded-[50%] mx-auto">
         <form class="w-full h-full">
           <label for="customFile" class="w-full h-full text-white text-[1rem] block cursor-pointer relative">
             <img :src="(avatar as string)" alt="avatar" v-if="avatar" />
@@ -15,14 +15,14 @@
                 <font-awesome-icon icon="user-large" class="text-[#ccccccc7] lg:text-[5rem] text-[3.5rem]" />
               </client-only>
             </div>
+            <div
+              class="absolute left-0 bottom-0 w-full lg:h-[40px] h-[30px] bg-[rgba(0,0,0,0.7)] flex justify-center items-center"
+            >
+              <p class="text-[1rem] text-white font-bold">更換頭貼</p>
+            </div>
           </label>
           <input class="hidden" id="customFile" ref="fileDom" type="file" accept="image/*" @change="choosePhoto" />
         </form>
-        <div
-          class="absolute left-0 bottom-0 w-full lg:h-[40px] h-[30px] bg-[rgba(0,0,0,0.7)] flex justify-center items-center"
-        >
-          <p class="text-[1rem] text-white font-bold">更換頭貼</p>
-        </div>
       </div>
     </div>
     <form class="mx-auto lg:w-[40%] w-full px-[30px]" @submit.prevent="submit">

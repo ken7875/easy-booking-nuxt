@@ -6,6 +6,7 @@
     <Modal v-if="isModalOpen" />
   </client-only>
   <Message v-if="content" />
+  <TransitionPage v-if="showTansitionPage" v-model:showTansitionPage="showTansitionPage" />
 </template>
 
 <script setup lang="ts">
@@ -13,6 +14,9 @@ import Modal from './components/modal/index.vue';
 import Message from './components/Message.vue';
 import { useStore } from '~~/store/index';
 import { storeToRefs } from 'pinia';
+import TransitionPage from './components/TransitionPage.vue';
+
+const route = useRoute();
 
 useHead({
   link: [
@@ -36,19 +40,23 @@ authStore.$patch({
 });
 
 const htmlDom = process.client ? document.querySelector('html') : null;
-watch(isModalOpen, (val) => {
+const showTansitionPage = ref(false);
+
+watch([isModalOpen, showTansitionPage], (val) => {
+  console.log(showTansitionPage.value);
   if (htmlDom) {
-    if (val) {
-      htmlDom.style.overflow = 'hidden';
+    if (val[0] || val[1]) {
+      htmlDom.style.overflowY = 'hidden';
     } else {
-      htmlDom.style.overflow = 'unset';
+      htmlDom.style.overflowY = 'unset';
     }
   }
 });
-</script>
 
-<style>
-::-webkit-scrollbar {
-  display: none;
-}
-</style>
+watch(
+  () => route.path,
+  (val) => {
+    showTansitionPage.value = true;
+  }
+);
+</script>
