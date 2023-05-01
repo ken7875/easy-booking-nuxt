@@ -8,7 +8,6 @@ interface getAllHotelsApiResponse<T> extends GetAllResponse<T> {
 }
 
 export const getHotHotels = <T>(): Promise<GetAllResponse<T>> => {
-  console.log('hot products');
   return myFetch<GetAllResponse<T>>('/products/hotProducts', {
     method: 'GET'
   });

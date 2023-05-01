@@ -4,7 +4,7 @@
       <h2>所有飯店</h2>
     </template>
     <template #left>
-      <ul class="px-[25px] h-full overflow-scroll pb-[10px]">
+      <ul class="px-[25px] h-full overflow-x-hidden pb-[10px]">
         <li class="border-b border-darkLight mb-[10px] pb-[10px]">
           <h2 class="text-[1.5rem] font-bold">{{ currentHotel.name }}</h2>
           <div>

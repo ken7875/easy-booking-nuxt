@@ -30,7 +30,7 @@
           v-if="randomImgPosition.includes(i)"
         />
         <div
-          class="absolute top-0 left-0 w-full h-full group-hover:flex hidden justify-center items-center bg-[rgba(0,0,0,0.3)]"
+          class="absolute top-0 left-0 w-full h-full lg:group-hover:flex lg:hidden flex justify-center items-center bg-[rgba(0,0,0,0.3)]"
           v-if="randomImgPosition.indexOf(i) > -1"
         >
           <p class="lg:text-[1.8rem] text-[1rem] text-white">

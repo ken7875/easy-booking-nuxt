@@ -35,8 +35,8 @@
           </div>
         </div>
         <div class="mr-[10px] flex items-baseline">
-          <p class="text-white" v-textSlice:[5]="userInfo?.name"></p>
-          <span class="text-white" v-show="userInfo?.name?.length && userInfo?.name?.length > 5">...</span>
+          <p class="text-white" v-textSlice:[userNameSliceNum]="userInfo?.name"></p>
+          <span class="text-white" v-show="isUserNameSlice">...</span>
         </div>
       </li>
       <li v-else>
@@ -68,4 +68,9 @@ const toggleMenuHandler = (bool: boolean) => {
 if (token.value) {
   await getAvatar();
 }
+
+const { isMobile } = useDevice();
+
+const isUserNameSlice = computed(() => isMobile && userInfo?.value?.name?.length && userInfo.value?.name?.length > 5);
+const userNameSliceNum = computed(() => (isUserNameSlice.value ? 5 : 20));
 </script>
