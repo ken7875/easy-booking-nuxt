@@ -1,6 +1,14 @@
-# Nuxt 3 Minimal Starter
 
-Look at the [nuxt 3 documentation](https://v3.nuxtjs.org) to learn more.
+
+# easy booking
+
+## 簡介
+
+個人作品，無任何商業用途。
+
+demo網址: [easy-booking-nuxt.vercel.app](https://easy-booking-nuxt.vercel.app/)
+
+
 
 ## Setup
 
@@ -22,7 +30,7 @@ pnpm install --shamefully-hoist
 Start the development server on http://localhost:3000
 
 ```bash
-npm run dev
+yarn dev
 ```
 
 ## Production
@@ -30,13 +38,13 @@ npm run dev
 Build the application for production:
 
 ```bash
-npm run build
+yarn build
 ```
 
 Locally preview production build:
 
 ```bash
-npm run preview
+yarn preview
 ```
 
 Checkout the [deployment documentation](https://v3.nuxtjs.org/guide/deploy/presets) for more information.
