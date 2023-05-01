@@ -34,6 +34,8 @@ const { content } = storeToRefs(messageStore);
 
 const modalStore = useModal();
 const { isModalOpen } = storeToRefs(modalStore);
+const { toggleModal } = modalStore;
+
 const authStore = useAuth();
 authStore.$patch({
   token: useCookie('easy-booking-token').value
@@ -55,8 +57,9 @@ watch([isModalOpen, showTansitionPage], (val) => {
 
 watch(
   () => route.path,
-  (val) => {
+  () => {
     showTansitionPage.value = true;
+    toggleModal(false);
   }
 );
 </script>

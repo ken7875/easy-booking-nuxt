@@ -15,9 +15,9 @@
       <template #body>
         <div>
           <div>
-            <Button @click="handleAction('cancel')" class="absolute top-[3%] right-[3%]" v-show="!hasCancel">
-              X
-            </Button>
+            <div @click="handleAction('cancel')" class="absolute top-[3%] right-[3%]">
+              <font-awesome-icon :icon="['fas', 'xmark']" class="text-[1.5rem] cursor-pointer" />
+            </div>
             <p class="text-[1.2rem]" ref="normalContent">
               {{ content }}
             </p>

@@ -10,7 +10,7 @@
       ]"
     >
       <div class="text-[2rem] absolute top-[3px] right-[10px]" @click="closePopoutFunc">
-        <font-awesome-icon :icon="['fas', 'xmark']" />
+        <font-awesome-icon :icon="['fas', 'xmark']" class="cursor-pointer" />
       </div>
       <div class="pt-[2.5rem] h-full overflow-hidden">
         <div class="text-center text-[1.5rem] font-bold mb-[1.5rem] h-[1.5rem]">

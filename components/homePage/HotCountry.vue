@@ -1,5 +1,5 @@
 <template>
-  <section class="lg:h-screen h-auto w-screen bg-white relative z-[100] pt-[6.5rem]" ref="scrollWrap">
+  <section class="lg:h-[100vh] h-auto w-screen bg-white relative z-[100] pt-[6.5rem]" ref="scrollWrap">
     <div class="absolute top-0 left-[20%] z-1 h-full">
       <div class="h-full w-[1px] bg-black hidden lg:block" v-border></div>
     </div>
@@ -14,15 +14,15 @@
       </h2>
       <div class="h-[0.5px] w-full bg-black" v-border></div>
     </div>
-    <div class="flex lg:h-[calc(100%-4.5rem)] h-auto pt-[1.5rem]">
-      <airplaneSvg class="airplaneSvg w-[100px] h-[100px] translate-x-[-5%]" />
+    <div class="flex lg:h-[calc(100%-4.5rem)] h-auto pt-[0.6rem] 2xl:pt-[1.5rem]">
+      <airplaneSvg class="airplaneSvg w-[100px] h-[100px] translate-x-[-100%]" />
       <div class="w-[20%] h-full hidden md:block">
         <!-- <client-only>
           <airplaneSvg />
         </client-only> -->
-        <ul class="flex flex-col justify-between h-full">
+        <ul class="flex flex-col justify-between h-[90%]">
           <li
-            class="group hover:scale-[1.2] transition-transform duration-500 lg:text-[2.5rem] text-[1.5rem] lg:px-[3rem] px-[0.8rem] whitespace-nowrap cursor-pointer menuList"
+            class="group hover:scale-[1.2] transition-transform duration-500 lg:text-[2rem] lg:px-[3rem] px-[0.8rem] whitespace-nowrap cursor-pointer menuList"
           >
             台灣
             <div
@@ -30,7 +30,7 @@
             ></div>
           </li>
           <li
-            class="group hover:scale-[1.2] transition-transform duration-500 lg:text-[2.5rem] text-[1.5rem] lg:px-[3rem] px-[0.8rem] whitespace-nowrap cursor-pointer menuList"
+            class="group hover:scale-[1.2] transition-transform duration-500 lg:text-[2rem] lg:px-[3rem] px-[0.8rem] whitespace-nowrap cursor-pointer menuList"
           >
             日本
             <div
@@ -38,7 +38,7 @@
             ></div>
           </li>
           <li
-            class="group hover:scale-[1.2] transition-transform duration-500 lg:text-[2.5rem] text-[1.5rem] lg:px-[3rem] px-[0.8rem] whitespace-nowrap cursor-pointer menuList"
+            class="group hover:scale-[1.2] transition-transform duration-500 lg:text-[2rem] lg:px-[3rem] px-[0.8rem] whitespace-nowrap cursor-pointer menuList"
           >
             美國
             <div
@@ -46,7 +46,7 @@
             ></div>
           </li>
           <li
-            class="group hover:scale-[1.2] transition-transform duration-500 lg:text-[2.5rem] text-[1.5rem] lg:px-[3rem] px-[0.8rem] whitespace-nowrap cursor-pointer menuList"
+            class="group hover:scale-[1.2] transition-transform duration-500 lg:text-[2rem] lg:px-[3rem] px-[0.8rem] whitespace-nowrap cursor-pointer menuList"
           >
             韓國
             <div
@@ -54,7 +54,7 @@
             ></div>
           </li>
           <li
-            class="group hover:scale-[1.2] transition-transform duration-500 lg:text-[2.5rem] text-[1.5rem] lg:px-[3rem] px-[0.8rem] whitespace-nowrap cursor-pointer menuList"
+            class="group hover:scale-[1.2] transition-transform duration-500 lg:text-[2rem] lg:px-[3rem] px-[0.8rem] whitespace-nowrap cursor-pointer menuList"
           >
             法國
             <div
@@ -180,7 +180,8 @@ const horizatialScrollAnimation = () => {
   tl = useScrollAnimation({
     pin: true,
     // snap: 1 / countryListAry.length,
-    start: '+=5%',
+    // +=5%
+    start: '+=1%',
     end,
     trigger: scrollWrap.value,
     scrub: 1

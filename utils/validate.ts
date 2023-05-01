@@ -13,7 +13,7 @@ export const passwordValidate = string()
 // 確認密碼
 export const passwordConfirmValidate = (yup: string) =>
   string()
-    .matches(/^[a-zA-Z0-9]{6,12}$/, '密碼格式錯誤')
+    .matches(/^[a-zA-Z0-9]{5,12}$/, '密碼格式錯誤')
     .required('此為必填欄位')
     .oneOf([yupRef(yup)], '請確認是否與密碼一致');
 
