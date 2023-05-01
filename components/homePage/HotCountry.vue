@@ -14,7 +14,7 @@
       </h2>
       <div class="h-[0.5px] w-full bg-black" v-border></div>
     </div>
-    <div class="flex lg:h-[calc(100%-4.5rem)] h-auto pt-[0.6rem] 2xl:pt-[1.5rem]">
+    <div class="lg:flex lg:h-[calc(100%-4.5rem)] h-auto pt-[0.6rem] 2xl:pt-[1.5rem] px-[15px] lg:px-0">
       <airplaneSvg class="airplaneSvg w-[100px] h-[100px] translate-x-[-100%]" />
       <div class="w-[20%] h-full hidden md:block">
         <!-- <client-only>
@@ -63,21 +63,21 @@
           </li>
         </ul>
       </div>
-      <div class="w-[100%] lg:ml-[8%] ml-[5%] overflow-hidden">
+      <div class="w-[100%] lg:ml-[8%] overflow-hidden">
         <ul class="lg:flex lg:flex-nowrap lg:w-[400%] w-full h-full lg:translate-x-[10%]">
           <!-- "w-[18vw] h-[18vw] -->
           <li
             v-for="(country, idx) in hotCountryMap"
             :key="idx"
-            class="lg:w-[8%] w-full px-[20px] lg:relative lg:mr-[8%] lg:even:top-[16%] 2xl:even:top-[30%] mb-[80px]"
+            class="lg:w-[8%] w-full lg:px-[20px] lg:relative lg:mr-[8%] lg:even:top-[16%] 2xl:even:top-[30%] mb-[80px] lg:mb-0"
             ref="countryList"
           >
             <div
               :class="[
-                '2xl:w-full lg:absolute lg:w-[30vw] w-full z-10 rounded-[16px] duration-300 lg:translate-x-[50px] flex'
+                '2xl:w-full lg:absolute lg:w-[30vw] w-full z-10 rounded-[16px] duration-300 lg:translate-x-[50px] lg:flex'
               ]"
             >
-              <h3 class="text-[3.5rem] mr-[10px] font-bold self-end">{{ country.name }}</h3>
+              <h3 class="text-[3.5rem] mr-[10px] font-bold lg:self-end">{{ country.name }}</h3>
               <p class="text-[1.2rem]">{{ country.description }}</p>
             </div>
           </li>
