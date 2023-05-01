@@ -59,25 +59,13 @@ const authStore = useAuth();
 const { token, userInfo, avatar } = storeToRefs(authStore);
 const { getAvatar } = authStore;
 
-const getAvatarHandler = async () => {
-  await getAvatar();
-};
-
 const toggleMenu = ref(false);
 
 const toggleMenuHandler = (bool: boolean) => {
   toggleMenu.value = bool;
 };
 
-watch(
-  token,
-  (val) => {
-    if (val) {
-      getAvatarHandler();
-    }
-  },
-  {
-    immediate: true
-  }
-);
+if (token.value) {
+  await getAvatar();
+}
 </script>

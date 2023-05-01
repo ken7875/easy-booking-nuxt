@@ -26,10 +26,11 @@ export const useAuth = defineStore('auth', {
       const userInfo = loginRes.data.user;
       const token = loginRes.token;
 
-      tokenCookie().setItem(token);
-      userIdCookie().setItem(userInfo.id);
+      await tokenCookie().setItem(token);
+      await userIdCookie().setItem(userInfo.id);
 
       this.setUserInfo({ token, userInfo });
+      await this.getAvatar();
     },
     setUserInfo({ token, userInfo }: { token: string; userInfo: UserInfo }) {
       this.token = token;
@@ -45,16 +46,27 @@ export const useAuth = defineStore('auth', {
         const file = await getAvatarApi(id);
         const reader = new FileReader();
         reader.readAsDataURL(file);
-        reader.onload = () => {
-          this.avatar = reader.result;
-        };
+
+        return new Promise((resolve, reject) => {
+          reader.onload = () => {
+            this.avatar = reader.result;
+            if (this.avatar) {
+              resolve('成功取得照片!');
+            } else {
+              reject('取得照片失敗!');
+            }
+          };
+        });
       } catch (error) {
+        console.log('圖片加載失敗');
+
         this.avatar = null;
       }
     },
     logout() {
       this.token = null;
       this.userInfo = null;
+      this.avatar = null;
       if (process.client) {
         localStorage.removeItem('user-info');
       }

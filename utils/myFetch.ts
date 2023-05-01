@@ -23,6 +23,7 @@ export default <T>(url: string, options: Options): Promise<T> => {
       if (authToken) {
         const headersInit: HeadersInit = {};
         options.headers = headersInit;
+        console.log(authToken, 'authToken authToken authToken');
         options.headers.Authorization = `Bearer ${authToken}`;
       }
     },
