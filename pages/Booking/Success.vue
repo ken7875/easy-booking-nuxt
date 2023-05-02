@@ -7,8 +7,8 @@
     <p class="text-[20px] text-center">恭喜您，獲得了一張優惠券</p>
     <Lottery class="mx-auto mb-[100px]" />
     <div class="flex justify-between">
-      <router-link to="/OrderList" class="button button__primary">查看訂單</router-link>
-      <router-link to="/" class="button button__primary">回首頁</router-link>
+      <NuxtLink to="/OrderList" class="button button__primary">查看訂單</NuxtLink>
+      <NuxtLink to="/" class="button button__primary">回首頁</NuxtLink>
     </div>
   </div>
 </template>

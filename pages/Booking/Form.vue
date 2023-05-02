@@ -22,7 +22,7 @@
             <div>
               <div class="my-4 flex justify-between text-[1.5rem]">
                 <h4>{{ reserveHotelInfo?.roomTypeInfo.name }}</h4>
-                <h4>x1</h4>
+                <h4>x{{ reserveHotelInfo?.roomTypeInfo.roomNum }}</h4>
               </div>
               <p class="text-[0.8rem] mb-4">最多可容納 1 成人、2小孩</p>
               <h6 class="mb-3 text-[1.2rem] font-bold">免費設施</h6>
@@ -40,16 +40,16 @@
           <client-only>
             <div class="border-b-2 border-darkLight">
               <div class="flex justify-between mb-[15px]">
-                <p>{{ reserveHotelInfo?.roomTypeInfo.name }}x1</p>
-                <p>{{ reserveHotelInfo?.roomTypeInfo.price }}</p>
+                <p>{{ reserveHotelInfo?.roomTypeInfo.name }}x{{ reserveHotelInfo?.roomTypeInfo.roomNum }}</p>
+                <p>{{ reserveHotelInfo.paid }}</p>
               </div>
               <div class="flex justify-between mb-[15px]">
                 <p>20%加值稅</p>
-                <p>{{ Number(reserveHotelInfo?.roomTypeInfo.price) * 0.2 }}</p>
+                <p>{{ Number(reserveHotelInfo.paid) * 0.2 }}</p>
               </div>
               <div class="flex justify-between mb-[15px]">
                 <p>10% 客房服務</p>
-                <p>{{ Number(reserveHotelInfo?.roomTypeInfo.price) * 0.1 }}</p>
+                <p>{{ Number(reserveHotelInfo.paid) * 0.1 }}</p>
               </div>
               <div class="flex justify-between mb-[15px]">
                 <p>手續費</p>
@@ -57,12 +57,13 @@
               </div>
               <div class="flex justify-between mb-[15px]">
                 <p>折扣</p>
-                <p>{{ reserveHotelInfo?.discount }}%</p>
+                <p v-if="reserveHotelInfo?.discount < 100">{{ reserveHotelInfo?.discount }}%</p>
+                <p v-else>無</p>
               </div>
             </div>
             <div class="flex justify-content-between font-bold text-[1.2rem] items-center mt-3">
               <p>總計</p>
-              <p>{{ reserveHotelInfo?.paid }}</p>
+              <p>{{ totalPaid }}</p>
             </div>
           </client-only>
         </div>
@@ -164,7 +165,12 @@ const { useBooking } = useStore();
 
 const bookingStore = useBooking();
 const { bookingForm, reserveHotelInfo } = storeToRefs(bookingStore);
-const { setBookingForm } = bookingStore;
+const { setBookingForm, setReserHotelInfo } = bookingStore;
+
+// 房間價格 + 20%稅 + 10%客房服務
+const totalPaid = computed(
+  () => reserveHotelInfo.value.paid + reserveHotelInfo.value.paid * 0.2 + reserveHotelInfo.value.paid * 0.1
+);
 
 const initialValues = {
   lastName: bookingForm.value?.lastName ?? '',
@@ -199,7 +205,7 @@ const { value: phone } = useField('phone', undefined, { initialValue: '' });
 const { value: isBusiness } = useField('isBusiness', undefined, { initialValue: false });
 const { value: asking } = useField('asking', undefined, { initialValue: '' });
 
-const submit = handleSubmit(async () => {
+const submit = handleSubmit(() => {
   try {
     const form = {
       lastName: lastName.value,
@@ -211,7 +217,8 @@ const submit = handleSubmit(async () => {
       asking: asking.value
     };
 
-    await setBookingForm(form);
+    setBookingForm(form);
+    setReserHotelInfo({ ...reserveHotelInfo.value, paid: totalPaid.value });
     router.push('/booking/confirm');
   } catch (error) {
     console.log(error);

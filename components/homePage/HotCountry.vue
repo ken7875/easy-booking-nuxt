@@ -15,7 +15,7 @@
       <div class="h-[0.5px] w-full bg-black" v-border></div>
     </div>
     <div class="lg:flex lg:h-[calc(100%-4.5rem)] h-auto pt-[0.6rem] 2xl:pt-[1.5rem] px-[15px] lg:px-0">
-      <airplaneSvg class="airplaneSvg w-[100px] h-[100px] translate-x-[-100%]" />
+      <airplaneSvg class="airplaneSvg w-[100px] h-[100px] translate-x-[-100%] hidden lg:block" />
       <div class="w-[20%] h-full hidden md:block">
         <!-- <client-only>
           <airplaneSvg />

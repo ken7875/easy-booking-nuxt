@@ -126,7 +126,7 @@
               </div>
             </template>
             <template v-slot:footer>
-              <h5 class="mt-3">附近的景點</h5>
+              <h5 class="mt-3 px-4">附近的景點</h5>
               <ViewPorts :viewPorts="hotelDetailData?.viewPorts || []" />
             </template>
           </Card>
@@ -273,10 +273,10 @@ const openReserve = (productInfo: RoomType) => {
     checkinTime: date.value.isoDate[0],
     checkoutTime: date.value.isoDate[1]
   };
-  reserveHotelInfo.paid = reserveHotelInfo.roomTypeInfo.price * reserveHotelInfo.bookingNum;
 };
 
 const reserve = () => {
+  reserveHotelInfo.paid = reserveHotelInfo.roomTypeInfo.price * reserveHotelInfo.bookingNum;
   setReserHotelInfo(reserveHotelInfo);
   let path = token.value ? '/Booking/Form' : '/Login';
   // JSON.stringify(reserveHotelInfo)
