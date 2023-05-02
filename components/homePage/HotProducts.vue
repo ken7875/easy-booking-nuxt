@@ -45,9 +45,9 @@
               <div class="mb-[16px]">
                 <span
                   :class="[index === 4 ? 'text-black' : 'text-white']"
-                  v-textSlice:[100]="slideItem.description"
+                  v-textSlice:[80]="slideItem.description"
                 ></span>
-                <span v-if="slideItem.description.length > 100" :class="[index === 4 ? 'text-black' : 'text-white']"
+                <span v-if="slideItem.description.length > 80" :class="[index === 4 ? 'text-black' : 'text-white']"
                   >...</span
                 >
               </div>
