@@ -126,8 +126,8 @@ const { handleSubmit, errors } = useForm({
   validationSchema
 });
 
-const { value: account } = useField<string>('account', undefined, { initialValue: '' });
-const { value: password } = useField<string>('password', undefined, { initialValue: '' });
+const { value: account } = useField<string>('account', undefined, { initialValue: 'testUser' });
+const { value: password } = useField<string>('password', undefined, { initialValue: 'testUser' });
 
 const login = () => {
   handleSubmit(async (values) => {

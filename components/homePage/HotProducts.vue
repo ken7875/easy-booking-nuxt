@@ -42,7 +42,15 @@
               <h3 :class="['text-[2rem]', index === 4 ? 'text-black' : 'text-white', 'mb-[16px]']">
                 {{ slideItem.name }}
               </h3>
-              <p :class="[index === 4 ? 'text-black' : 'text-white', 'mb-[16px]']">{{ slideItem.summary }}</p>
+              <div class="mb-[16px]">
+                <span
+                  :class="[index === 4 ? 'text-black' : 'text-white']"
+                  v-textSlice:[100]="slideItem.description"
+                ></span>
+                <span v-if="slideItem.description.length > 100" :class="[index === 4 ? 'text-black' : 'text-white']"
+                  >...</span
+                >
+              </div>
               <p :class="[index === 4 ? 'text-black' : 'text-white', 'mb-[16px]']">
                 評分: {{ slideItem.ratingAverage }}
               </p>

@@ -6,7 +6,13 @@
         <BaseInput v-model.trim="account" :error="errors.account" label="帳號" placeholder="請輸入帳號" />
       </div>
       <div class="mb-[40px]">
-        <BaseInput v-model.trim="password" :error="errors.password" label="密碼" placeholder="請輸入密碼" />
+        <BaseInput
+          v-model.trim="password"
+          :error="errors.password"
+          label="密碼"
+          placeholder="請輸入密碼"
+          type="password"
+        />
       </div>
       <div class="mb-[40px]">
         <BaseInput
@@ -14,6 +20,7 @@
           :error="errors.confirmPassword"
           label="確認密碼"
           placeholder="請再次輸入密碼"
+          type="password"
         />
       </div>
       <div class="flex justify-center">

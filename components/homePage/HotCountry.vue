@@ -246,13 +246,13 @@ const AirplaneAnimation = () => {
       autoRotate: true,
       path: [
         { x: 100, y: 20 },
-        { x: 300, y: 100 },
-        { x: 500, y: 180 },
-        { x: 750, y: 10 },
+        { x: 300, y: 150 },
+        { x: 500, y: 240 },
+        { x: 750, y: 30 },
         { x: 350, y: 0 },
-        { x: 600, y: 150 },
-        { x: 800, y: 50 },
-        { x: window.innerWidth, y: 100 }
+        { x: 600, y: 180 },
+        { x: 800, y: 80 },
+        { x: window.innerWidth + 100, y: 100 } // 全部螢幕寬度 + 飛機寬度
       ]
     }
     // motionPath:{

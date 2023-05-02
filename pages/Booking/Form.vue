@@ -113,17 +113,19 @@
               :error="errors.phone"
             />
           </div>
-          <div class="mb-[20px]">
-            <BaseInput
-              label="優惠碼"
-              v-model="coupon"
-              placeholder="請填入您的優惠碼"
-              type="text"
-              :error="errors.coupon"
-              :blockLabel="true"
-              class="w-[80%]"
-            />
-            <Button class="button button__secondary w-[20%] inline-block" @click="getCoupon">輸入</Button>
+          <div class="mb-[20px] w-full flex justify-between items-end">
+            <div class="w-[80%]">
+              <BaseInput
+                label="優惠碼"
+                v-model="coupon"
+                placeholder="請填入您的優惠碼"
+                type="text"
+                :error="errors.coupon"
+                :blockLabel="true"
+                class="w-full"
+              />
+            </div>
+            <Button class="button button__secondary w-[17%] inline-block h-[2.5rem]" @click="getCoupon">輸入</Button>
           </div>
           <fieldset class="mb-[20px]">
             <legend>是否為商務旅遊</legend>
