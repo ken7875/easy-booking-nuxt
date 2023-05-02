@@ -7,6 +7,8 @@
 個人作品，無任何商業用途。
 
 demo網址: [easy-booking-go.netlify.app](https://easy-booking-go.netlify.app/)
+帳號: testUser
+密碼: testUser
 
 
 
