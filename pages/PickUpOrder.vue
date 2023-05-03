@@ -89,10 +89,13 @@ const { userInfo } = storeToRefs(authStore);
 
 const isMapOpen = ref(false);
 
-const { data: pickUpListData } = await useAsyncData('pickUpOrder', () =>
-  getAllPickUpOrderApi<PickUpOrder[]>('642fee78168d50a44cc3e0b9')
+const { data: pickUpListData } = await useAsyncData(
+  'pickUpOrder',
+  () => getAllPickUpOrderApi<PickUpOrder[]>('642fee78168d50a44cc3e0b9'),
+  {
+    initialCache: false
+  }
 );
-console.log(pickUpListData, 'pickListData');
 
 const pickUpList = ref(pickUpListData.value?.data.data);
 

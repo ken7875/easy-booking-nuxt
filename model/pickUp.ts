@@ -1,12 +1,10 @@
 export interface PickUpKey {
   name: string;
-  coordinates: {
-    lat: number;
-    lng: number;
-  };
+  coordinates: number[];
 }
 
 export interface PickUpApiParams {
+  userId: string;
   airport: PickUpKey;
   hotel: PickUpKey;
 }

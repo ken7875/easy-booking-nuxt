@@ -53,8 +53,9 @@ import { storeToRefs } from 'pinia';
 import calcDistance from '~~/utils/calcDistance';
 import { Decimal } from 'decimal.js';
 import { object } from 'yup';
+import { userIdCookie } from '~~/utils/cookies';
 
-const { useMessage, useHotel, useLeaflet } = useStore();
+const { useMessage, useHotel, useLeaflet, useModal } = useStore();
 
 const hotelStore = useHotel();
 const { allHotels } = storeToRefs(hotelStore);
@@ -72,7 +73,6 @@ const formValidate = useForm({
 });
 
 type AirportJson = typeof airportJson;
-
 const { value: airport } = useField<keyof AirportJson>('airport', undefined, {
   initialValue: '台灣松山機場'
 });
@@ -136,11 +136,14 @@ const distance = computed(() => {
   const [hotelLat, hotelLng] = hotelCoordinates.value;
   return calcDistance(airportLat, airportLng, hotelLat, hotelLng);
 });
+
 const price = computed(() => {
   const price = new Decimal(85 + ((distance.value * 1000) / 200) * 5);
   return price.toFixed(0);
 });
 // 處理地圖
+const modalStore = useModal();
+const { toggleModal } = modalStore;
 
 const submit = handleSubmit(() => {
   console.log(airport, hotel);
@@ -151,17 +154,40 @@ const submit = handleSubmit(() => {
     });
     return;
   }
+  const userId = userIdCookie().getItem();
 
-  createPickUpOrderApi({
-    airport: airportJson[airport.value],
-    hotel: {
-      name: hotel.value,
-      coordinates: {
-        lat: hotelsToMap.value[hotel.value]?.locations?.coordinates[1],
-        lng: hotelsToMap.value[hotel.value]?.locations?.coordinates[0]
+  if (!userId) {
+    openMsg({
+      title: '錯誤',
+      content: '查無此用戶!'
+    });
+
+    return;
+  }
+
+  try {
+    createPickUpOrderApi({
+      userId,
+      airport: {
+        name: airportJson[airport.value].name,
+        coordinates: [airportJson[airport.value].coordinates.lng, airportJson[airport.value].coordinates.lat]
+      },
+      hotel: {
+        name: hotel.value,
+        coordinates: [hotelCoordinates.value[1], hotelCoordinates.value[0]]
       }
-    }
-  });
+    });
+    openMsg({
+      title: '訊息',
+      content: '預約成功'
+    });
+    toggleModal(false);
+  } catch (error) {
+    openMsg({
+      title: '錯誤',
+      content: '預約失敗'
+    });
+  }
 });
 
 const hotelOptionsAry = ref<{ content: string }[]>([]);

@@ -121,8 +121,7 @@ const authStore = useAuth();
 const { userInfo } = storeToRefs(authStore);
 
 const { data: ordersData, error } = await useAsyncData('ordersList', () => getOrdersApi<OrderDetail[]>(), {
-  initialCache: false,
-  lazy: true
+  initialCache: false
 });
 
 const ordersList = ref(ordersData.value?.data?.data);
