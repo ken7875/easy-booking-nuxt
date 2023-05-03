@@ -77,6 +77,7 @@ import { useStore } from '~~/store/index';
 import { storeToRefs } from 'pinia';
 import { PickUpOrder } from '~~/model/pickUp';
 import Card from '~~/components/card/index.vue';
+import { userIdCookie } from '~~/utils/cookies';
 
 definePageMeta({
   middleware: 'auth'
@@ -89,13 +90,11 @@ const { userInfo } = storeToRefs(authStore);
 
 const isMapOpen = ref(false);
 
-const { data: pickUpListData } = await useAsyncData(
-  'pickUpOrder',
-  () => getAllPickUpOrderApi<PickUpOrder[]>('642fee78168d50a44cc3e0b9'),
-  {
-    initialCache: false
-  }
-);
+const userId = userIdCookie().getItem();
+
+const { data: pickUpListData } = await useAsyncData('pickUpOrder', () => getAllPickUpOrderApi<PickUpOrder[]>(userId!), {
+  initialCache: false
+});
 
 const pickUpList = ref(pickUpListData.value?.data.data);
 
