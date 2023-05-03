@@ -26,7 +26,9 @@ module.exports = {
       zIndex: {
         navbar: '100',
         messageShadow: '1000',
-        message: '1001'
+        message: '1001',
+        modalShadow: '900',
+        modal: '901'
       },
       keyframes: {
         cardFadeIn: {
