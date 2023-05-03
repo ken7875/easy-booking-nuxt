@@ -30,5 +30,14 @@ import allService from '~~/components/homePage/AllService.vue';
 definePageMeta({
   layout: 'home'
 });
+
+useHead({
+  title: 'Easy Booking home page',
+  meta: [
+    { charset: 'utf-8' },
+    { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+    { hid: 'description', name: 'description', content: 'Welcome to Easy Booking home page' }
+  ]
+});
 // getAsyncComp();
 </script>

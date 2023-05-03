@@ -2,6 +2,9 @@ import svgLoader from 'vite-svg-loader';
 
 // https://v3.nuxtjs.org/api/configuration/nuxt.config
 export default defineNuxtConfig({
+  head: {
+    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
+  },
   buildModules: ['@pinia/nuxt'],
   build: {
     transpile: ['gsap']
@@ -16,6 +19,9 @@ export default defineNuxtConfig({
       apiBase: process.env.NODE_ENV === 'development' ? process.env.API_BASE_URL : process.env.API_BASE_URL_PROD
     }
   },
+  nitro: {
+    compressPublicAssets: true // 壓縮 public assets 物件
+  },
   // nitro: {
   //   storage: {
   //     redis: {
@@ -29,6 +35,9 @@ export default defineNuxtConfig({
   vite: {
     esbuild: {
       pure: process.env.NODE_ENV === 'production' ? ['console.log', 'debugger'] : []
+    },
+    build: {
+      minify: 'terser'
     },
     plugins: [svgLoader({ defaultImport: 'url' })]
   }

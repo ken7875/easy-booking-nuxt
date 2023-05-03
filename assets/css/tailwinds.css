@@ -28,7 +28,7 @@
   .storke-text {
     -webkit-text-stroke: 1px #000000;
     -webkit-text-fill-color: white;
-    font-szie: 30px;
+    font-size: 30px;
   }
   .bgBlur{
     box-shadow: 0px 0px 20px #E033FF, 0 0 40px #E033FF, 0 0 80px #E033FF, 0 0 120px #E033FF, 0 0 200px #E033FF;

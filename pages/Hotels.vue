@@ -143,6 +143,15 @@ definePageMeta({
   layout: 'default'
 });
 
+useHead({
+  title: 'Easy Booking hotel list page',
+  meta: [
+    { charset: 'utf-8' },
+    { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+    { hid: 'description', name: 'description', content: 'You can find all hotel in Easy Booking in this page' }
+  ]
+});
+
 let htmlDom: HTMLElement | null = null;
 
 const pageData = reactive({

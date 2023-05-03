@@ -198,11 +198,27 @@ import ViewPorts from '~~/components/hotelDetailPage/ViewPorts.vue';
 import ImageGroup from '~~/components/hotelDetailPage/ImageGroup.vue';
 import HotelInformation from '~~/components/hotelDetailPage/HotelInformation.vue';
 
-const device = useDevice();
-const { isDesktop } = device;
-
 const route = useRoute();
 const router = useRouter();
+
+const hotelId = ref<string>(route.params.id as string);
+const { data: hotelDetail, pending } = await useAsyncData('hotelDetail', () => getProductApi<Hotel>(hotelId.value), {
+  initialCache: false
+});
+
+const hotelDetailData = ref(hotelDetail.value?.data?.data);
+
+useHead({
+  title: hotelDetailData?.value?.name,
+  meta: [
+    { charset: 'utf-8' },
+    { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+    { hid: 'description', name: 'description', content: hotelDetailData?.value?.description }
+  ]
+});
+
+const device = useDevice();
+const { isDesktop } = device;
 
 const { useDatePicker, useBooking, useAuth, useModal, useLeaflet } = useStore();
 
@@ -219,13 +235,6 @@ const { toggleModal, modalType } = useModal();
 
 const leafletStore = useLeaflet();
 const { setCenterMarker, setMarkers } = leafletStore;
-
-const hotelId = ref<string>(route.params.id as string);
-const { data: hotelDetail, pending } = await useAsyncData('hotelDetail', () => getProductApi<Hotel>(hotelId.value), {
-  initialCache: false
-});
-
-const hotelDetailData = ref(hotelDetail.value?.data?.data);
 
 const showServiceId = ref({
   id: '',

@@ -19,6 +19,12 @@ import TransitionPage from './components/TransitionPage.vue';
 const route = useRoute();
 
 useHead({
+  title: 'Easy Booking',
+  meta: [
+    { charset: 'utf-8' },
+    { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+    { hid: 'description', name: 'description', content: 'Welcome to Easy Booking' }
+  ],
   link: [
     {
       rel: 'stylesheet',
