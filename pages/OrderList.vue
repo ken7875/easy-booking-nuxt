@@ -105,9 +105,9 @@
 import { getOrdersApi } from '~~/api/booking';
 import { useStore } from '~~/store/index';
 import { storeToRefs } from 'pinia';
-import { OrderDetail } from '~~/model/booking';
+import { type OrderDetail } from '~~/model/booking';
 import { getProductApi } from '~~/api/hotel';
-import { Hotel } from '~~/model/hotel';
+import { type Hotel } from '~~/model/hotel';
 import ImageGroup from '~~/components/hotelDetailPage/ImageGroup.vue';
 import HotelInformation from '~~/components/hotelDetailPage/HotelInformation.vue';
 import Loading from '~~/components/Loading.vue';
@@ -120,9 +120,7 @@ const { useAuth } = useStore();
 const authStore = useAuth();
 const { userInfo } = storeToRefs(authStore);
 
-const { data: ordersData, error } = await useAsyncData('ordersList', () => getOrdersApi<OrderDetail[]>(), {
-  initialCache: false
-});
+const { data: ordersData, error } = await useAsyncData('ordersList', () => getOrdersApi<OrderDetail[]>());
 
 const ordersList = ref(ordersData.value?.data?.data);
 
@@ -136,9 +134,7 @@ const isHotelDetailOpen = ref(false);
 const openHotelDetail = async (id: string) => {
   isHotelDetailPending.value = true;
   isHotelDetailOpen.value = true;
-  const { data, pending } = await useAsyncData('hotelDetail', () => getProductApi<Hotel>(id), {
-    initialCache: false
-  });
+  const { data, pending } = await useAsyncData('hotelDetail', () => getProductApi<Hotel>(id));
   isHotelDetailPending.value = false;
   console.log(pending.value, 'sadasdasdasdasd');
 

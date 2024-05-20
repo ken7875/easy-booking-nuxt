@@ -48,14 +48,14 @@ import { string } from 'yup';
 import { createPickUpOrderApi } from '~~/api/pickUp';
 import { useStore } from '~~/store/index';
 import airportJson from '~~/assets/json/airport.json';
-import { Hotel } from '~~/model/hotel';
+import { type Hotel } from '~~/model/hotel';
 import { storeToRefs } from 'pinia';
 import calcDistance from '~~/utils/calcDistance';
 import { Decimal } from 'decimal.js';
 import { object } from 'yup';
 import { userIdCookie } from '~~/utils/cookies';
 
-const { useMessage, useHotel, useLeaflet, useModal } = useStore();
+const { useMessage, useHotel, useLeaflet } = useStore();
 
 const hotelStore = useHotel();
 const { allHotels } = storeToRefs(hotelStore);
@@ -141,9 +141,6 @@ const price = computed(() => {
   const price = new Decimal(85 + ((distance.value * 1000) / 200) * 5);
   return price.toFixed(0);
 });
-// 處理地圖
-const modalStore = useModal();
-const { toggleModal } = modalStore;
 
 const submit = handleSubmit(() => {
   console.log(airport, hotel);
@@ -177,11 +174,11 @@ const submit = handleSubmit(() => {
         coordinates: [hotelCoordinates.value[1], hotelCoordinates.value[0]]
       }
     });
+
     openMsg({
       title: '訊息',
       content: '預約成功'
     });
-    toggleModal(false);
   } catch (error) {
     openMsg({
       title: '錯誤',

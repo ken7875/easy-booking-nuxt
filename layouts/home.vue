@@ -91,6 +91,7 @@ const gsapAnimation = () => {
 onMounted(() => {
   gsapAnimation();
 });
+
 const refreshAndKillTl = () => {
   if (tl) {
     tl?.restart();

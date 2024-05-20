@@ -1,5 +1,5 @@
 <template>
-  <section class="lg:h-[100vh] h-auto w-screen bg-white relative z-[100] pt-[6.5rem]" ref="scrollWrap">
+  <section class="lg:h-[100vh] h-auto w-full bg-white relative z-[100] pt-[6.5rem]" ref="scrollWrap">
     <div class="absolute top-0 left-[20%] z-1 h-full">
       <div class="h-full w-[1px] bg-black hidden lg:block" v-border></div>
     </div>
@@ -88,13 +88,13 @@
 </template>
 
 <script setup lang="ts">
-import { Hotel } from '~~/model/hotel';
+import { type Hotel } from '~~/model/hotel';
 import gsap from 'gsap';
-import { CSSPlugin } from 'gsap-trial/CSSPlugin';
+// import { CSSPlugin } from 'gsap-trial/CSSPlugin';
 import { MotionPathPlugin } from 'gsap/MotionPathPlugin';
+// https://stackoverflow.com/questions/73917316/how-to-add-inline-svgs-in-a-nuxt3-vite-project
 import airplaneSvg from '~~/assets/svg/airplane.svg?component';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { duration } from 'moment';
 
 type HotCountry = Pick<Hotel, 'name' | 'description' | 'images'> & { id: number };
 

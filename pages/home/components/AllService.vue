@@ -48,24 +48,32 @@
         v-if="isMobile ? i / 12 > 1 : i / 8 > 1"
       ></div>
     </div>
+    <LazyModalHotels v-model:is-open="hotelService" v-if="hotelService" class="w-[80%]" />
   </section>
 </template>
 
 <script setup lang="ts">
 import { useStore } from '~~/store/index';
 import { storeToRefs } from 'pinia';
+// import HotelsServiceModal from '~~/components/homePage/serviceModal/Hotels.vue';
 
-const { useModal, useMessage, useAuth } = useStore();
-const modalStore = useModal();
+const { useMessage, useAuth } = useStore();
 const msgStore = useMessage();
 const authStore = useAuth();
 
 const { isMobile } = useDevice();
-
+// const modalOpenMap = defineModel('isOpen', {
+//   default: {
+//     hotelService: false
+//   }
+// });
+const hotelService = defineModel('isOpen', { default: false });
 // 'B&B'
 // 'AirTicket'
 // 'AirTicketAndHotel'
 // 'Rent'
+
+// TODO 改為串接api
 const allServiceAry = ref([
   {
     title: '所有飯店',
@@ -112,9 +120,6 @@ const allServiceAry = ref([
 ]);
 
 const randomImgPosition = computed(() => [1, 3, 5, 7, 9, 11, 15]);
-const serviceModalType = ref('');
-
-const { modalType, toggleModal } = modalStore;
 
 const { openMsg } = msgStore;
 
@@ -128,7 +133,10 @@ const openServiceDetail = (idx: number) => {
       content: '此功能尚未開放'
     });
     return;
+  } else if (!allServiceAry.value[idx]?.modalName) {
+    return;
   }
+
   if (allServiceAry.value[idx]?.auth && !token.value) {
     openMsg({
       content: '請先登入'
@@ -137,9 +145,10 @@ const openServiceDetail = (idx: number) => {
     });
     return;
   }
-  serviceModalType.value = allServiceAry.value[idx]?.modalName as string;
+  hotelService.value = true;
+  // serviceModalType.value = allServiceAry.value[idx]?.modalName as string;
 
-  toggleModal(true);
-  modalType({ components: serviceModalType.value });
+  // toggleModal(true);
+  // modalType({ components: serviceModalType.value });
 };
 </script>

@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <div>
     <component :is="dyComp"></component>
   </div>
@@ -31,4 +31,4 @@ onMounted(() => {
   modalType({ components: 'ServiceModal' });
 });
 const dyComp = computed(() => componentsList[curModal.value] || null);
-</script>
+</script> -->

@@ -74,7 +74,6 @@ import throttle from '~~/utils/throttle';
 import icon from '~~/utils/icon';
 import { useHotel } from '~~/store/hotel';
 import { storeToRefs } from 'pinia';
-import { OptionsType } from '~~/model/hotel';
 
 const hotelStore = useHotel();
 const { filterHandler } = hotelStore;

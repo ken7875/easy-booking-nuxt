@@ -1,5 +1,5 @@
 <template>
-  <ServiceLayout>
+  <ServiceLayout v-model:is-open="isOpen">
     <template #title>
       <h2>所有飯店</h2>
     </template>
@@ -9,7 +9,6 @@
           <h2 class="text-[1.5rem] font-bold">{{ currentHotel.name }}</h2>
           <div>
             <span v-textSlice:[sliceNum]="currentHotel.description"></span>
-            <!-- v-if="hasSeeMoreBtn" -->
             <div v-if="hasSeeMoreBtn">
               <span v-show="!isTextShow">...</span>
               <span @click="seeMore" class="text-secondary ml-[5px] cursor-pointer">{{
@@ -48,6 +47,8 @@
 
 <script setup lang="ts">
 import ServiceLayout from './ServiceModalLayout.vue';
+
+const isOpen = defineModel('isOpen', { default: false });
 import { useStore } from '~~/store/index';
 import { storeToRefs } from 'pinia';
 
@@ -55,11 +56,10 @@ const { useHotel } = useStore();
 
 const hotelStore = useHotel();
 const { allHotels, allHotelMap } = storeToRefs(hotelStore);
-
 const sliceHotels = computed(() => allHotels.value.slice(0, 6));
 
 const currentHotel = ref(sliceHotels.value[0]);
-
+console.log(sliceHotels.value, currentHotel.value);
 const changeShowHotel = (id: string) => {
   isTextShow.value = false;
   currentHotel.value = allHotelMap.value[id];
@@ -85,5 +85,5 @@ const seeMore = () => {
   }
 };
 
-const hasSeeMoreBtn = currentHotel.value.description.toString().length > sliceNum.value;
+const hasSeeMoreBtn = currentHotel.value?.description?.toString().length > sliceNum.value;
 </script>

@@ -1,35 +1,30 @@
 <template>
-  <div class="w-screen overflow-x-hidden">
-    <hotCountry />
-    <HotProducts />
-    <allService />
-    <LazyHomePageWaterfull />
+  <div class="w-full overflow-x-hidden">
+    <section>
+      <HotCountry />
+    </section>
+    <section ref="hotProducts">
+      <LazyHotProducts v-if="allHotels.length > 0" />
+    </section>
+    <section ref="allService">
+      <LazyAllService v-if="allServiceTargetIsVisible" />
+    </section>
+    <section>
+      <WaterfullViews />
+    </section>
   </div>
 </template>
 
 <script setup lang="ts">
-// // import { useStore } from '~~/store/hotel';
-// import gsap from 'gsap';
-// import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import HotProducts from '~~/components/homePage/HotProducts.vue';
-// import LazyWarterFull from '~~/components/homePage/Waterfull.vue';
-import hotCountry from '~~/components/homePage/HotCountry.vue';
-import allService from '~~/components/homePage/AllService.vue';
-// const { getAllHotels } = hotelStore;
+import { useStore } from '~~/store/index';
+import { useIntersectionObserver } from '@vueuse/core';
+import { storeToRefs } from 'pinia';
+import { type Hotel } from '~~/model/hotel';
 
-// const getAsyncComp = async () => {
-//   await getAllHotels();
-//   hotProducts.value = defineAsyncComponent(() => {
-//     return import('~~/components/homePage/HotProducts.vue');
-//   });
-//   warterFull.value = defineAsyncComponent(async () => {
-//     return import('~~/components/homePage/Waterfull.vue');
-//   });
-// };
-
-definePageMeta({
-  layout: 'home'
-});
+const { useHotel } = useStore();
+const hotelStore = useHotel();
+const { getAllHotels } = hotelStore;
+const { allHotels } = storeToRefs(hotelStore);
 
 useHead({
   title: 'Easy Booking home page',
@@ -39,5 +34,41 @@ useHead({
     { hid: 'description', name: 'description', content: 'Welcome to Easy Booking home page' }
   ]
 });
-// getAsyncComp();
+
+definePageMeta({
+  layout: 'home'
+});
+
+// await useAsyncData('hotHotel', () => getAllHotels());
+
+await getAllHotels();
+const WaterfullViews = defineAsyncComponent(() => import('./home/components/Waterfull.vue'));
+const allService = ref(null);
+const allServiceTargetIsVisible = ref(false);
+
+const { stop: stopAllServiceListen, resume: resumeAllServiceListen } = useIntersectionObserver(
+  allService,
+  ([{ isIntersecting }], observerElement) => {
+    allServiceTargetIsVisible.value = isIntersecting;
+    console.log(allServiceTargetIsVisible.value, 'asasdsda');
+    console.log(allService.value, 'observerElement');
+  }
+  // {
+  //   rootMargin: '500px'
+  // }
+);
+
+watch(allServiceTargetIsVisible, (val) => {
+  if (val) {
+    stopAllServiceListen();
+  } else {
+    resumeAllServiceListen();
+  }
+});
 </script>
+
+<style>
+::-webkit-scrollbar {
+  display: none;
+}
+</style>

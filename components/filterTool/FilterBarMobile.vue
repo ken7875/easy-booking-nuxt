@@ -11,20 +11,16 @@
         <p class="text-center">篩選</p>
       </div>
     </div>
+    <LazyFilterToolFilterModal />
   </div>
 </template>
 
 <script setup lang="ts">
-import { useStore } from '~~/store/index';
-
 const { isMobile, isTablet } = useDevice();
 
-const { useModal } = useStore();
-const { toggleModal, modalType } = useModal();
-
 const openFilterModal = () => {
-  toggleModal(true);
-  modalType({ components: 'FilterModal' });
+  // toggleModal(true);
+  // modalType({ components: 'FilterModal' });
 };
 
 defineEmits(['openMap']);

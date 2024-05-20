@@ -20,7 +20,7 @@
         </button>
       </div>
       <ul>
-        <li v-for="(hotel, i) in allHotels" :key="i" :isHorizontal="true" class="mb-[20px]">
+        <li v-for="(hotel, i) in showHotelList" :key="i" :isHorizontal="true" class="mb-[20px]">
           <Card :detailType="detailType" :isHorizontal="true" class="border border-[#dee2e6]">
             <template #header>
               <img
@@ -42,7 +42,7 @@
                 </div>
                 <div
                   :class="[
-                    'pl-[10px] py-[8px] border-y border-[#dee2e6] flex items-center',
+                    'px-[10px] py-[8px] border-y border-[#dee2e6] flex items-center justify-between',
                     { 'bg-darkLight': detailType.title === '詳細介紹' && detailType.id === hotel.id }
                   ]"
                   @click="checkProduct(hotel.id, '詳細介紹')"
@@ -57,16 +57,15 @@
                 </div>
                 <div
                   :class="[
-                    'pl-[10px] py-[8px] flex items-center',
+                    'px-[10px] py-[8px] flex items-center justify-between',
                     { 'bg-darkLight': detailType.title === '所有評論' && detailType.id === hotel.id }
                   ]"
                   @click="checkProduct(hotel.id, '所有評論')"
                 >
                   <p class="mb-0 w-100 mr-[5px]">
-                    <span class="badge bg-success">
-                      {{ hotel.ratingAverage }}
-                    </span>
-                    ({{ hotel.ratingQuantity }} 則評論)
+                    <span class="badge bg-success text-[15px] font-[800] text-primary">{{ hotel.ratingAverage }}</span>
+                    <span class="text-[12px]">/ 5</span>
+                    <span class="inline-block ml-5 text-[15px]">({{ hotel.ratingQuantity }} 則評論)</span>
                   </p>
                   <font-awesome-icon
                     :icon="[
@@ -98,10 +97,10 @@
                   <p class="text-[1.7rem] text-end text-primary mr-[5px]">$ {{ hotel.price }}</p>
                   <p class="leading-[1] text-[0.5rem] text-end">每晚</p>
                 </div>
-                <p class="text-end text-[0.8rem] my-[15px]">剩下x間空房</p>
-                <router-link :to="`/Hotel-${hotel.id}`" class="button button__outline-primary"
-                  >查看房間詳情</router-link
-                >
+                <p class="text-end text-[0.8rem] my-[15px]">
+                  剩下 <span class="text-primary font-[800]">{{ calcRoomRemainNums(hotel.id) }}</span> 間空房
+                </p>
+                <NuxtLink :to="`/Hotel-${hotel.id}`" class="button button__outline-primary">查看房間詳情</NuxtLink>
               </div>
             </template>
             <template #detail v-if="detailType.id && detailType.title && detailType.id === hotel.id">
@@ -117,7 +116,7 @@
     >
       <div class="close absolute top-[2%] right-[2%] z-[1000]" @click="toggleMap.closeMap">X</div>
       <client-only>
-        <LazyLeaflet v-if="mapData.markers.length > 0" class="z-[100]" />
+        <LazyLeaflet v-if="mapData?.markers?.length > 0" class="z-[100]" />
       </client-only>
     </article>
   </div>
@@ -127,17 +126,18 @@
 import { useStore } from '~~/store/index';
 import { storeToRefs } from 'pinia';
 import Card from '~~/components/card/index.vue';
-import Images from '~~/components/productsPage/card/Images.vue';
-import Introduce from '~~/components/productsPage/card/Introduce.vue';
-import Reviews from '~~/components/productsPage/card/Reviews.vue';
+// import Images from '~~/components/productsPage/card/Images.vue';
+// import Introduce from '~~/components/productsPage/card/Introduce.vue';
+// import Reviews from '~~/components/productsPage/card/Reviews.vue';
 import throttle from '~~/utils/throttle';
 import SearchBar from '~~/components/searchBar/index.vue';
 import FilterBarPc from '~~/components/filterTool/FilterBarPc.vue';
 import FilterBarMobile from '~~/components/filterTool/FilterBarMobile.vue';
 import gsap from 'gsap';
-import { AllHoteFilterObj, RoomType } from '~~/model/hotel';
+import { type AllHoteFilterObj } from '~~/model/hotel';
 import Loading from '~~/components/Loading.vue';
 import type { Component } from 'vue';
+import { type Hotel } from '~~/model/hotel';
 
 definePageMeta({
   layout: 'default'
@@ -172,20 +172,13 @@ const { setMarkers, setCenterMarker } = leafletStore;
 // 篩選條件改變需要初始的資料
 const resetFilterData = () => {
   // 篩選資料需要reset
-  hotelStore.$patch({
-    allHotels: []
-  });
+  hotelStore.resetHotelData();
 
   pageData.page = 1;
   pageData.limit = 10;
 
-  hotelStore.$patch({
-    hotelFilterObj: {
-      page: pageData.page,
-      limit: pageData.limit
-    }
-  });
-
+  // FIXME 型別優化
+  hotelStore.patchFilterDate(pageData);
   if (process.client) {
     // 避免資料過短網頁觸底重新搜尋觸發handleScroll造成發2次api
     window.scrollTo(0, 0);
@@ -195,6 +188,7 @@ const resetFilterData = () => {
 const curHotelTotal = ref(0);
 const isHotelApiLoading = ref(false);
 
+const showHotelList = ref<Hotel[]>([]);
 // 取得所有飯店api
 const getAllHotelsHandler = async (resetData: boolean, filterObj: AllHoteFilterObj) => {
   if (resetData) {
@@ -203,12 +197,10 @@ const getAllHotelsHandler = async (resetData: boolean, filterObj: AllHoteFilterO
   }
 
   isHotelApiLoading.value = true;
-
-  console.log(filterObj, 'filterObj');
   await getAllHotels(filterObj);
 
   isHotelApiLoading.value = false;
-
+  showHotelList.value.push(...allHotels.value);
   checkProduct(allHotels.value[0]?.id);
 
   curHotelTotal.value += curHotelNum.value;
@@ -232,9 +224,11 @@ watch(
 
 // 計算房間剩餘數量
 const calcRoomRemainNums = (id: string) => {
-  return allHotelMap.value[id].roomType.reduce((acc, cur) => {
+  const res = allHotelMap.value[id]?.roomType?.reduce((acc, cur) => {
     return (acc += cur.remainRoom);
   }, 0);
+  console.log(res, 'asdasdsdadassda');
+  return res;
 };
 
 const removeScrollListener = () => {
@@ -261,10 +255,10 @@ const handleScroll = () => {
   }
 };
 
-const throttleScroll = throttle(handleScroll.bind(this, htmlDom), 500);
+const throttleScroll = throttle(handleScroll.bind(this), 500);
 
 onMounted(() => {
-  getAllHotelsHandler(false, hotelFilterObj.value);
+  getAllHotelsHandler(true, hotelFilterObj.value);
 
   if (process.client) {
     htmlDom = document.querySelector('html')!;
@@ -274,7 +268,7 @@ onMounted(() => {
 
 onBeforeUnmount(() => {
   removeScrollListener();
-  hotelStore.$reset();
+  // hotelStore.$reset();
 });
 
 type CurComp = {
@@ -284,10 +278,16 @@ type CurComp = {
 };
 
 const curComp: CurComp = {
-  所有圖片: Images,
-  所有評論: Reviews,
-  詳細介紹: Introduce
+  所有圖片: defineAsyncComponent(() => import('~~/components/productsPage/card/Images.vue')),
+  所有評論: defineAsyncComponent(() => import('~~/components/productsPage/card/Reviews.vue')),
+  詳細介紹: defineAsyncComponent(() => import('~~/components/productsPage/card/Introduce.vue'))
 };
+
+// const curComp: CurComp = {
+//   所有圖片: Images,
+//   所有評論: Reviews,
+//   詳細介紹: Introduce
+// };
 
 interface detailType {
   id: string;
@@ -331,8 +331,6 @@ const checkProduct = (id: string, title?: keyof CurComp): void => {
   mapData.markers = hotelsCoordinatesData.value;
   setMarkers(mapData.markers);
   setCenterMarker([lat, lng]);
-
-  console.log(lat, lng, 'asdasd');
 };
 
 // 地圖開關動畫

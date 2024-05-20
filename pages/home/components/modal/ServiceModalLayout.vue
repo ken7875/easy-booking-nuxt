@@ -1,5 +1,5 @@
 <template>
-  <ModalLayout>
+  <ModalLayout v-model:is-open="isOpen">
     <template #title>
       <slot name="title"></slot>
     </template>
@@ -8,7 +8,7 @@
         <div class="lg:col-[1_/_span_4] col-[1_/_span_12] row-[2_/_span_1] lg:row-auto border-r border-black">
           <slot name="left"></slot>
         </div>
-        <div class="lg:col-[5_/_span_8] col-[1_/_span_12] row-[1_/_span_1] lg:row-auto">
+        <div class="lg:col-[5_/_span_8] col-[1_/_span_12] row-[1_/_span_1] lg:row-auto overflow-hidden">
           <slot name="right"></slot>
         </div>
       </div>
@@ -17,9 +17,19 @@
 </template>
 
 <script setup lang="ts">
-import ModalLayout from '../../modal/ModalLayout.vue';
+import ModalLayout from '@/components/modal/index.vue';
 
+const isOpen = defineModel('isOpen', { default: false });
+watch(isOpen, (val) => {
+  console.log(val, 'isOpen');
+});
 // const props = defineProps<{
 //   title: string;
 // }>();
 </script>
+
+<style scoped>
+::-webkit-scrollbar {
+  width: 0;
+}
+</style>

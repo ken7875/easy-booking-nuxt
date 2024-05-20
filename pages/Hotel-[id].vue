@@ -75,7 +75,7 @@
                         <h6 class="font-bold">{{ type.price }}</h6>
                       </li>
                       <li class="flex-[1_1_0] text-center flex justify-center items-center">
-                        <Button class="button__secondary w-[60px] h-[50px]" @click="openReserve(type)"> 訂房 </Button>
+                        <Button class="w-[60px] h-[50px]" @click="openReserve(type)"> 訂房 </Button>
                       </li>
                     </ul>
                   </template>
@@ -179,6 +179,11 @@
           </div>
         </div>
       </div>
+      <LazyLeafletModal v-model:is-open="leafletModalStatus" v-if="leafletModalStatus" class="w-[80%]" />
+      <LazyHotelDetailPageViewPortsModal
+        v-model:is-open="ViewPortsModalStatus"
+        v-if="ViewPortsModalStatus"
+      ></LazyHotelDetailPageViewPortsModal>
     </div>
   </div>
 </template>
@@ -188,23 +193,22 @@ import { getProductApi } from '~~/api/hotel';
 import { storeToRefs } from 'pinia';
 import { useStore } from '~~/store/index';
 import icon from '~~/utils/icon';
-import { RoomType, ReserveHotelInfo } from '~~/model/hotel';
+import { type RoomType, type ReserveHotelInfo } from '~~/model/hotel';
 import Card from '~~/components/card/index.vue';
 import Button from '~~/components/Button.vue';
 import { useRouter, useRoute } from 'vue-router';
-import { Hotel } from '~~/model/hotel';
+import { type Hotel } from '~~/model/hotel';
 import Reviews from '~~/components/hotelDetailPage/Reviews.vue';
 import ViewPorts from '~~/components/hotelDetailPage/ViewPorts.vue';
 import ImageGroup from '~~/components/hotelDetailPage/ImageGroup.vue';
 import HotelInformation from '~~/components/hotelDetailPage/HotelInformation.vue';
+// import Leaflet from '~~/components/LeafletModal.vue';
 
 const route = useRoute();
 const router = useRouter();
 
 const hotelId = ref<string>(route.params.id as string);
-const { data: hotelDetail, pending } = await useAsyncData('hotelDetail', () => getProductApi<Hotel>(hotelId.value), {
-  initialCache: false
-});
+const { data: hotelDetail, pending } = await useAsyncData('hotelDetail', () => getProductApi<Hotel>(hotelId.value));
 
 const hotelDetailData = ref(hotelDetail.value?.data?.data);
 
@@ -220,7 +224,7 @@ useHead({
 const device = useDevice();
 const { isDesktop } = device;
 
-const { useDatePicker, useBooking, useAuth, useModal, useLeaflet } = useStore();
+const { useDatePicker, useBooking, useAuth, useLeaflet } = useStore();
 
 const datePickerStore = useDatePicker();
 const { date } = storeToRefs(datePickerStore);
@@ -231,7 +235,7 @@ const { setReserHotelInfo } = bookingStore;
 const authStore = useAuth();
 const { token } = storeToRefs(authStore);
 
-const { toggleModal, modalType } = useModal();
+// const { toggleModal, modalType } = useModal();
 
 const leafletStore = useLeaflet();
 const { setCenterMarker, setMarkers } = leafletStore;
@@ -292,15 +296,17 @@ const reserve = () => {
   router.push(path);
 };
 
+const leafletModalStatus = ref(false);
+const ViewPortsModalStatus = ref(false);
 const openModal = (type: string) => {
-  toggleModal(true);
   if (type === 'map') {
     const coordinates = hotelDetailData.value?.locations?.coordinates;
     const [lng, lat] = coordinates!;
-    modalType({ components: 'Leaflet' });
     setMarkers([[lat, lng]]);
+    leafletModalStatus.value = true;
+    console.log(leafletModalStatus.value, 'leafletModalStatus');
   } else if (type === 'viewPorts') {
-    modalType({ components: 'ViewPortsModal' });
+    ViewPortsModalStatus.value = true;
   }
 };
 </script>

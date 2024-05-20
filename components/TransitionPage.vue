@@ -24,12 +24,12 @@
 import gsap from 'gsap';
 
 interface Props {
-  showTansitionPage: boolean;
+  showTransitionPage: boolean;
 }
 
-const props = defineProps<Props>();
+defineProps<Props>();
 
-const emit = defineEmits(['update:showTansitionPage']);
+const emit = defineEmits(['update:showTransitionPage']);
 
 let htmlDom: HTMLElement | null = null;
 
@@ -67,7 +67,7 @@ const animation = () => {
       x: '100%',
       duration: isDesktop ? 0.6 : 0.3,
       ease: 'easeOut',
-      onComplete: () => emit('update:showTansitionPage', false)
+      onComplete: () => emit('update:showTransitionPage', false)
     },
     '<'
   );
@@ -88,7 +88,7 @@ onBeforeUnmount(() => {
 //   () => route.name,
 //   () => {
 //     nextTick(() => {
-//       showTansitionPage.value = true;
+//       showTransitionPage.value = true;
 //     });
 //   },
 //   {
@@ -96,7 +96,7 @@ onBeforeUnmount(() => {
 //   }
 // );
 
-// watch(showTansitionPage, (val) => {
+// watch(showTransitionPage, (val) => {
 //   console.log(val, 'val');
 //   if (val) {
 // lockScroll();

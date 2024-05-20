@@ -1,39 +1,34 @@
 <template>
-  <div>
-    <component :is="dyComp"></component>
-  </div>
+  <Teleport to="body">
+    <div
+      class="fixed top-0 left-0 w-full h-full bg-[rgba(0,0,0,0.3)] flex justify-center items-center z-modalShadow"
+      @click.stop.self.prevent="closePopoutFunc"
+      v-if="isOpen"
+    >
+      <div :class="['overflow-scroll bg-white rounded-[8px] h-[90vh] relative z-modal animate-scale']" v-bind="$attrs">
+        <div class="text-[2rem] absolute top-[3px] right-[10px]" @click="closePopoutFunc">
+          <font-awesome-icon :icon="['fas', 'xmark']" class="cursor-pointer" />
+        </div>
+        <div class="pt-[2.5rem] h-full overflow-hidden">
+          <div class="text-center text-[1.5rem] font-bold mb-[1.5rem] h-[1.5rem]">
+            <slot name="title" />
+          </div>
+          <div class="overflow-x-hidden h-[calc(100%-3rem)]">
+            <slot />
+          </div>
+        </div>
+      </div>
+    </div>
+  </Teleport>
 </template>
 
 <script setup lang="ts">
-import { onBeforeUnmount } from 'vue';
-import { storeToRefs } from 'pinia';
-import { useModal } from '~~/store/modal';
-import FilterModal from '~~/components/filterTool/FilterModal.vue';
-import Leaflet from '~~/components/LeafletModal.vue';
-import ViewPortsModal from '~~/components/hotelDetailPage/ViewPortsModal.vue';
-import AirportPickUp from '~~/components/homePage/serviceModal/AirportPickUp.vue';
-import Hotels from '~~/components/homePage/serviceModal/Hotels.vue';
-import UploadImageModal from '~~/components/UploadImageModal.vue';
-
-import type { Component } from 'vue';
-
-interface Comp {
-  [key: string]: Component;
-}
-const modalStore = useModal();
-const { curModal } = storeToRefs(modalStore);
-
-onBeforeUnmount(() => {
-  modalStore.$reset();
+defineOptions({
+  inheritAttrs: false
 });
 
-const componentsList: Comp = {
-  FilterModal,
-  Leaflet,
-  ViewPortsModal,
-  AirportPickUp,
-  Hotels,
-  UploadImageModal
+const isOpen = defineModel('isOpen', { default: false });
+const closePopoutFunc = () => {
+  isOpen.value = false;
 };
-const dyComp = computed(() => componentsList[curModal.value] || null);
 </script>

@@ -40,10 +40,9 @@ import { storeToRefs } from 'pinia';
 import { useHotel } from '~~/store/hotel';
 
 const hotelStore = useHotel();
-const { getAllHotels } = hotelStore;
-const { allHotels } = storeToRefs(hotelStore);
 
-getAllHotels();
+const { allHotels } = storeToRefs(hotelStore);
+// getAllHotels();
 const device = useDevice();
 // 瀑布流資料結構
 const waterfullData = computed(() => {
@@ -52,7 +51,7 @@ const waterfullData = computed(() => {
   let rowNum = device.isMobile ? 3 : 5; // 瀑布排數
   let startIdx = 0;
   let endIdx = 6;
-
+  console.log(startIdx, allHotels.value.length);
   for (let i = 0; i <= rowNum; i++) {
     // 如果 sliceidx 大於陣列總長度就把slice idx 初始
     if (startIdx >= allHotels.value.length) {

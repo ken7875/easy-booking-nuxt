@@ -27,7 +27,7 @@
 
 <script setup lang="ts">
 import Slider from '~~/components/slider/Slider.vue';
-import { Review } from '~~/model/hotel';
+import { type Review } from '~~/model/hotel';
 
 interface Props {
   reviews: Review[];

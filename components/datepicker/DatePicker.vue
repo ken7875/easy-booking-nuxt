@@ -26,21 +26,26 @@
           dateOrder === 'from' ? 'lg:left-[10%] left-[5%]' : 'lg:left-[35%] left-[20%]'
         ]"
       ></div>
-      <div class="flex">
-        <Panel
-          :calendarDateProps="firstCalendarDate"
-          v-model:dateOrder="dateOrder"
-          adjustBtn="prev"
-          @adjustDate="adjustDate"
-          class="lg:mr-[15px]"
-        />
-        <Panel
-          :calendarDateProps="secondCalendarDate"
-          v-model:dateOrder="dateOrder"
-          adjustBtn="next"
-          @adjustDate="adjustDate"
-          v-if="isDesktop"
-        />
+      <div>
+        <div class="pl-[5px] border-b border-darkLight py-[10px]">
+          <p class="font-bold ml-[15px]">請選擇入住日期</p>
+        </div>
+        <div class="flex">
+          <Panel
+            :calendarDateProps="firstCalendarDate"
+            v-model:dateOrder="dateOrder"
+            adjustBtn="prev"
+            @adjustDate="adjustDateStrategy['goPrevDate']()"
+            class="lg:mr-[15px]"
+          />
+          <Panel
+            :calendarDateProps="secondCalendarDate"
+            v-model:dateOrder="dateOrder"
+            adjustBtn="next"
+            @adjustDate="adjustDateStrategy['goNextDate']()"
+            v-if="isDesktop"
+          />
+        </div>
       </div>
       <div class="flex items-center mt-[8px] border-t border-darkLight p-[8px]">
         <p
@@ -99,33 +104,21 @@ const firstCalendarDate = reactive({
 
 const secondCalendarDate = reactive({ ...firstCalendarDate, month: firstCalendarDate.month + 1 });
 
-const adjustDate = (methods: string) => {
-  if (methods === 'prev') {
-    if (firstCalendarDate.month > 0) {
-      firstCalendarDate.month--;
-    } else {
-      firstCalendarDate.month = 11;
-      firstCalendarDate.year -= 1;
-    }
-    if (secondCalendarDate.month > 0) {
-      secondCalendarDate.month--;
-    } else {
-      secondCalendarDate.month = 11;
-      secondCalendarDate.year -= 1;
-    }
-  } else {
-    if (firstCalendarDate.month < 11) {
-      firstCalendarDate.month++;
-    } else {
-      firstCalendarDate.month = 0;
-      firstCalendarDate.year += 1;
-    }
-    if (secondCalendarDate.month < 11) {
-      secondCalendarDate.month++;
-    } else {
-      secondCalendarDate.month = 0;
-      secondCalendarDate.year += 1;
-    }
+const adjustDateStrategy = {
+  goPrevDate: () => {
+    firstCalendarDate.month = (firstCalendarDate.month + 11) % 12;
+    firstCalendarDate.year -= firstCalendarDate.month === 11 ? 1 : 0;
+    console.log(firstCalendarDate.month, 'firstCalendarDate.month');
+
+    secondCalendarDate.month = (secondCalendarDate.month + 11) % 12;
+    secondCalendarDate.year -= secondCalendarDate.month === 11 ? 1 : 0;
+  },
+  goNextDate: () => {
+    firstCalendarDate.month = (firstCalendarDate.month + 1) % 12;
+    firstCalendarDate.year += firstCalendarDate.month === 0 ? 1 : 0;
+
+    secondCalendarDate.month = (secondCalendarDate.month + 1) % 12;
+    secondCalendarDate.year += secondCalendarDate.month === 0 ? 1 : 0;
   }
 };
 

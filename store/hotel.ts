@@ -1,7 +1,9 @@
 import { defineStore } from 'pinia';
 import { getAllHotelsApi } from '~~/api/hotel';
-import { Hotel, AllHotelMap, AllHoteFilterObj } from '~~/model/hotel';
+import { type Hotel, type AllHotelMap, type AllHoteFilterObj } from '~~/model/hotel';
 import { getProductApi } from '@/api/hotel';
+import type { PublicRuntimeConfig } from 'nuxt/schema';
+// import type { PublicRuntimeConfig } from 'nuxt/schema';
 
 interface State {
   allHotels: Hotel[];
@@ -44,7 +46,7 @@ export const useHotel = defineStore('hotelStore', {
         reviews: []
       },
       hotHotels: [],
-      baseUrl,
+      baseUrl: baseUrl as unknown as string,
       hotelFilterObj: {
         'price[gte]': 0,
         'price[lte]': 20000,
@@ -76,7 +78,8 @@ export const useHotel = defineStore('hotelStore', {
   actions: {
     async getAllHotels(filterObj?: AllHoteFilterObj) {
       const hotelData = await getAllHotelsApi<Hotel[]>(filterObj);
-      this.allHotels.push(...hotelData?.data?.data);
+      this.allHotels = hotelData?.data?.data;
+      console.log(this.allHotels, 'allHotels action');
       this.hotelTotal = hotelData.total;
       this.curHotelNum = hotelData.result;
     },
@@ -99,6 +102,14 @@ export const useHotel = defineStore('hotelStore', {
         default:
           break;
       }
+    },
+    resetHotelData() {
+      this.allHotels = [];
+    },
+    patchFilterDate(data: { [P in keyof AllHoteFilterObj]?: AllHoteFilterObj[P] }) {
+      this.$patch({
+        hotelFilterObj: { ...data }
+      });
     }
   },
   getters: {

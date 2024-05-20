@@ -2,15 +2,13 @@
   <NuxtLayout>
     <NuxtPage />
   </NuxtLayout>
-  <client-only>
-    <Modal v-if="isModalOpen" />
-  </client-only>
   <Message v-if="content" />
-  <TransitionPage v-if="showTansitionPage" v-model:showTansitionPage="showTansitionPage" />
+  <Teleport to="body">
+    <TransitionPage v-if="showTransitionPage" v-model:showTransitionPage="showTransitionPage" />
+  </Teleport>
 </template>
 
 <script setup lang="ts">
-import Modal from './components/modal/index.vue';
 import Message from './components/Message.vue';
 import { useStore } from '~~/store/index';
 import { storeToRefs } from 'pinia';
@@ -33,39 +31,23 @@ useHead({
   ]
 });
 
-const { useMessage, useAuth, useModal } = useStore();
+const { useMessage, useAuth } = useStore();
 
 const messageStore = useMessage();
 const { content } = storeToRefs(messageStore);
-
-const modalStore = useModal();
-const { isModalOpen } = storeToRefs(modalStore);
-const { toggleModal } = modalStore;
 
 const authStore = useAuth();
 authStore.$patch({
   token: useCookie('easy-booking-token').value
 });
 
-const htmlDom = process.client ? document.querySelector('html') : null;
-const showTansitionPage = ref(false);
-
-watch([isModalOpen, showTansitionPage], (val) => {
-  console.log(showTansitionPage.value);
-  if (htmlDom) {
-    if (val[0] || val[1]) {
-      htmlDom.style.overflowY = 'hidden';
-    } else {
-      htmlDom.style.overflowY = 'unset';
-    }
-  }
-});
+const showTransitionPage = ref(false);
 
 watch(
   () => route.path,
   () => {
-    showTansitionPage.value = true;
-    toggleModal(false);
+    showTransitionPage.value = true;
+    // toggleModal(false);
   }
 );
 </script>

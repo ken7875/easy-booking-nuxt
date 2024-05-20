@@ -31,33 +31,40 @@
               { 'animate-cardFadeInAnimate': index === 4 },
               { 'shadow-xl shadow-black': index === 4 },
               { 'opacity-50': index !== 4 },
-              index === 4 ? 'bg-white' : 'bg-[#212121]',
+              index === 4
+                ? 'bg-white'
+                : 'before:absolute before:top-0 before:left-0 before:block before:w-full before:h-full before:bg-[#000] before:opacity-[0.4] text-white',
               'duration-300 ease-linear'
             ]"
           >
+            <!-- FIXME 修正圖片串接方式 -->
             <template #header>
-              <img :src="slideItem.images[0]" alt="hotelImg" class="w-full h-[220px] object-cover object-center" />
+              <img
+                :src="slideItem.images[0]"
+                alt="hotelImg"
+                :class="['w-full h-[220px] object-cover object-center', { 'text-white': index !== 4 }]"
+              />
             </template>
             <template #body>
-              <h3 :class="['text-[2rem]', index === 4 ? 'text-black' : 'text-white', 'mb-[16px]']">
-                {{ slideItem.name }}
-              </h3>
-              <div class="mb-[16px]">
-                <span
-                  :class="[index === 4 ? 'text-black' : 'text-white']"
-                  v-textSlice:[80]="slideItem.description"
-                ></span>
-                <span v-if="slideItem.description.length > 80" :class="[index === 4 ? 'text-black' : 'text-white']"
-                  >...</span
-                >
+              <div :class="[index === 4 ? 'text-black' : 'bg-black text-white', 'h-full']">
+                <h3 :class="['text-[2rem]', 'mb-[16px]']">
+                  {{ slideItem.name }}
+                </h3>
+                <div class="mb-[16px]">
+                  <span v-textSlice:[80]="slideItem.description"></span>
+                  <span v-if="slideItem.description.length > 80">...</span>
+                </div>
+                <p :class="[, 'mb-[16px]']">評分: {{ slideItem.ratingAverage }}</p>
+                <p :class="[, 'mb-[16px]']">最低價格: {{ slideItem.price }}</p>
               </div>
-              <p :class="[index === 4 ? 'text-black' : 'text-white', 'mb-[16px]']">
-                評分: {{ slideItem.ratingAverage }}
-              </p>
-              <p :class="[index === 4 ? 'text-black' : 'text-white', 'mb-[16px]']">最低價格: {{ slideItem.price }}</p>
             </template>
             <template #footer>
-              <div class="border-t border-darkLight w-full absolute bottom-0 p-[10px] flex justify-end">
+              <div
+                :class="[
+                  'border-t border-darkLight w-full absolute bottom-0 p-[10px] flex justify-end',
+                  index === 4 ? 'text-black' : 'text-white bg-black'
+                ]"
+              >
                 <NuxtLink :to="`/Hotel-${slideItem._id}`" class="button button__outline-primary w-[30%]"
                   >查看房間</NuxtLink
                 >
@@ -71,10 +78,10 @@
 </template>
 
 <script setup lang="ts">
-import slider from '../slider/Slider.vue';
-import card from '../card/index.vue';
+import slider from '~~/components/slider/Slider.vue';
+import card from '~~/components/card/index.vue';
 import { getHotHotels } from '~~/api/hotel';
-import { Hotel } from '~~/model/hotel';
+import { type Hotel } from '~~/model/hotel';
 
 const {
   data: hotHotelData,

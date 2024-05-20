@@ -129,14 +129,12 @@ const { handleSubmit, errors } = useForm({
 const { value: account } = useField<string>('account', undefined, { initialValue: 'testUser' });
 const { value: password } = useField<string>('password', undefined, { initialValue: 'testUser' });
 
-const login = () => {
+const login = async () => {
   handleSubmit(async (values) => {
-    console.log(values);
     try {
       await loginRequest({ account: account.value, password: password.value });
 
       const path = reserveHotelInfo.value.productId ? '/Booking' : '/';
-      console.log(reserveHotelInfo.value.productId, 'path');
 
       router.push(path);
     } catch (error) {
@@ -152,6 +150,7 @@ const getCarouselRef = (el: ComponentPublicInstance<any> | Element) => {
 let tl: GSAPTimeline | null = gsap.timeline({ repeat: -1 });
 
 const fadeAnimation = () => {
+  console.log(123123);
   tl?.fromTo(carouselAryRef.value[0], { autoAlpha: 1 }, { autoAlpha: 0, duration: 4 });
   tl?.fromTo(carouselAryRef.value[1], { autoAlpha: 0 }, { autoAlpha: 1, duration: 4 }, '<');
   tl?.fromTo(carouselAryRef.value[1], { autoAlpha: 1 }, { autoAlpha: 0, duration: 4 });

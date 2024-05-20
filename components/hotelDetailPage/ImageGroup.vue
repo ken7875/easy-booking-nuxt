@@ -54,7 +54,7 @@
 </template>
 
 <script setup lang="ts">
-import { Hotel } from '~~/model/hotel';
+import { type Hotel } from '~~/model/hotel';
 
 defineProps<{
   hotelDetailData: Hotel | null;

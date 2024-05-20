@@ -81,6 +81,7 @@
         <Button type="submit" class="w-[100px]">送出</Button>
       </div>
     </form>
+    <UploadImageModal v-model="modalOpenMap['uploadImage']"></UploadImageModal>
   </div>
 </template>
 
@@ -93,12 +94,13 @@ import { useField, useForm } from 'vee-validate';
 import * as validate from '~~/utils/validate';
 import { object } from 'yup';
 import { storeToRefs } from 'pinia';
+import UploadImageModal from '~/components/UploadImageModal.vue';
 
 definePageMeta({
   middleware: 'auth'
 });
 
-const { useMessage, useAuth, useModal } = useStore();
+const { useMessage, useAuth } = useStore();
 
 const msgStore = useMessage();
 const { openMsg } = msgStore;
@@ -187,14 +189,14 @@ const submit = handleSubmit(async (values) => {
   }
 });
 
+const modalOpenMap = ref({
+  uploadImage: defineModel()
+});
 // 上傳頭貼功能
 const tempPhoto = ref<string | ArrayBuffer | null | undefined>('');
 
 const authStore = useAuth();
 const { avatar } = storeToRefs(authStore);
-
-const modalStore = useModal();
-const { toggleModal, modalType } = modalStore;
 
 const choosePhoto = (e: any) => {
   const file = e.target.files[0];
@@ -210,8 +212,8 @@ const choosePhoto = (e: any) => {
       authStore.$patch({
         checkImg: tempPhoto.value
       });
-      toggleModal(true);
-      modalType({ components: 'UploadImageModal', width: '30%' });
+
+      modalOpenMap.value['uploadImage'] = true;
     } else {
       openMsg({
         title: '錯誤',

@@ -72,7 +72,7 @@
 </template>
 
 <script setup lang="ts">
-import ModalLayout from '~~/components/modal/ModalLayout.vue';
+import ModalLayout from '~~/components/modal/index.vue';
 import RangeSlider from './RangeSlider.vue';
 import BaseSelect from '../form/BaseSelect.vue';
 import DropDownMenu from '../DropDownMenu.vue';
@@ -80,7 +80,7 @@ import throttle from '~~/utils/throttle';
 import icon from '~~/utils/icon';
 import { useHotel } from '~~/store/hotel';
 import { storeToRefs } from 'pinia';
-import { OptionsType } from '~~/model/hotel';
+import { type OptionsType } from '~~/model/hotel';
 
 const hotelStore = useHotel();
 const { filterHandler } = hotelStore;

@@ -10,10 +10,12 @@
     </div>
   </div>
   <span v-textSlice:[sliceNum]="hotelDetailData?.description"></span>
-  <span v-show="!isTextShow">...</span>
-  <span class="text-secondary ml-[5px] cursor-pointer" @click="seeMore">{{
-    !isTextShow ? '閱讀更多' : '隱藏內容'
-  }}</span>
+  <template v-if="hotelDetailData?.description && hotelDetailData?.description.length > 315">
+    <span v-show="!isTextShow">...</span>
+    <span class="text-secondary ml-[5px] cursor-pointer" @click="seeMore">{{
+      !isTextShow ? '閱讀更多' : '隱藏內容'
+    }}</span>
+  </template>
   <div class="border border-darkLight px-[15px] mt-[20px]">
     <h3 class="text-[1.3rem] mb-[8px]">免費設施</h3>
     <div class="flex flex-wrap">
@@ -28,7 +30,7 @@
 </template>
 
 <script setup lang="ts">
-import { Hotel } from '~~/model/hotel';
+import { type Hotel } from '~~/model/hotel';
 import icon from '~~/utils/icon';
 
 const props = defineProps<{

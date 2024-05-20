@@ -1,15 +1,42 @@
+import type { NuxtPage } from 'nuxt/schema';
 import svgLoader from 'vite-svg-loader';
 
 // https://v3.nuxtjs.org/api/configuration/nuxt.config
 export default defineNuxtConfig({
-  head: {
-    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
-  },
-  buildModules: ['@pinia/nuxt'],
+  // head: {
+  //   link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
+  // },
+  // buildModules: ['@pinia/nuxt'],
   build: {
     transpile: ['gsap']
   },
-  modules: ['@nuxtjs/tailwindcss', '@pinia/nuxt', '@nuxtjs/device'],
+  components: [
+    {
+      path: '~~/components'
+    },
+    {
+      path: '~~/pages/home/components'
+    }
+  ],
+  hooks: {
+    'pages:extend'(pages) {
+      function removePagesMatching(pattern: RegExp, pages: NuxtPage[] = []) {
+        const pagesToRemove = [];
+        for (const page of pages) {
+          if (pattern.test(page.file as string)) {
+            pagesToRemove.push(page);
+          } else {
+            removePagesMatching(pattern, page.children);
+          }
+        }
+        for (const page of pagesToRemove) {
+          pages.splice(pages.indexOf(page), 1);
+        }
+      }
+      removePagesMatching(/\.ts$|components|\.spec\.ts$/, pages);
+    }
+  },
+  modules: ['@nuxtjs/tailwindcss', '@pinia/nuxt', '@nuxtjs/device', 'nuxt-vitest'],
   typescript: {
     strict: true
   },
@@ -33,6 +60,11 @@ export default defineNuxtConfig({
   //   }
   // },
   vite: {
+    vue: {
+      script: {
+        defineModel: true
+      }
+    },
     esbuild: {
       pure: process.env.NODE_ENV === 'production' ? ['console.log', 'debugger'] : []
     },

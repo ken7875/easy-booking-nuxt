@@ -8,7 +8,7 @@
 </template>
 
 <script setup lang="ts">
-import { ViewPorts } from '~~/model/hotel';
+import { type ViewPorts } from '~~/model/hotel';
 
 interface Props {
   viewPorts: ViewPorts[];

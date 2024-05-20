@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
-import { ReserveHotelInfo } from '~~/model/hotel';
-import { BookingForm } from '~~/model/booking';
+import { type ReserveHotelInfo } from '~~/model/hotel';
+import { type BookingForm } from '~~/model/booking';
 interface State {
   reserveHotelInfo: ReserveHotelInfo;
   bookingForm: BookingForm;

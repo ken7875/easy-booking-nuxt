@@ -15,7 +15,9 @@
         ref="PeopleCounterInstance"
         :class="[peopleCounterWidth, 'lg:mb-0 h-[3rem]']"
       />
-      <Button class="lg:w-[100px] lg:rounded-t-[8px] lg:ml-[10px] w-full h-[3rem] rounded-t-none" @click="search"
+      <Button
+        class="button__secondary lg:w-[100px] lg:rounded-t-[8px] lg:ml-[10px] w-full h-[3rem] rounded-t-none"
+        @click="search"
         >搜尋</Button
       >
     </div>

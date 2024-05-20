@@ -1,8 +1,5 @@
 <template>
   <div :class="['w-[350px] bg-white px-[1px]']">
-    <div class="h-[2.5rem] mt-[5px] pl-[5px] border-b border-darkLight">
-      <p class="font-bold" v-if="adjustBtn === 'prev'">請選擇入住日期</p>
-    </div>
     <div class="text-center pb-[20px] px-0 flex jusitfy-center items-center">
       <button
         :class="[
@@ -50,7 +47,7 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue';
 import { useStore } from '~~/store/index';
-import { DateType } from './type';
+import { type DateType } from './type';
 import { storeToRefs } from 'pinia';
 
 const { useDatePicker } = useStore();

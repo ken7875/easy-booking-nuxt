@@ -1,5 +1,4 @@
 import { defineStore } from 'pinia';
-import { Hotel } from '~~/model/hotel';
 
 interface State {
   markers: number[][];
