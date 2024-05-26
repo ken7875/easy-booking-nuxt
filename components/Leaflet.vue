@@ -43,7 +43,6 @@ interface MapInit {
 // const { markers } = toRefs(props);
 
 // map center
-console.log(markers.value, 'markers.value');
 const [lat, lng] = [markers.value[0][0], markers.value[0][1]];
 setCenterMarker([lat, lng]);
 const mapInit = reactive<MapInit>({

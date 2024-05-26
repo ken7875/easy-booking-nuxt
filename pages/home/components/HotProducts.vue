@@ -65,7 +65,7 @@
                   index === 4 ? 'text-black' : 'text-white bg-black'
                 ]"
               >
-                <NuxtLink :to="`/Hotel-${slideItem._id}`" class="button button__outline-primary w-[30%]"
+                <NuxtLink :to="`/Hotel-${slideItem._id}`" class="button button__outline-primary w-[30%] h-[40px]"
                   >查看房間</NuxtLink
                 >
               </div>

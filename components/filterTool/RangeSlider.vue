@@ -1,6 +1,6 @@
 <template>
   <div class="w-full">
-    <div class="w-full relative">
+    <div class="w-full relative mb-[5px]">
       <!-- progress bar -->
       <div class="relative h-[6px] bg-[#ddd] w-full">
         <div

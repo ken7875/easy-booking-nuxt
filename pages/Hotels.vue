@@ -4,7 +4,7 @@
       :class="['lg:w-full w-[90%] flex lg:z-[40] lg:pl-[20%]', isMapOpen && isMobile ? 'z-[100px]' : 'z-[10]']"
       @updateProducts="getAllHotelsHandler($event, hotelFilterObj)"
     />
-    <FilterBarPc :class="['sticky top-[5rem] w-full lg:z-[30]', isMapOpen && isMobile ? 'z-[100px]' : 'z-[10]']" />
+    <FilterBarPc :class="['sticky top-[6rem] w-full lg:z-[30]', isMapOpen && isMobile ? 'z-[100px]' : 'z-[10]']" />
     <FilterBarMobile @open-map="toggleMap.openMap.apply(toggleMap)" class="sticky top-[6.5rem] z-[2] h-[3rem]" />
     <article class="lg:w-[50%] w-full lg:px-[20px] relative">
       <div
@@ -76,7 +76,7 @@
                 </div>
                 <!-- 手機footer -->
                 <div v-if="!isDesktop" class="border-t border-[#dee2e6] px-[10px]">
-                  <div class="flex justify-center items-end">
+                  <div class="flex justify-around items-center">
                     <div class="mr-[5px]">
                       <span class="lg:text-[1.7rem] text-[1.2rem] text-end text-primary inline-block mr-[2px]"
                         >$ {{ hotel.price }}</span
@@ -86,7 +86,9 @@
                         剩下 <span class="text-primary">{{ calcRoomRemainNums(hotel.id) }}</span> 間空房
                       </p>
                     </div>
-                    <NuxtLink :to="`/Hotel-${hotel.id}`" class="button button__outline-primary">查看房間詳情</NuxtLink>
+                    <NuxtLink :to="`/Hotel-${hotel.id}`" class="button button__outline-primary px-[5px] h-[45px]"
+                      >查看房間詳情</NuxtLink
+                    >
                   </div>
                 </div>
               </div>
@@ -100,7 +102,9 @@
                 <p class="text-end text-[0.8rem] my-[15px]">
                   剩下 <span class="text-primary font-[800]">{{ calcRoomRemainNums(hotel.id) }}</span> 間空房
                 </p>
-                <NuxtLink :to="`/Hotel-${hotel.id}`" class="button button__outline-primary">查看房間詳情</NuxtLink>
+                <NuxtLink :to="`/Hotel-${hotel.id}`" class="button button__outline-primary h-[45px]"
+                  >查看房間詳情</NuxtLink
+                >
               </div>
             </template>
             <template #detail v-if="detailType.id && detailType.title && detailType.id === hotel.id">
@@ -215,6 +219,7 @@ watch(
     hotelFilterObj.value['service[in]']
   ],
   () => {
+    showHotelList.value = [];
     getAllHotelsHandler(true, hotelFilterObj.value);
   },
   {
@@ -224,10 +229,8 @@ watch(
 
 // 計算房間剩餘數量
 const calcRoomRemainNums = (id: string) => {
-  const res = allHotelMap.value[id]?.roomType?.reduce((acc, cur) => {
-    return (acc += cur.remainRoom);
-  }, 0);
-  console.log(res, 'asdasdsdadassda');
+  const res = allHotelMap.value[id]?.roomType?.reduce((acc, cur) => (acc += cur.remainRoom), 0);
+
   return res;
 };
 

@@ -1,14 +1,16 @@
 <template>
-  <div>
-    <label :for="label" :class="{ block: blockLabel }">{{ label }}</label>
-    <input
-      v-bind="$attrs"
-      :value="modelValue"
-      :class="['w-full input h-[2.5rem]', { isError: error }]"
-      @input="$emit('update:modelValue', ($event.target as HTMLInputElement)?.value)"
-      :placeholder="placeholder"
-    />
-    <p v-if="error" class="text-red-500 font-bold mt-[20px]">{{ error }}</p>
+  <div class="relative">
+    <div>
+      <label :for="label" :class="{ block: blockLabel }">{{ label }}</label>
+      <input
+        v-bind="$attrs"
+        :value="modelValue"
+        :class="['w-full input h-[2.5rem]', { 'border border-red-500': error }]"
+        @input="$emit('update:modelValue', ($event.target as HTMLInputElement)?.value)"
+        :placeholder="placeholder"
+      />
+    </div>
+    <p v-if="error" class="text-red-500 text-[12px] font-bold absolute bottom-[-20px] right-0">{{ error }}</p>
   </div>
 </template>
 

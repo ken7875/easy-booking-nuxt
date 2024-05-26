@@ -1,17 +1,17 @@
 <template>
-  <div class="h-[8rem] bg-[#f9fafa] py-[20px] w-full px-[20%] hidden lg:block">
+  <div class="h-[8rem] bg-[#f9fafa] pt-[20px] pb-[4px] w-full px-[20%] hidden lg:block">
     <div class="w-full h-full flex items-center">
       <div class="flex-[1_1_0%] pr-[10px] border-x-[3px] border-[#E6EAEA] h-full px-[20px]">
-        <p class="mb-[20px]">價格範圍</p>
+        <p class="mb-[10px]">價格範圍</p>
         <RangeSlider
           @updateProducts="updateProducts($event, 'price')"
           :max="hotelFilterObj['price[lte]']!"
           :min="hotelFilterObj['price[gte]']!"
         />
       </div>
-      <div class="flex-[1_1_0%] h-full flex items-center justify-between px-[20px]">
-        <div class="w-[50%]">
-          <p class="mb-[20px]">評分</p>
+      <div class="flex-[1_1_0%] h-full flex items-top justify-between px-[20px]">
+        <div class="w-[50%] mr-[15px]">
+          <p class="mb-[27px]">評分</p>
           <BaseSelect
             v-model="rateValue"
             :options="rateSelect"
@@ -20,7 +20,7 @@
           />
         </div>
         <div class="w-[50%]">
-          <p class="mb-[20px]">飯店等級</p>
+          <p class="mb-[27px]">飯店等級</p>
           <BaseSelect
             v-model="starsValue"
             :options="hotelStars"
@@ -29,12 +29,12 @@
           />
         </div>
       </div>
-      <div class="flex-[1_1_0%] border-x-[3px] border-[#E6EAEA] h-full flex items-center px-[20px]">
+      <div class="flex-[1_1_0%] border-x-[3px] border-[#E6EAEA] h-full flex items-top px-[20px]">
         <div class="w-full">
-          <p class="mb-[20px]">其他條件</p>
+          <p class="mb-[27px]">其他條件</p>
           <DropDownMenu>
             <template #trigger>
-              <p>
+              <p class="input">
                 <span>已套用</span>
                 <span>{{ chooseServiceArray.length }}</span>
                 <span>條件</span>

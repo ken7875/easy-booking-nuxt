@@ -24,7 +24,7 @@
         在 Easy Booking 有上百間優質飯店等您入住，<br />點選下方按鈕即可開始挑選飯店
       </p>
       <div class="flex justify-center">
-        <Button class="w-[180px] p-[15px] text-[1.5rem]" @click="goProductsPage">
+        <Button class="w-[180px] p-[15px] text-[1.5rem] button" @click="goProductsPage">
           <template #default>開始選房</template>
         </Button>
       </div>

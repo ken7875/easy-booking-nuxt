@@ -43,22 +43,13 @@ export default defineNuxtConfig({
   css: ['~~/assets/css/tailwinds.css', '@fortawesome/fontawesome-svg-core/styles.css'],
   runtimeConfig: {
     public: {
-      apiBase: process.env.NODE_ENV === 'development' ? process.env.API_BASE_URL : process.env.API_BASE_URL_PROD
+      // process.env.NODE_ENV === 'development' ? process.env.API_BASE_URL : process.env.API_BASE_URL_PROD
+      apiBase: process.env.API_BASE_URL
     }
   },
   nitro: {
     compressPublicAssets: true // 壓縮 public assets 物件
   },
-  // nitro: {
-  //   storage: {
-  //     redis: {
-  //       driver: 'redis',
-  //       port: 6379, // Redis port
-  //       host: '127.0.0.1', // Redis host
-  //       db: 0 // Defaults to 0
-  //     }
-  //   }
-  // },
   vite: {
     vue: {
       script: {
@@ -69,11 +60,21 @@ export default defineNuxtConfig({
       pure: process.env.NODE_ENV === 'production' ? ['console.log', 'debugger'] : []
     },
     build: {
-      minify: 'terser'
+      minify: 'terser',
+      rollupOptions: {
+        output: {
+          manualChunks(id) {
+            if (id.includes('node_modules')) {
+              return id.toString().split('node_modules/')[1].split('/')[0].toString();
+            }
+          }
+        }
+      }
     },
     plugins: [svgLoader({ defaultImport: 'url' })]
+  },
+  app: {
+    baseURL: '/'
   }
-  // app: {
-  //   baseURL: '/home/'
-  // }'http://localhost:8000/api'
+  // 'http://localhost:8000/api'
 });

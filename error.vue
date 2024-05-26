@@ -14,7 +14,7 @@
           <p class="text-[1.2rem] mb-[25px]">您所尋找的頁面並不存在，請點擊下面按鈕回到首頁。</p>
         </div>
         <p v-else class="text-[2rem] mb-[25px]">{{ error?.message }}</p>
-        <Button :bgColor="'button__outline-primary'" @click="handleError" class="float-right">回首頁</Button>
+        <Button @click="handleError" class="float-right button__outline-primary">回首頁</Button>
       </div>
     </div>
   </div>

@@ -59,7 +59,6 @@ const { allHotels, allHotelMap } = storeToRefs(hotelStore);
 const sliceHotels = computed(() => allHotels.value.slice(0, 6));
 
 const currentHotel = ref(sliceHotels.value[0]);
-console.log(sliceHotels.value, currentHotel.value);
 const changeShowHotel = (id: string) => {
   isTextShow.value = false;
   currentHotel.value = allHotelMap.value[id];

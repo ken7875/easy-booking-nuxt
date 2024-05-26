@@ -19,7 +19,6 @@
 import { useStore } from '~~/store/index';
 import { useIntersectionObserver } from '@vueuse/core';
 import { storeToRefs } from 'pinia';
-import { type Hotel } from '~~/model/hotel';
 
 const { useHotel } = useStore();
 const hotelStore = useHotel();
@@ -50,8 +49,6 @@ const { stop: stopAllServiceListen, resume: resumeAllServiceListen } = useInters
   allService,
   ([{ isIntersecting }], observerElement) => {
     allServiceTargetIsVisible.value = isIntersecting;
-    console.log(allServiceTargetIsVisible.value, 'asasdsda');
-    console.log(allService.value, 'observerElement');
   }
   // {
   //   rootMargin: '500px'

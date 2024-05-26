@@ -25,10 +25,11 @@
         </div>
       </template>
       <template #footer>
-        <div class="absolute bottom-0 w-[90%] p-[15px] flex justify-end border-t border-darkLight" v-if="hasBtn">
-          <Button @click="handleAction('cancel')" class="w-[80px]" :bgColor="'button__secondary'" v-if="hasCancel"
-            >取消</Button
-          >
+        <div
+          class="absolute bottom-0 w-[90%] p-[15px] flex justify-end border-t border-darkLight button__secondary"
+          v-if="hasBtn"
+        >
+          <Button @click="handleAction('cancel')" class="w-[80px]" v-if="hasCancel">取消</Button>
           <Button @click="handleAction('confirm')" class="w-[80px]">確認</Button>
         </div>
       </template>

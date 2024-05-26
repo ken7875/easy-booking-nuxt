@@ -17,10 +17,10 @@
       <ul class="lg:w-[250px] w-[320px]">
         <li class="flex justify-between items-center mb-[50px]" v-for="(item, i) in optionListDomArray" :key="i">
           <p class="nowrap">{{ item }}</p>
-          <div class="flex items-center justify-between w-[70%]">
-            <Button :bgColor="'button__none'" @click.prevent="minus(i)">-</Button>
+          <div class="flex items-center justify-between w-[70%] button__none">
+            <Button @click.prevent="minus(i)">-</Button>
             <input type="number" v-model="tempOptions[i]" class="w-[50px] text-center border-1 border-darkLight" />
-            <Button :bgColor="'button__none'" @click.prevent="add(i)">+</Button>
+            <Button class="button__none" @click.prevent="add(i)">+</Button>
           </div>
         </li>
         <li>

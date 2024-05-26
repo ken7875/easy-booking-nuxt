@@ -1,15 +1,11 @@
 <template>
-  <button :class="[bgColor, textColor, 'button']">
+  <button :class="['button, w-[150px] button__primary']" v-bind="$attrs">
     <slot></slot>
   </button>
 </template>
 
 <script setup lang="ts">
-defineProps({
-  bgColor: { type: String, default: 'button__primary' },
-  width: { type: String, default: 'w-[150px]' },
-  textColor: { type: String, default: '' }
+defineOptions({
+  inheritAttrs: false
 });
-
-// const { bgColor, width, textColor } = toRefs(props);
 </script>

@@ -1,34 +1,28 @@
-# 我們的 node 版本 image 的環境
-FROM node:16-alpine AS builder
+# use node 16 alpine image
+FROM node:20-alpine
 
-# ENV HOST=0.0.0.0
+# create work directory in app folder
+WORKDIR /app
 
-# 創造目標的資料夾
-RUN mkdir -p /easy-booking-app
-WORKDIR /easy-booking-app
+# install required packages for node image
+# RUN apk --no-cache add openssh g++ make python3 git
 
-RUN apk update && apk upgrade
-RUN apk add git
+# copy over package.json files
+COPY package.json /app/
+COPY yarn.lock /app/
 
-COPY package*.json ./
+# install all depencies
+RUN yarn install
 
-RUN yarn install && yarn cache clean
-# CMD ["sh", "-c", "npm install && npm run dev"]
-# 把當下資料夾內容複製到容器內的指定的資料夾底下 (若有 dockerignore 會忽略指定的內容)
-COPY . /easy-booking-app
+# copy over all files to the work directory
+ADD . /app
 
-# 安裝所有套件並建置
-# RUN yarn install
-# 若 你是整包原始碼裝過來的話，請設定 .dockerignore 並加上下一行
-# RUN npm build
+# build the project
+RUN yarn build
 
-# 把容器對外的 port 開啟
+# expose the host and port 3000 to the server
+ENV HOST 0.0.0.0
 EXPOSE 3000
 
-# 容器內 我們 nuxt 的 host 和 port 指定給環境變數
-ENV NUXT_HOST=0.0.0.0
-ENV NUXT_PORT=3000
-
-# 執行鏡像時會執行的 script
-# CMD [ "yarn", "dev" ]
-ENTRYPOINT [ "yarn", "dev" ]
+# run the build project with node
+ENTRYPOINT ["node", ".output/server/index.mjs"]
