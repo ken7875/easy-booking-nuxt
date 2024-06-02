@@ -53,8 +53,8 @@
 <script setup lang="ts">
 import { reactive } from 'vue';
 import { useRouter } from 'vue-router';
-import { createBookingApi } from '~~/api/booking';
-import { OrderDetail, OrderDetailParams } from '~~/model/booking';
+import { apiMethods } from '~~/api/index';
+import type { OrderDetailParams } from '~~/model/booking';
 import { useStore } from '~~/store/index';
 import { storeToRefs } from 'pinia';
 import Button from '~~/components/Button.vue';
@@ -81,7 +81,7 @@ const bookingInfo = reactive<OrderDetailParams>({
 });
 
 const createBooking = async () => {
-  const res = await createBookingApi<OrderDetailParams>(bookingInfo);
+  const res = await apiMethods.booking.createBooking<OrderDetailParams>(bookingInfo);
 
   return res.status;
 };

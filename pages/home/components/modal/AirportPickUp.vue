@@ -45,7 +45,7 @@ import ServiceLayout from './ServiceModalLayout.vue';
 import BaseSelect from '~~/components/form/BaseSelect.vue';
 import { useField, useForm } from 'vee-validate';
 import { string } from 'yup';
-import { createPickUpOrderApi } from '~~/api/pickUp';
+import { apiMethods } from '~~/api/index';
 import { useStore } from '~~/store/index';
 import airportJson from '~~/assets/json/airport.json';
 import { type Hotel } from '~~/model/hotel';
@@ -163,7 +163,7 @@ const submit = handleSubmit(() => {
   }
 
   try {
-    createPickUpOrderApi({
+    apiMethods.pickUp.createPickUpOrder({
       userId,
       airport: {
         name: airportJson[airport.value].name,

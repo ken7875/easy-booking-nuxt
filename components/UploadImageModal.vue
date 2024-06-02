@@ -18,7 +18,7 @@ import ModalLayout from './modal/index.vue';
 import { useStore } from '~~/store/index';
 import { storeToRefs } from 'pinia';
 import Button from './Button.vue';
-import { updateUserApi } from '~~/api/auth';
+import { apiMethods } from '~~/api/index';
 
 const { useAuth, useMessage } = useStore();
 const authStore = useAuth();
@@ -42,7 +42,7 @@ const uploadPhoto = async () => {
   }
 
   try {
-    await updateUserApi(id, formData.value);
+    await apiMethods.auth.updateUser(id, formData.value);
     await getAvatar();
 
     openMsg({

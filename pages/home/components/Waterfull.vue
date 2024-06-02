@@ -14,7 +14,9 @@
     >
       <div v-for="(col, colIdx) in row" :key="colIdx" class="w-full opacity-50">
         <div :class="['w-full relative p-[20px]', { 'h-[400px]': rowIdx % 2 === 0, 'h-[350px]': rowIdx % 2 !== 0 }]">
-          <img :src="col.images[0]" alt="" class="h-full w-full object-cover object-center rounded-[16px]" />
+          <client-only>
+            <img :src="col.images[0]" alt="" class="h-full w-full object-cover object-center rounded-[16px]" />
+          </client-only>
         </div>
       </div>
     </div>
@@ -51,7 +53,7 @@ const waterfullData = computed(() => {
   let rowNum = device.isMobile ? 3 : 5; // 瀑布排數
   let startIdx = 0;
   let endIdx = 6;
-  console.log(startIdx, allHotels.value.length);
+
   for (let i = 0; i <= rowNum; i++) {
     // 如果 sliceidx 大於陣列總長度就把slice idx 初始
     if (startIdx >= allHotels.value.length) {

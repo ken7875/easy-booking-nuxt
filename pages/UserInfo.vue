@@ -89,7 +89,7 @@
 import { useStore } from '~~/store/index';
 import BaseInput from '~~/components/form/BaseInput.vue';
 import BaseSelect from '~~/components/form/BaseSelect.vue';
-import { getUserApi, updateUserApi } from '~~/api/auth';
+import { apiMethods } from '~~/api/index';
 import { useField, useForm } from 'vee-validate';
 import * as validate from '~~/utils/validate';
 import { object } from 'yup';
@@ -105,7 +105,7 @@ const { useMessage, useAuth } = useStore();
 const msgStore = useMessage();
 const { openMsg } = msgStore;
 
-const { data: userInfoData } = await useAsyncData('getUserInfo', () => getUserApi());
+const { data: userInfoData } = await useAsyncData('getUserInfo', () => apiMethods.auth.getUser());
 
 if (!userInfoData.value) {
   throw createError({
@@ -170,7 +170,7 @@ const submit = handleSubmit(async (values) => {
   const { id } = tempUserInfo.value;
 
   try {
-    const updateData = await updateUserApi(id, {
+    const updateData = await apiMethods.auth.updateUser(id, {
       gender: gender.value,
       address: address.value,
       country: country.value,

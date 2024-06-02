@@ -1,15 +1,15 @@
 import myFetch from '~~/utils/myFetch';
-import { ReserveHotelInfo } from '~~/model/hotel';
-import { OrderDetailParams } from '~~/model/booking';
-import { BaseResponse, GetAllResponse } from '~~/model/api';
+// import { ReserveHotelInfo } from '~~/model/hotel';
+import type { OrderDetailParams } from '~~/model/booking';
+import type { BaseResponse, GetAllResponse } from '~~/model/api';
 
-export const createBookingApi = <T>(body: OrderDetailParams): Promise<BaseResponse<T>> =>
+export const createBooking = <T>(body: OrderDetailParams): Promise<BaseResponse<T>> =>
   myFetch<BaseResponse<T>>('/booking', {
     method: 'POST',
     body
   });
 
-export const getOrdersApi = <T>(): Promise<GetAllResponse<T>> =>
+export const getOrders = <T>(): Promise<GetAllResponse<T>> =>
   myFetch<GetAllResponse<T>>('/booking', {
     method: 'GET'
   });

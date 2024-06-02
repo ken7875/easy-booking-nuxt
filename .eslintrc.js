@@ -7,7 +7,8 @@ module.exports = {
     'plugin:prettier/recommended',
     'plugin:vue/vue3-essential',
     'plugin:@typescript-eslint/recommended',
-    'plugin:nuxt/recommended'
+    'plugin:nuxt/recommended',
+    'vitest'
   ],
   parserOptions: {
     ecmaVersion: 'latest',

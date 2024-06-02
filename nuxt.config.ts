@@ -36,7 +36,7 @@ export default defineNuxtConfig({
       removePagesMatching(/\.ts$|components|\.spec\.ts$/, pages);
     }
   },
-  modules: ['@nuxtjs/tailwindcss', '@pinia/nuxt', '@nuxtjs/device', 'nuxt-vitest'],
+  modules: ['@nuxtjs/tailwindcss', '@pinia/nuxt', '@nuxtjs/device', '@nuxt/test-utils/module'],
   typescript: {
     strict: true
   },

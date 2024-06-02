@@ -41,6 +41,7 @@ definePageMeta({
 // await useAsyncData('hotHotel', () => getAllHotels());
 
 await getAllHotels();
+console.log(allHotels.value, 'allHotels')
 const WaterfullViews = defineAsyncComponent(() => import('./home/components/Waterfull.vue'));
 const allService = ref(null);
 const allServiceTargetIsVisible = ref(false);

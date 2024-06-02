@@ -41,10 +41,10 @@ import { useField, useForm } from 'vee-validate';
 import * as validate from '~~/utils/validate';
 import { object } from 'yup';
 import { signUpSessionStorage } from '~~/utils/storage';
-import { StepTwoSignUpInfo } from '~~/model/auth';
+import type { StepTwoSignUpInfo } from '~~/model/auth';
 import BaseInput from '~~/components/form/BaseInput.vue';
 import BaseSelect from '~~/components/form/BaseSelect.vue';
-import { signUpApi } from '~~/api/auth';
+import { apiMethods } from '~~/api/index';
 import { useStore } from '~~/store/index';
 
 const { useMessage, useAuth } = useStore();
@@ -112,7 +112,7 @@ const submit = handleSubmit(async (values) => {
     return;
   }
   const { account, password, confirmPassword } = signUpStorage;
-  await signUpApi({
+  await apiMethods.auth.signUp({
     account,
     password,
     confirmPassword,

@@ -60,16 +60,8 @@ declare global {
   const triggerRef: typeof import('vue')['triggerRef']
   const unref: typeof import('vue')['unref']
   const useAttrs: typeof import('vue')['useAttrs']
-  const useBaseFetch: typeof import('#imports')['useBaseFetch']
   const useCssModule: typeof import('vue')['useCssModule']
   const useCssVars: typeof import('vue')['useCssVars']
-  const useFavoriteLocalisation: typeof import('#imports')['useFavoriteLocalisation']
-  const useHead: typeof import('#imports')['useHead']
-  const useInputValidation: typeof import('#imports')['useInputValidation']
-  const useLazyAsyncData: typeof import('#imports')['useLazyAsyncData']
-  const useLocalisationOptions: typeof import('#imports')['useLocalisationOptions']
-  const useNuxtApp: typeof import('#imports')['useNuxtApp']
-  const useRuntimeConfig: typeof import('#imports')['useRuntimeConfig']
   const useSlots: typeof import('vue')['useSlots']
   const vi: typeof import('vitest')['vi']
   const vitest: typeof import('vitest')['vitest']
@@ -81,5 +73,6 @@ declare global {
 // for type re-export
 declare global {
   // @ts-ignore
-  export type { Component, ComponentPublicInstance, ComputedRef, InjectionKey, PropType, Ref, VNode } from 'vue'
+  export type { Component, ComponentPublicInstance, ComputedRef, ExtractDefaultPropTypes, ExtractPropTypes, ExtractPublicPropTypes, InjectionKey, PropType, Ref, VNode, WritableComputedRef } from 'vue'
+  import('vue')
 }

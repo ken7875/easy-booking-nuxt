@@ -6,7 +6,7 @@ const store = () => import('~~/store/index');
 // const { openMsg } = messageStore;
 
 interface Options {
-  method: string;
+  method: "get" | "post" | "GET" | "HEAD" | "PATCH" | "POST" | "PUT" | "DELETE" | "CONNECT" | "OPTIONS" | "TRACE" | "head" | "patch" | "put" | "delete" | "connect" | "options" | "trace" | undefined;
   body?: any;
   responseType?: 'blob' | 'json';
 }

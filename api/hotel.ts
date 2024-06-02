@@ -1,19 +1,20 @@
 import myFetch from '~~/utils/myFetch';
 import { type AllHoteFilterObj } from '~~/model/hotel';
 import { queryFactory } from '~~/utils/queryFactory';
-import { type GetAllResponse, type BaseResponse } from '~~/model/api';
+import type{ GetAllResponse, BaseResponse } from '~~/model/api';
+import { type Hotel } from '~~/model/hotel';
 
 interface getAllHotelsApiResponse<T> extends GetAllResponse<T> {
   total: number;
 }
 
-export const getHotHotels = <T>(): Promise<GetAllResponse<T>> => {
-  return myFetch<GetAllResponse<T>>('/products/hotProducts', {
+export const getHotHotels = (): Promise<GetAllResponse<Hotel[]>> => {
+  return myFetch<GetAllResponse<Hotel[]>>('/products/hotProducts', {
     method: 'GET'
   });
 };
 
-export const getAllHotelsApi = <T>(body?: AllHoteFilterObj): Promise<getAllHotelsApiResponse<T>> => {
+export const getAllHotels = (body?: AllHoteFilterObj): Promise<getAllHotelsApiResponse<Hotel[]>> => {
   // const path = query ? `products?${query}` : 'products';
   // const queryStr: string = Object.keys(query).length > 0 ? queryFactory(query) : '';
 
@@ -22,7 +23,7 @@ export const getAllHotelsApi = <T>(body?: AllHoteFilterObj): Promise<getAllHotel
     query = queryFactory(body);
   }
 
-  return myFetch<getAllHotelsApiResponse<T>>(`/products${query}`, {
+  return myFetch<getAllHotelsApiResponse<Hotel[]>>(`/products${query}`, {
     method: 'GET'
   });
 };

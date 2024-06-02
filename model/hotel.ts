@@ -1,4 +1,5 @@
 export interface Locations {
+  type: "Point";
   coordinates: number[];
   address: string;
 }
@@ -68,17 +69,20 @@ export interface Hotel {
   locations: Locations;
   name: string;
   price: number;
-  country: '台灣' | '美國' | '日本' | '加拿大' | '韓國' | '中國';
+  country: string;
   ratingAverage: number;
-  ratingQuantity: string;
+  ratingQuantity: number;
   description: string;
   images: string[];
   summary: string;
-  viewPorts: ViewPorts[];
+  freeCancel?: boolean;
+  noPrePay?: boolean;
+  priceDiscount?: number;
+  // viewPorts?: ViewPorts[];
   accommodate: number;
   roomType: RoomType[];
   stars: number;
-  reviews: Review[];
+  // reviews: Review[];
   service: Service;
 }
 

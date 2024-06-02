@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { getAllHotelsApi } from '~~/api/hotel';
+import { apiMethods } from '~~/api/index';
 import { type Hotel, type AllHotelMap, type AllHoteFilterObj } from '~~/model/hotel';
 // import type { PublicRuntimeConfig } from 'nuxt/schema';
 
@@ -75,9 +75,8 @@ export const useHotel = defineStore('hotelStore', {
   },
   actions: {
     async getAllHotels(filterObj?: AllHoteFilterObj) {
-      const hotelData = await getAllHotelsApi<Hotel[]>(filterObj);
+      const hotelData = await apiMethods.hotel.getAllHotels(filterObj);
       this.allHotels.push(...hotelData?.data?.data);
-      console.log(this.allHotels, 'allHotels action');
       this.hotelTotal = hotelData.total;
       this.curHotelNum = hotelData.result;
     },

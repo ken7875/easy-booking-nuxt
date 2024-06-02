@@ -1,8 +1,7 @@
 import { defineStore, storeToRefs } from 'pinia';
-import { UserInfo, LoginForm } from '~~/model/auth';
+import type { UserInfo, LoginForm } from '~~/model/auth';
 import { tokenCookie, userIdCookie } from '~~/utils/cookies';
-import { loginApi } from '~~/api/auth';
-import { getAvatarApi } from '~~/api/auth';
+import { apiMethods } from '~~/api/index';
 
 interface State {
   token: string | null;
@@ -22,7 +21,7 @@ export const useAuth = defineStore('auth', {
   }),
   actions: {
     async login({ account, password }: LoginForm) {
-      const loginRes = await loginApi({ account, password });
+      const loginRes = await apiMethods.auth.login({ account, password });
       const userInfo = loginRes.data.user;
       const token = loginRes.token;
 
@@ -43,7 +42,7 @@ export const useAuth = defineStore('auth', {
       }
 
       try {
-        const file = await getAvatarApi(id);
+        const file = await apiMethods.auth.getAvatar(id);
         const reader = new FileReader();
         reader.readAsDataURL(file);
 

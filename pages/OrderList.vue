@@ -102,7 +102,7 @@
 </template>
 
 <script setup lang="ts">
-import { getOrdersApi } from '~~/api/booking';
+import { apiMethods } from '~~/api/index';
 import { useStore } from '~~/store/index';
 import { storeToRefs } from 'pinia';
 import { type OrderDetail } from '~~/model/booking';
@@ -120,7 +120,7 @@ const { useAuth } = useStore();
 const authStore = useAuth();
 const { userInfo } = storeToRefs(authStore);
 
-const { data: ordersData, error } = await useAsyncData('ordersList', () => getOrdersApi<OrderDetail[]>());
+const { data: ordersData, error } = await useAsyncData('ordersList', () => apiMethods.booking.getOrders<OrderDetail[]>());
 
 const ordersList = ref(ordersData.value?.data?.data);
 

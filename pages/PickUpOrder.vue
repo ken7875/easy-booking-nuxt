@@ -72,10 +72,10 @@
 </template>
 
 <script setup lang="ts">
-import { getAllPickUpOrderApi } from '~~/api/pickUp';
+import { apiMethods } from '~~/api/index';
 import { useStore } from '~~/store/index';
 import { storeToRefs } from 'pinia';
-import { PickUpOrder } from '~~/model/pickUp';
+import type { PickUpOrder } from '~~/model/pickUp';
 import Card from '~~/components/card/index.vue';
 import { userIdCookie } from '~~/utils/cookies';
 
@@ -92,9 +92,7 @@ const isMapOpen = ref(false);
 
 const userId = userIdCookie().getItem();
 
-const { data: pickUpListData } = await useAsyncData('pickUpOrder', () => getAllPickUpOrderApi<PickUpOrder[]>(userId!), {
-  initialCache: false
-});
+const { data: pickUpListData } = await useAsyncData('pickUpOrder', () => apiMethods.pickUp.getAllPickUpOrder<PickUpOrder[]>(userId!));
 
 const pickUpList = ref(pickUpListData.value?.data.data);
 

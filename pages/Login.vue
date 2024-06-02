@@ -58,7 +58,7 @@
 import BaseInput from '~~/components/form/BaseInput.vue';
 import Button from '~~/components/Button.vue';
 // import BaseCheckbox from '~~/components/form/BaseCheckbox.vue';
-import { loginApi } from '~~/api/auth';
+import { apiMethods } from '~~/api/index';
 import { useRouter } from 'vue-router';
 import { useStore } from '~~/store/index';
 import { storeToRefs } from 'pinia';
