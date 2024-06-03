@@ -55,10 +55,10 @@
                 <h3 :class="['text-[2rem]', 'mb-[16px]']">
                   {{ slideItem.name }}
                 </h3>
-                <!-- <div class="mb-[16px]">
+                <div class="mb-[16px]">
                   <span v-textSlice:[80]="slideItem.description"></span>
                   <span v-if="slideItem.description.length > 80">...</span>
-                </div> -->
+                </div>
                 <p :class="[, 'mb-[16px]']">評分: {{ slideItem.ratingAverage }}</p>
                 <p :class="[, 'mb-[16px]']">最低價格: {{ slideItem.price }}</p>
               </div>

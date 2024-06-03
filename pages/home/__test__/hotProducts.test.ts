@@ -4,7 +4,6 @@ import HotProducts from '~~/pages/home/components/HotProducts.vue';
 import { productsData1, productsData2 } from './mockData';
 import { flushPromises } from '@vue/test-utils';
 import mergeWith from 'lodash/mergeWith';
-import { apiMethods } from '~/api';
 
 const AsyncHotProducts = defineComponent({
   components: { HotProducts },
@@ -14,9 +13,7 @@ const AsyncHotProducts = defineComponent({
 const createWrapper = async (override = {}) => {
   const defaultConfig = {
     global: {
-      mocks: {
-          sessionStorage: vi.fn()
-      },
+      mocks: {},
       directives: {
         textSlice: vi.fn()
       }
@@ -30,7 +27,7 @@ const createWrapper = async (override = {}) => {
 const getFakeCall = vi.fn();
 registerEndpoint('/products/hotProducts', getFakeCall)
 
-describe('test', () => {
+describe('hotProducts', () => {
   it('chinese title is shown', async () => {
     const wrapper = await createWrapper()
     await flushPromises();
