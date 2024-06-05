@@ -12,17 +12,15 @@
     >
       Hot Hotel
     </h3>
-    <slider
+    <Slider
       :spacing="`lg:ml-[calc(-25%*2.5)] ml-[calc(-400%+12px)]`"
-      :data="hotHotelData?.data?.data"
-      :buttonWidth="'lg:w-[calc(26%)] w-full'"
-      :buttonPosition="'top-[50%] left-[50%] lg:translate-x-[calc(-50%-12px)] translate-x-[-50%] translate-y-[-50%]'"
+      :init-data="hotHotelData?.data?.data"
+      :button-layout-style="'lg:w-[calc(26%)] w-full top-[50%] left-[50%] lg:translate-x-[calc(-50%-12px)] translate-x-[-50%] translate-y-[-50%]'"
       :slide-item-width="'lg:flex-[25%_0_0] flex-[100%_0_0]'"
       class="h-[67%] absolute top-[60%] translate-y-[-50%]"
       data-test="slider"
-      @change="sliderChange"
     >
-      <template v-slot:swiperItem="{ slideItem, index, totalLen }">
+      <template v-slot:swiperItem="{ slideItem, index, totalLen, isCenter }">
         <div
           :class="[
             'h-full z-10 w-[calc(100%-24px)] relative',
@@ -30,13 +28,12 @@
           ]"
           ref="cardWraps"
         >
-          <card
-            :key="isSliderChange"
+          <Card
             :class="[
-              { 'animate-cardFadeInAnimate': index === 4 },
-              { 'shadow-xl shadow-black': index === 4 },
-              { 'opacity-50': index !== 4 },
-              index === 4
+              { 'animate-cardFadeInAnimate': isCenter },
+              { 'shadow-xl shadow-black': isCenter },
+              { 'opacity-50': !isCenter },
+              isCenter
                 ? 'bg-white'
                 : 'before:absolute before:top-0 before:left-0 before:block before:w-full before:h-full before:bg-[#000] before:opacity-[0.4] text-white',
               'duration-300 ease-linear'
@@ -75,29 +72,23 @@
                 >
               </div>
             </template>
-          </card>
+          </Card>
         </div>
       </template>
-    </slider>
+    </Slider>
   </div>
 </template>
 
 <script setup lang="ts">
-import slider from '~~/components/slider/Slider.vue';
-import card from '~~/components/card/index.vue';
+import Slider from '~~/components/slider/Slider.vue';
+import Card from '~~/components/card/index.vue';
 import { apiMethods } from '~~/api/index';
-import { type Hotel } from '~~/model/hotel';
-import { ref, onMounted, onBeforeUnmount } from 'vue';
+
 const {
   data: hotHotelData,
   pending,
   error
 } = await useAsyncData('hotHotel', () => apiMethods.hotel.getHotHotels());
-
-const isSliderChange = ref(0);
-const sliderChange = () => {
-  isSliderChange.value++;
-};
 
 let hotProductsWrapRef = ref<HTMLElement | null>(null);
 

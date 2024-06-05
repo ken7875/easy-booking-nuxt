@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { registerEndpoint, mountSuspended } from '@nuxt/test-utils/runtime'
 import HotProducts from '~~/pages/home/components/HotProducts.vue';
-import { productsData1, productsData2 } from './mockData';
+import { allHotelData } from '~~/api/mocks/hotel';
 import { flushPromises } from '@vue/test-utils';
 import mergeWith from 'lodash/mergeWith';
 
@@ -25,6 +25,12 @@ const createWrapper = async (override = {}) => {
 };
 
 const getFakeCall = vi.fn();
+const sliceHotelData: typeof allHotelData = {
+  ...allHotelData,
+  data: {
+    data: allHotelData.data.data.slice(0, 6)
+  }
+}
 registerEndpoint('/products/hotProducts', getFakeCall)
 
 describe('hotProducts', () => {
@@ -36,8 +42,8 @@ describe('hotProducts', () => {
     expect(chineseTitle.text()).toBe('熱門飯店')
   })
 
-  it('if data more then 9 then card amount should equal data1', async () => {
-    getFakeCall.mockImplementationOnce(() => productsData1)
+  it('if data more then 9 then card amount should equal data', async () => {
+    getFakeCall.mockImplementationOnce(() => allHotelData)
     
     const wrapper = await createWrapper()
     
@@ -47,7 +53,7 @@ describe('hotProducts', () => {
   })
 
   it('if data length is 6 then data amount should be double utils amount more then 9', async () => {
-    getFakeCall.mockImplementationOnce(() => productsData2);
+    getFakeCall.mockImplementationOnce(() => sliceHotelData);
 
     const wrapper = await createWrapper()
     await flushPromises();

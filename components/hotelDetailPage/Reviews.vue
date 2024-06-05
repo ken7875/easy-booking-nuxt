@@ -1,11 +1,10 @@
 <template>
   <Slider
-    :data="reviews"
-    :noDataText="'暫無評論'"
+    :init-data="reviews"
+    :no-data-text="'暫無評論'"
     :slide-item-width="'flex-[50%_0_0]'"
     :spacing="'ml-[calc(-50%*1.5)]'"
-    :buttonWidth="'w-[55%]'"
-    :buttonPosition="'top-[45%] left-[50%] translate-x-[calc(-50%-8px)]'"
+    :button-layout-style="'w-[55%] top-[45%] left-[50%] translate-x-[calc(-50%-8px)]'"
   >
     <template #swiperItem="{ slideItem }">
       <Card class="w-[calc(100%-16px)]">

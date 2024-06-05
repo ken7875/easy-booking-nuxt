@@ -78,11 +78,11 @@ export interface Hotel {
   freeCancel?: boolean;
   noPrePay?: boolean;
   priceDiscount?: number;
-  // viewPorts?: ViewPorts[];
+  viewPorts?: ViewPorts[];
   accommodate: number;
   roomType: RoomType[];
   stars: number;
-  // reviews: Review[];
+  reviews?: Review[];
   service: Service;
 }
 

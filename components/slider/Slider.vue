@@ -1,33 +1,47 @@
 <template>
   <div class="relative">
-    <!-- spacing -->
     <div :class="['w-full h-full', spacing]">
-      <transition-group name="flip-list" tag="div" class="flex w-full h-full">
-        <div
-          v-for="(item, index) in mountedData"
-          :key="item.id"
-          :class="[{ invisible: index === 0 || index === mountedData.length - 1 }, slideItemWidth, gap]"
-        >
-          <slot name="swiperItem" :slideItem="{ ...item }" :index="index" :totalLen="mountedData.length"></slot>
-        </div>
-      </transition-group>
-      <swiperButton
-        :dataLeng="mountedData.length"
-        :curIdx="curIdx"
-        @changeIdx="change"
-        :class="buttonWidth"
-        :buttonPosition="buttonPosition"
-      ></swiperButton>
+      <template v-if="mountedData.length > 0">
+        <transition-group name="flip-list" tag="div" class="flex w-full h-full">
+          <div
+            v-for="(item, index) in mountedData"
+            :key="item.id"
+            :class="[{ invisible: index === 0 || index === mountedData.length - 1 }, slideItemWidth, gap]"
+            data-test="slider-cards"
+          >
+            <slot name="swiperItem" :slideItem="{ ...item }" :index="index" :isCenter="index === 4" :totalLen="mountedData.length"></slot>
+          </div>
+        </transition-group>
+      </template>
+      <template v-else>
+        <p data-test="no-data-text">{{ noDataText }}</p>
+      </template>
+      <!-- button -->
+      <div :class="['absolute z-50 flex justify-between', buttonLayoutStyle]" v-if="mountedData.length > 0">
+        <button @click="change(curIdx - 1)" data-test="prev-button">
+          <client-only>
+            <font-awesome-icon
+              :icon="['fas', 'circle-chevron-left']"
+              class="lg:text-[2.5rem] text-[2rem] swiper-icon text-red-500"
+            ></font-awesome-icon>
+          </client-only>
+        </button>
+        <button @click="change(curIdx + 1)" data-test="next-button">
+          <client-only>
+            <font-awesome-icon
+              :icon="['fas', 'circle-chevron-right']"
+              class="lg:text-[2.5rem] text-[2rem] swiper-icon text-red-500"
+            ></font-awesome-icon>
+          </client-only>
+        </button>
+      </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { type Hotel } from '~~/model/hotel';
-import swiperButton from './SwiperButton.vue';
-
 const myprops = defineProps({
-  data: {
+  initData: {
     type: Array,
     default: () => []
   },
@@ -35,7 +49,7 @@ const myprops = defineProps({
     type: String,
     default: '0'
   },
-  buttonWidth: {
+  buttonLayoutStyle: {
     type: String,
     default: '0'
   },
@@ -52,23 +66,24 @@ const myprops = defineProps({
     type: String,
     default: ''
   },
-  buttonPosition: {
+  noDataText: {
     type: String,
-    default: '',
-    require: true
+    default: '暫無資料'
   }
 });
 
-// const slots = useSlots();
-const { data, spacing, buttonWidth } = toRefs(myprops);
+const emit = defineEmits<{
+  (e: 'change'): void;
+}>();
 
-const initData = ref<any[]>([]);
-initData.value = data.value as any[];
+// const slots = useSlots();
+const { initData, spacing, buttonLayoutStyle } = toRefs(myprops);
 
 const loopData = computed(() => {
   const result: any[] = [];
   // 每個slider的id，讓transition-group能運作
   let number = 0;
+
   if (initData.value.length > 0) {
     while (result.length < 9) {
       initData.value.forEach((item: any) => {
@@ -99,12 +114,17 @@ const change = (idx: number) => {
   let limit = mountedData.value.length - 1;
   let newIdx = idx > limit ? 0 : idx < 0 ? mountedData.value.length - 1 : idx;
   curIdx.value = newIdx;
+
   emit('change');
 };
 
-const emit = defineEmits<{
-  (e: 'change'): void;
-}>();
+defineExpose({
+  myprops,
+  mountedData,
+  loopData,
+  initData,
+  curIdx
+})
 </script>
 
 <style scoped>

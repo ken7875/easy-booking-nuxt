@@ -25,6 +25,7 @@ export const useHotel = defineStore('hotelStore', {
       hotel: {
         id: '',
         locations: {
+          type: 'Point',
           coordinates: [],
           address: ''
         },
@@ -32,7 +33,7 @@ export const useHotel = defineStore('hotelStore', {
         price: 0,
         country: '台灣',
         ratingAverage: 0,
-        ratingQuantity: '',
+        ratingQuantity: 0,
         description: '',
         images: [],
         summary: '',

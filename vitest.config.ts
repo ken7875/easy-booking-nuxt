@@ -22,18 +22,28 @@
 // });
 
 import { defineVitestConfig } from '@nuxt/test-utils/config'
+import AutoImport from 'unplugin-auto-import/vite'
+import path from 'path';
 
 export default defineVitestConfig({
-  server: {
-    host: 'localhost',
-    port: 5000,
-    strictPort: true,
-    origin: 'http://localhost:8080',
+  // server: {
+  //   host: 'localhost',
+  //   port: 5000,
+  //   strictPort: true,
+  //   origin: 'http://localhost:8080',
+  // },
+  plugins: [
+    AutoImport({
+      imports: ['vitest', 'vue'],
+    }),
+  ],
+  resolve: {
+    alias: {
+      '#imports': path.resolve(__dirname, './.nuxt/imports.d.ts')
+    }
   },
   test: {
     environment: 'nuxt',
-    // setupFiles: ['vitest-localstorage-mock'],
-    // mockReset: false,
     setupFiles: ['./testSetup.ts'],
     alias: {
       '~~': '/',

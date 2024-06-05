@@ -37,11 +37,10 @@
     </div>
     <div class="overflow-hidden" v-else>
       <Slider
-        :data="hotelDetailData?.images"
+        :init-data="hotelDetailData?.images"
         :slide-item-width="'flex-[calc(100%)_0_0]'"
         :spacing="'ml-[-200%]'"
-        :buttonPosition="'top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]'"
-        :buttonWidth="'w-full'"
+        :button-layout-style="'w-full top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]'"
         class="h-[250px]"
       >
         <template #swiperItem="{ slideItem, index }">

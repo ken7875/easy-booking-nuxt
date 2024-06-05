@@ -2,7 +2,6 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { mountSuspended } from '@nuxt/test-utils/runtime'
 import mergeWith from 'lodash/mergeWith';
 import Modal from '../index.vue'
-import { h } from 'vue'
 
 const createWrapper = async (override = {}) => {
     const defaultConfig = {
