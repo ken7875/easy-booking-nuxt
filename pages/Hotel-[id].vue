@@ -1,7 +1,7 @@
 <template>
   <div>
     <section class="lg:w-[1140px] w-full mx-auto">
-      <ImageGroup :hotelDetailData="hotelDetailData || null" :height="'h-[450px]'" />
+      <ImageGroup :hotelDetailData="hotelDetailData || null" :height="'h-[450px] my-[50px]'" />
     </section>
     <section class="lg:w-[1140px] w-full mx-auto">
       <div class="w-full grid grid-cols-5 auto-rows-auto gap-x-[15px] gap-y-[15px]">
@@ -141,12 +141,12 @@
     >
       <div class="lg:w-[1140px] w-full px-[15px] mx-auto h-full flex flex-wrap items-center justify-between">
         <h5 class="lg:w-[40%] w-full text-[1.875rem] font-bold">{{ reserveHotelInfo.roomTypeInfo.name }}</h5>
-        <p class="mb-1 pl-2 text-primary font-bold text-[0.875rem] lg:w-fit w-full">
+        <p class="mb-1 pl-2 text-primary font-bold text-[0.875rem] lg:w-fit w-[50%] text-end">
           *僅剩{{ reserveHotelInfo.roomTypeInfo.remainRoom }}間空房
         </p>
-        <div class="lg:flex lg:items-center w-full lg:w-fit">
+        <div class="lg:flex lg:items-center w-full">
           <div class="flex items-center justify-between">
-            <p class="mx-2">{{ reserveHotelInfo.day }} 晚</p>
+            <p class="mx-2">{{ totalDayGetter }} 晚</p>
             <div class="mx-2 flex items-center">
               <Button
                 class="button__none"
@@ -163,14 +163,20 @@
               >
                 +
               </Button>
-              <p class="mb-0 ml-[10px]">數量</p>
+              <!-- <p class="mb-0 ml-[10px]">數量</p> -->
             </div>
-            <h6 class="text-[1.5rem] font-bold mx-2">{{ reserveHotelInfo.roomTypeInfo.price }}</h6>
+            <p>總價:</p>
+            <h6 class="text-[1.5rem] font-bold mx-2">{{ totalPriceGetter }}</h6>
           </div>
           <div class="flex justify-between items-center mt-[10px] lg:mt-0">
-            <Button class="button__outline-darkLight w-[100px] lg:ml-[15px]" @click="barOpen = false">取消</Button>
+            <Button class="button__outline-darkLight w-[100px] lg:ml-[15px] h-[40px]" @click="barOpen = false"
+              >取消</Button
+            >
             <Button
-              :class="['w-[100px] ml-[15px]', reserveHotelInfo.bookingNum <= 0 ? 'button__gray' : 'button__primary']"
+              :class="[
+                'w-[100px] ml-[15px] h-[40px]',
+                reserveHotelInfo.bookingNum <= 0 ? 'button__gray' : 'button__primary'
+              ]"
               @click="reserve"
               :disabled="reserveHotelInfo.bookingNum <= 0"
             >
@@ -208,6 +214,7 @@ const route = useRoute();
 const router = useRouter();
 
 const hotelId = ref<string>(route.params.id as string);
+
 const { data: hotelDetail, pending } = await useAsyncData('hotelDetail', () => getProductApi<Hotel>(hotelId.value));
 
 const hotelDetailData = ref(hotelDetail.value?.data?.data);
@@ -278,6 +285,9 @@ const reserveHotelInfo = reactive<ReserveHotelInfo>({
   paid: 0
 });
 
+const totalDayGetter = computed(() => reserveHotelInfo.day * reserveHotelInfo.bookingNum);
+const totalPriceGetter = computed(() => reserveHotelInfo.roomTypeInfo.price * reserveHotelInfo.bookingNum);
+
 const openReserve = (productInfo: RoomType) => {
   barOpen.value = true;
   reserveHotelInfo.productId = hotelId.value;
@@ -289,7 +299,8 @@ const openReserve = (productInfo: RoomType) => {
 };
 
 const reserve = () => {
-  reserveHotelInfo.paid = reserveHotelInfo.roomTypeInfo.price * reserveHotelInfo.bookingNum;
+  reserveHotelInfo.paid = totalPriceGetter.value;
+
   setReserHotelInfo(reserveHotelInfo);
   let path = token.value ? '/Booking/Form' : '/Login';
   // JSON.stringify(reserveHotelInfo)
@@ -304,7 +315,6 @@ const openModal = (type: string) => {
     const [lng, lat] = coordinates!;
     setMarkers([[lat, lng]]);
     leafletModalStatus.value = true;
-    console.log(leafletModalStatus.value, 'leafletModalStatus');
   } else if (type === 'viewPorts') {
     ViewPortsModalStatus.value = true;
   }

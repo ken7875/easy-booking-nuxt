@@ -1,5 +1,5 @@
 <template>
-  <div class="lg:container">
+  <div class="lg:container lg:w-full w-[90%] mx-auto">
     <ProgressBar :steps="stepAry" :curStep="curStep" />
     <NuxtPage />
   </div>
@@ -25,7 +25,6 @@ const stepAry = reactive(['選擇房型', '填寫基本資料', '確認訂單', 
 // let timer: ReturnType<typeof setTimeout> | null = null;
 
 const curStep = computed(() => {
-  console.log(route.name, 'route.name');
   let step = 0;
   switch (route.name) {
     case 'Booking-Form':

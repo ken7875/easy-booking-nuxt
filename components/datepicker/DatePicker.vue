@@ -108,7 +108,6 @@ const adjustDateStrategy = {
   goPrevDate: () => {
     firstCalendarDate.month = (firstCalendarDate.month + 11) % 12;
     firstCalendarDate.year -= firstCalendarDate.month === 11 ? 1 : 0;
-    console.log(firstCalendarDate.month, 'firstCalendarDate.month');
 
     secondCalendarDate.month = (secondCalendarDate.month + 11) % 12;
     secondCalendarDate.year -= secondCalendarDate.month === 11 ? 1 : 0;
@@ -142,7 +141,6 @@ const openCalendarHandler = (option: string) => {
 const getSpecifyDate = (dateType: string) => {
   let oneDayMillisecond = 86400000;
   const defaultDate = new Date().setHours(0, 0, 0, 0);
-  console.log(defaultDate, 'defaultDate');
 
   let date = [new Date(defaultDate), new Date(defaultDate + oneDayMillisecond)];
 
@@ -165,7 +163,6 @@ const getSpecifyDate = (dateType: string) => {
 
 const setSpecifyDate = (dateType: string) => {
   const date: Date[] = getSpecifyDate(dateType);
-  console.log(date);
 
   getDate({ dateRangeISO: date[0], openCalendar: true, dateOrder: 'from' });
   getDate({ dateRangeISO: date[1], openCalendar: false, dateOrder: 'to' });
@@ -196,7 +193,6 @@ watch(
     openCalendar.value = val.openCalendar;
     showDateRange.value.star = val.isoDate[0];
     showDateRange.value.end = val.isoDate[1];
-    console.log(showDateRange.value, 'outer value');
   },
   {
     deep: true,

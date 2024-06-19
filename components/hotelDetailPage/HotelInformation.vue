@@ -39,7 +39,7 @@ const props = defineProps<{
 
 const sliceNum = ref(315);
 const isTextShow = ref(false);
-console.log(props.hotelDetailData?.description, 'description');
+
 const seeMore = () => {
   isTextShow.value = !isTextShow.value;
   if (isTextShow.value) {

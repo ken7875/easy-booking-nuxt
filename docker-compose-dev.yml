@@ -1,36 +1,35 @@
 version: "3.8"
 services:
-  easy-booking-app:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    ports:
-      - "8080:3000"
-    volumes:
-      # - ./:/easy-booking-app
-      - ./public:/easy-booking-app/public
-      - ./types:/easy-booking-app/types
-      - ./vite.config.ts:/easy-booking-app/vite.config.ts
-      - ./tsconfig.json:/easy-booking-app/tsconfig.json
-      - ./tsconfig.vitest:/easy-booking-app/tsconfig.vitest
-      - ./vitest.config.ts:/easy-booking-app/vitest.config.ts
-      - ./tailwind.config.js:/easy-booking-app/tailwind.config.js
-      - ./index.html:/easy-booking-app/index.html
-      - ./api:/easy-booking-app/api
-      - ./assets:/easy-booking-app/assets
-      - ./components:/easy-booking-app/components
-      - ./composables:/easy-booking-app/composables
-      - ./layouts:/easy-booking-app/layouts
-      - ./middleware:/easy-booking-app/middleware
-      - ./model:/easy-booking-app/model
-      - ./pages:/easy-booking-app/pages
-      - ./plugins:/easy-booking-app/plugins
-      - ./store:/easy-booking-app/store
-      - ./utils:/easy-booking-app/utils
-      - ./eslintrc.js:/easy-booking-app/eslintrc.js
-      - ./auto-imports.d.ts:/easy-booking-app/auto-imports.d.ts
-      - ./error.vue:/easy-booking-app/error.vue
-    command: yarn dev
+  easy-booking-nuxt:
+    # build:
+    #   context: .
+    #   dockerfile: Dockerfile.devcontainer
+    # ports:
+    #   - "8080:3000"
+    # volumes:
+    #   - ./:/easy-booking-app
+      # - ../public:/easy-booking-app/public
+      # - ../types:/easy-booking-app/types
+      # - ../vite.config.ts:/easy-booking-app/vite.config.ts
+      # - ../tsconfig.json:/easy-booking-app/tsconfig.json
+      # - ../tsconfig.vitest:/easy-booking-app/tsconfig.vitest
+      # - ../vitest.config.ts:/easy-booking-app/vitest.config.ts
+      # - ../tailwind.config.js:/easy-booking-app/tailwind.config.js
+      # - ../index.html:/easy-booking-app/index.html
+      # - ../api:/easy-booking-app/api
+      # - ../assets:/easy-booking-app/assets
+      # - ../components:/easy-booking-app/components
+      # - ../composables:/easy-booking-app/composables
+      # - ../layouts:/easy-booking-app/layouts
+      # - ../middleware:/easy-booking-app/middleware
+      # - ../model:/easy-booking-app/model
+      # - ../pages:/easy-booking-app/pages
+      # - ../plugins:/easy-booking-app/plugins
+      # - ../store:/easy-booking-app/store
+      # - ../utils:/easy-booking-app/utils
+      # - ../eslintrc.js:/easy-booking-app/eslintrc.js
+      # - ../auto-imports.d.ts:/easy-booking-app/auto-imports.d.ts
+      # - ../error.vue:/easy-booking-app/error.vue
     # environment:
     #   - PORT=5173
     #   - HOST=0.0.0.0

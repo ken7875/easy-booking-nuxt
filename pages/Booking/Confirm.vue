@@ -1,8 +1,8 @@
 <template>
-  <div>
+  <div class="lg:w-[45%]">
     <h3 class="text-center my-[20px] mx-0 text-[25px] font-bold">訂單確認</h3>
     <client-only>
-      <ul class="mx-auto w-[45%] border-t border-darkLight p-[20px]">
+      <ul class="mx-auto border-t border-darkLight p-[20px]">
         <li class="flex justify-between mb-[10px]">
           <p class="font-bold">房客名稱</p>
           <p>{{ bookingInfo.lastName }} {{ bookingInfo.firstName }}</p>
@@ -16,13 +16,13 @@
           <p>{{ bookingInfo.phone }}</p>
         </li>
       </ul>
-      <ul class="mx-auto w-[45%] border-t border-darkLight p-[20px]">
+      <ul class="mx-auto border-t border-darkLight p-[20px]">
         <li class="flex justify-between mb-[10px]">
           <p class="font-bold">旅館名稱</p>
           <p>{{ bookingInfo.roomType }}</p>
         </li>
       </ul>
-      <ul class="mx-auto w-[45%] border-t border-darkLight p-[20px]">
+      <ul class="mx-auto border-t border-darkLight p-[20px]">
         <li class="flex justify-between mb-[10px]">
           <p class="font-bold">入住時間</p>
           <p v-timeFormat="bookingInfo.checkinTime"></p>
@@ -32,14 +32,14 @@
           <p v-timeFormat="bookingInfo.checkoutTime"></p>
         </li>
       </ul>
-      <ul class="mx-auto w-[45%] border-y border-darkLight p-[20px]">
+      <ul class="mx-auto border-y border-darkLight p-[20px]">
         <li>
           <p class="font-bold">特殊需求</p>
           <p>{{ bookingForm.asking }}</p>
         </li>
       </ul>
     </client-only>
-    <div class="w-[45%] p-[20px] m-auto mt-[15px] flex justify-between">
+    <div class="p-[20px] m-auto mt-[15px] flex justify-between">
       <Button type="submit" class="button__outline-primary submit" @click.prevent="confirmOrEdit('/Booking/Form')">
         修改訂單
       </Button>

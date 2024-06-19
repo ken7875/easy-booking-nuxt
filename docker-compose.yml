@@ -1,8 +1,8 @@
 version: "3"
 
 services:
-  easy-booking-app:
-    container_name: easy-booking-app
+  easy-booking-nuxt:
+    container_name: easy-booking-nuxt
     build:
       context: .
       dockerfile: Dockerfile

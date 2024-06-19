@@ -48,7 +48,7 @@
           <a href="javascript:;" class="text-[#007bff]">Privacy Statement</a>
         </p> -->
         <!-- <BaseCheckbox label="記住我" v-model="remember" placeholder="請填入您的密碼" type="password" /> -->
-        <Button class="button button__primary w-full mt-5" type="submit">登入</Button>
+        <Button class="button button__primary w-full mt-5 h-[50px]" type="submit">登入</Button>
       </form>
     </div>
   </div>
@@ -150,7 +150,6 @@ const getCarouselRef = (el: ComponentPublicInstance<any> | Element) => {
 let tl: GSAPTimeline | null = gsap.timeline({ repeat: -1 });
 
 const fadeAnimation = () => {
-  console.log(123123);
   tl?.fromTo(carouselAryRef.value[0], { autoAlpha: 1 }, { autoAlpha: 0, duration: 4 });
   tl?.fromTo(carouselAryRef.value[1], { autoAlpha: 0 }, { autoAlpha: 1, duration: 4 }, '<');
   tl?.fromTo(carouselAryRef.value[1], { autoAlpha: 1 }, { autoAlpha: 0, duration: 4 });

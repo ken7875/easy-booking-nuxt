@@ -1,0 +1,39 @@
+# FROM ubuntu:12.04
+# 我們的 node 版本 image 的環境
+FROM node:20-alpine3.18 AS builder
+
+# 安裝 Python, make 和 g++ (node-alpine 使用yarn install需要python進行編譯)
+# RUN apk update && apk upgrade && \
+#       apk add git \
+#       && apk add --no-cache python3 make g++
+
+RUN apk update && \
+      apk add python3 --no-cache make g++ && \
+      apk add git
+
+ENV PATH /usr/bin/python3:$PATH
+# ENV NODE_OPTIONS=--max_old_space_size=8192
+
+# 創造目標的資料夾
+# WORKDIR /workspaces/easy-booking-nuxt
+# RUN cd /workspaces/easy-booking-nuxt
+# RUN npm i -g typescript@latest
+
+# COPY package.json yarn.lock /workspaces/easy-booking-nuxt/
+# RUN yarn install
+
+# 複製 package.json 和 yarn.lock 到工作目錄
+# CMD ["sh", "-c", "npm install && npm run dev"]
+# 把當下資料夾內容複製到容器內的指定的資料夾底下 (若有 dockerignore 會忽略指定的內容)
+# COPY . /easy-booking-nuxt
+
+# 把容器對外的 port 開啟
+# EXPOSE 3000
+
+# 容器內 我們 nuxt 的 host 和 port 指定給環境變數
+ENV NUXT_HOST=0.0.0.0
+ENV NUXT_PORT=3000
+
+# 執行鏡像時會執行的 script
+# CMD [ "yarn", "dev" ]
+# ENTRYPOINT [ "yarn", "dev" ]

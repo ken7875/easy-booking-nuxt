@@ -86,10 +86,10 @@
         </client-only>
         <div class="w-full h-full overflow-scroll">
           <div v-if="!isHotelDetailPending" class="px-[10px]">
-            <ImageGroup :hotelDetailData="hotelDetail || null" :height="'h-[330px]'" />
+            <ImageGroup :hotelDetailData="hotelDetail || null" :height="'h-[330px] my-[24px]'" />
             <HotelInformation :hotelDetailData="hotelDetail || null" />
             <div class="flex justify-end">
-              <NuxtLink :to="`/Hotel-${hotelDetail?.id}`" class="button button__secondary w-[150px] mt-[15px]"
+              <NuxtLink :to="`/Hotel-${hotelDetail?.id}`" class="button button__secondary w-[150px] mt-[15px] h-[45px]"
                 >查看房間詳情</NuxtLink
               >
             </div>
@@ -120,7 +120,9 @@ const { useAuth } = useStore();
 const authStore = useAuth();
 const { userInfo } = storeToRefs(authStore);
 
-const { data: ordersData, error } = await useAsyncData('ordersList', () => apiMethods.booking.getOrders<OrderDetail[]>());
+const { data: ordersData, error } = await useAsyncData('ordersList', () =>
+  apiMethods.booking.getOrders<OrderDetail[]>()
+);
 
 const ordersList = ref(ordersData.value?.data?.data);
 

@@ -1,5 +1,5 @@
-import type { NuxtPage } from 'nuxt/schema';
 import svgLoader from 'vite-svg-loader';
+import { removePagesMatching } from './utils/routesConfig';
 
 // https://v3.nuxtjs.org/api/configuration/nuxt.config
 export default defineNuxtConfig({
@@ -20,19 +20,6 @@ export default defineNuxtConfig({
   ],
   hooks: {
     'pages:extend'(pages) {
-      function removePagesMatching(pattern: RegExp, pages: NuxtPage[] = []) {
-        const pagesToRemove = [];
-        for (const page of pages) {
-          if (pattern.test(page.file as string)) {
-            pagesToRemove.push(page);
-          } else {
-            removePagesMatching(pattern, page.children);
-          }
-        }
-        for (const page of pagesToRemove) {
-          pages.splice(pages.indexOf(page), 1);
-        }
-      }
       removePagesMatching(/\.ts$|components|\.spec\.ts$/, pages);
     }
   },

@@ -1,9 +1,6 @@
 <template>
   <div>
-    <div
-      v-if="isDesktop"
-      :class="['w-full grid grid-cols-5 auto-rows-auto gap-x-[15px] gap-y-[15px] my-[50px]', height]"
-    >
+    <div v-if="isDesktop" :class="['w-full grid grid-cols-5 auto-rows-auto gap-x-[15px] gap-y-[15px]', height]">
       <div
         class="bg-center bg-cover bg-no-repeat col-[1_/_4] row-[1_/_5]"
         :style="{ backgroundImage: `url(${hotelDetailData?.images[0]})` }"

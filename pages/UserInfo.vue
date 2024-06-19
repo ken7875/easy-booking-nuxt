@@ -176,13 +176,8 @@ const submit = handleSubmit(async (values) => {
       country: country.value,
       phone: phone.value
     });
-
-    console.log(updateData);
-
     tempUserInfo.value = { ...updateData.data?.data };
-    console.log(tempUserInfo.value, updateData.data?.data);
     openUpdate();
-
     isUpdate.value = false;
   } catch (error) {
     openUpdate();
