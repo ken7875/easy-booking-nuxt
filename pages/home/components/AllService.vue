@@ -1,6 +1,6 @@
 <template>
   <section
-    class="bg-homeScrollImg relative bg-black overflow-hidden grid lg:grid-cols-5 grid-cols-3 rows-auto p-[1px] w-full py-[20px]"
+    class="bg-homeScrollImg relative bg-black overflow-hidden grid lg:grid-cols-5 grid-cols-3 rows-auto p-[1px] w-full h-screen"
   >
     <div
       :class="[' ml-[-1px] relative']"

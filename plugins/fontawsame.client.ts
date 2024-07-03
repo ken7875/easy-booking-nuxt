@@ -20,7 +20,8 @@ import {
   faCircleXmark,
   faUserLarge,
   faLocationDot,
-  faXmark
+  faXmark,
+  faAnglesDown
 } from '@fortawesome/free-solid-svg-icons';
 
 config.autoAddCss = false;
@@ -45,7 +46,8 @@ library.add(
   faCircleXmark,
   faUserLarge,
   faLocationDot,
-  faXmark
+  faXmark,
+  faAnglesDown
 );
 
 export default defineNuxtPlugin((nuxtApp) => {

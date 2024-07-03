@@ -1,30 +1,24 @@
 <template>
-  <div class="w-full overflow-x-hidden">
-    <section>
-      <HotCountry />
+  <div class="w-full overflow-x-hidden wrap" ref="wrap">
+    <!-- class="h-screen w-full z-[100] pt-[6.5rem] relative" -->
+    <!-- <section class="h-screen overflow-hidden">
+      <client-only>
+        <HotCountry></HotCountry>
+      </client-only>
+    </section> -->
+    <section ref="hotProducts" class="h-screen overflow-hidden">
+      <HotProducts />
     </section>
-    <section ref="hotProducts">
-      <LazyHotProducts v-if="allHotels.length > 0" />
+    <section ref="allService" class="h-screen overflow-hidden">
+      <AllService />
     </section>
-    <section ref="allService">
-      <LazyAllService v-if="allServiceTargetIsVisible" />
-    </section>
-    <section>
-      <WaterfullViews />
+    <section ref="waterfull" class="h-screen overflow-hidden">
+      <Waterfull />
     </section>
   </div>
 </template>
 
 <script setup lang="ts">
-import { useStore } from '~~/store/index';
-import { useIntersectionObserver } from '@vueuse/core';
-import { storeToRefs } from 'pinia';
-
-const { useHotel } = useStore();
-const hotelStore = useHotel();
-const { getAllHotels } = hotelStore;
-const { allHotels } = storeToRefs(hotelStore);
-
 useHead({
   title: 'Easy Booking home page',
   meta: [
@@ -38,35 +32,35 @@ definePageMeta({
   layout: 'home'
 });
 
-// await useAsyncData('hotHotel', () => getAllHotels());
+// ****** full page scroll ******
+const wrap = ref();
+const pageSection = ref(0);
 
-await getAllHotels();
+const scrollHandler = (e: WheelEvent) => {
+  const html = document.getElementsByTagName('html')[0];
+  e.preventDefault();
+  e.stopPropagation();
 
-const WaterfullViews = defineAsyncComponent(() => import('./home/components/Waterfull.vue'));
-const allService = ref(null);
-const allServiceTargetIsVisible = ref(false);
-
-const { stop: stopAllServiceListen, resume: resumeAllServiceListen } = useIntersectionObserver(
-  allService,
-  ([{ isIntersecting }], observerElement) => {
-    allServiceTargetIsVisible.value = isIntersecting;
+  if (e.deltaY > 0) {
+    pageSection.value++;
+  } else if (e.deltaY < 0) {
+    pageSection.value--;
   }
-  // {
-  //   rootMargin: '500px'
-  // }
-);
 
-watch(allServiceTargetIsVisible, (val) => {
-  if (val) {
-    stopAllServiceListen();
-  } else {
-    resumeAllServiceListen();
-  }
+  html?.scrollTo({
+    top: window.innerHeight * pageSection.value,
+    behavior: 'smooth' // 平滑滾動效果
+  });
+};
+
+onMounted(() => {
+  wrap.value.addEventListener('wheel', scrollHandler);
 });
+// ****** full page scroll ******
 </script>
 
-<style>
-::-webkit-scrollbar {
-  display: none;
+<style scoped>
+section {
+  scroll-snap-align: start;
 }
 </style>

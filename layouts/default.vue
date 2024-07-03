@@ -18,3 +18,9 @@ const route = useRoute();
 
 const showFooter = computed(() => route.path.includes('auth'));
 </script>
+
+<!-- <style>
+::-webkit-scrollbar {
+  display: none;
+}
+</style> -->

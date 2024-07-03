@@ -88,7 +88,9 @@ const {
   data: hotHotelData,
   pending,
   error
-} = await useAsyncData('hotHotel', () => apiMethods.hotel.getHotHotels());
+} = await useAsyncData('hotHotel', () => apiMethods.hotel.getHotHotels(), {
+  lazy: true
+});
 
 let hotProductsWrapRef = ref<HTMLElement | null>(null);
 
@@ -121,9 +123,9 @@ onBeforeUnmount(() => {
   tl = null;
 });
 
-defineExpose({
-  hotHotelData
-});
+// defineExpose({
+//   hotHotelData
+// });
 </script>
 
 <style>

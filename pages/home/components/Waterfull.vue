@@ -38,7 +38,6 @@
 <script setup lang="ts">
 import gsap from 'gsap';
 import Button from '~~/components/Button.vue';
-import throttle from '~~/utils/throttle';
 import { storeToRefs } from 'pinia';
 import { useHotel } from '~~/store/hotel';
 
@@ -64,7 +63,7 @@ const waterfullData = computed(() => {
     let waterfullCol = allHotels.value.slice(startIdx, endIdx);
     // 如果最後結果不滿6個，就把不足的補上
     if (waterfullCol.length < 6) {
-      const diff = 6 - waterfullCol.length
+      const diff = 6 - waterfullCol.length;
       waterfullCol.push(...allHotels.value.slice(0, diff));
     }
 
@@ -90,7 +89,7 @@ const waterfullAnimation = (el: HTMLElement, rowIdx: number) => {
 
 const router = useRouter();
 
-const goProductsPage = throttle(() => {
+const goProductsPage = useThrottle(() => {
   router.push('/Hotels');
 });
 

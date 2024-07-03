@@ -4,6 +4,7 @@ import { useDatePicker } from './datePicker';
 import { useBooking } from './booking';
 import { useAuth } from './auth';
 import { useMessage } from './msgStore';
+import { useSetting } from './setting';
 
 export const useStore = () => ({
   useHotel,
@@ -11,5 +12,6 @@ export const useStore = () => ({
   useDatePicker,
   useBooking,
   useAuth,
-  useMessage
+  useMessage,
+  useSetting
 });

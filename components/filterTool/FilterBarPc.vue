@@ -70,7 +70,6 @@
 import RangeSlider from './RangeSlider.vue';
 import BaseSelect from '../form/BaseSelect.vue';
 import DropDownMenu from '../DropDownMenu.vue';
-import throttle from '~~/utils/throttle';
 import icon from '~~/utils/icon';
 import { useHotel } from '~~/store/hotel';
 import { storeToRefs } from 'pinia';
@@ -141,7 +140,7 @@ const chooseServiceArray = ref<string[]>([]);
 
 // const emit = defineEmits(['updateProducts']);
 
-const updateProducts = throttle((value: any, type: string) => {
+const updateProducts = useThrottle((value: any, type: string) => {
   console.log(type, value);
   filterHandler(type, value);
 

@@ -15,7 +15,7 @@
 // // import flushPromises from 'flush-promises';
 // // import Hotels from '~~/pages/Hotels.vue';
 // // import { useHotel } from '~~/store/hotel';
-// // import throttle from '~~/utils/throttle.ts';
+// // import useThrottle from '~~/utils/useThrottle.ts';
 // // let wrapper;
 // // let store;
 
@@ -36,7 +36,7 @@
 
 // // vi.stubGlobal('getAllHotels', vi.fn());
 
-// // vi.mock('~~/utils/throttle.ts');
+// // vi.mock('~~/utils/useThrottle.ts');
 
 // // describe('Hotel views test', async () => {
 // //   beforeEach(() => {
@@ -73,7 +73,7 @@
 
 // //     store = useHotel();
 // //     console.log(store.getAllHotels);
-// //     expect(throttle).toHaveBeenCalledTimes(1);
+// //     expect(useThrottle).toHaveBeenCalledTimes(1);
 // //     expect(store.allHotels).toHaveLength(10);
 // //     // expect(wrapper.vm.getAllHotelsHandler).toHaveBeenCalledTimes(1);
 // //   });

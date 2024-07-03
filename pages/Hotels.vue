@@ -130,10 +130,6 @@
 import { useStore } from '~~/store/index';
 import { storeToRefs } from 'pinia';
 import Card from '~~/components/card/index.vue';
-// import Images from '~~/components/productsPage/card/Images.vue';
-// import Introduce from '~~/components/productsPage/card/Introduce.vue';
-// import Reviews from '~~/components/productsPage/card/Reviews.vue';
-import throttle from '~~/utils/throttle';
 import SearchBar from '~~/components/searchBar/index.vue';
 import FilterBarPc from '~~/components/filterTool/FilterBarPc.vue';
 import FilterBarMobile from '~~/components/filterTool/FilterBarMobile.vue';
@@ -258,7 +254,7 @@ const handleScroll = () => {
   }
 };
 
-const throttleScroll = throttle(handleScroll.bind(this), 500);
+const throttleScroll = useThrottle(handleScroll.bind(this), 500);
 
 onMounted(() => {
   getAllHotelsHandler(true, hotelFilterObj.value);

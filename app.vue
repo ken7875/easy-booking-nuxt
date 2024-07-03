@@ -22,13 +22,13 @@ useHead({
     { charset: 'utf-8' },
     { name: 'viewport', content: 'width=device-width, initial-scale=1' },
     { hid: 'description', name: 'description', content: 'Welcome to Easy Booking' }
-  ],
-  link: [
-    {
-      rel: 'stylesheet',
-      href: 'https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css'
-    }
   ]
+  // link: [
+  //   {
+  //     rel: 'stylesheet',
+  //     href: 'https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css'
+  //   }
+  // ]
 });
 
 const { useMessage, useAuth } = useStore();

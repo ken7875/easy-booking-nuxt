@@ -8,7 +8,7 @@ export default defineNuxtConfig({
   // },
   // buildModules: ['@pinia/nuxt'],
   build: {
-    transpile: ['gsap']
+    transpile: ['gsap', '@tresjs/cientos']
   },
   components: [
     {
@@ -23,7 +23,7 @@ export default defineNuxtConfig({
       removePagesMatching(/\.ts$|components|\.spec\.ts$/, pages);
     }
   },
-  modules: ['@nuxtjs/tailwindcss', '@pinia/nuxt', '@nuxtjs/device', '@nuxt/test-utils/module'],
+  modules: ['@nuxtjs/tailwindcss', '@pinia/nuxt', '@nuxtjs/device', '@nuxt/test-utils/module', '@tresjs/nuxt'],
   typescript: {
     strict: true
   },

@@ -76,7 +76,6 @@ import ModalLayout from '~~/components/modal/index.vue';
 import RangeSlider from './RangeSlider.vue';
 import BaseSelect from '../form/BaseSelect.vue';
 import DropDownMenu from '../DropDownMenu.vue';
-import throttle from '~~/utils/throttle';
 import icon from '~~/utils/icon';
 import { useHotel } from '~~/store/hotel';
 import { storeToRefs } from 'pinia';
@@ -146,7 +145,7 @@ const options = reactive<OptionsType>({
   service: []
 });
 
-const updateProducts = throttle((value: any, type: string) => {
+const updateProducts = useThrottle((value: any, type: string) => {
   filterHandler(type, value);
 }, 800);
 </script>
