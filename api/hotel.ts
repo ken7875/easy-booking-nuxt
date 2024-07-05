@@ -1,7 +1,7 @@
 import myFetch from '~~/utils/myFetch';
 import { type AllHoteFilterObj } from '~~/model/hotel';
 import { queryFactory } from '~~/utils/queryFactory';
-import type{ GetAllResponse, BaseResponse } from '~~/model/api';
+import type { GetAllResponse, BaseResponse } from '~~/model/api';
 import { type Hotel } from '~~/model/hotel';
 
 interface getAllHotelsApiResponse<T> extends GetAllResponse<T> {

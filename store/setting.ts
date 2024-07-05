@@ -1,14 +1,14 @@
 import { defineStore } from 'pinia';
 
 export const useSetting = defineStore('booking', () => {
-  const canPageScroll = ref(true);
+  const isTransitionPageMounted = ref(false);
 
-  const togglePageScroll = (bool: boolean) => {
-    canPageScroll.value = bool;
+  const toggleTransitionPageMounted = (bool: boolean) => {
+    isTransitionPageMounted.value = bool;
   };
 
   return {
-    canPageScroll,
-    togglePageScroll
+    isTransitionPageMounted,
+    toggleTransitionPageMounted
   };
 });

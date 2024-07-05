@@ -337,7 +337,7 @@ const pointShineAnimation = () => {
 // }
 
 const animate = () => {
-  resume();
+  // resume();
 
   onLoop(({ delta, elapsed, clock }) => {
     cloudAnimation();
@@ -369,9 +369,9 @@ const pointerLeaveHandler = useDebounce((e) => {
   }
 }, 10);
 
-onUnmounted(() => {
-  pause();
-});
+// onUnmounted(() => {
+//   pause();
+// });
 </script>
 
 <style>

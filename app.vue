@@ -40,7 +40,6 @@ const authStore = useAuth();
 authStore.$patch({
   token: useCookie('easy-booking-token').value
 });
-
 const showTransitionPage = ref(false);
 
 watch(

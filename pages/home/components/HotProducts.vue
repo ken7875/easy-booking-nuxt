@@ -52,9 +52,9 @@
                 <h3 :class="['text-[2rem]', 'mb-[16px]']">
                   {{ slideItem.name }}
                 </h3>
-                <div class="mb-[16px]">
-                  <span v-textSlice:[80]="slideItem.description"></span>
-                  <span v-if="slideItem.description.length > 80">...</span>
+                <div class="mb-[16px]" v-if="slideItem.description">
+                  <span v-textSlice:[200]="slideItem.description"></span>
+                  <span v-if="slideItem.description?.length > 200">...</span>
                 </div>
                 <p :class="[, 'mb-[16px]']">評分: {{ slideItem.ratingAverage }}</p>
                 <p :class="[, 'mb-[16px]']">最低價格: {{ slideItem.price }}</p>
@@ -84,14 +84,9 @@ import Slider from '~~/components/slider/Slider.vue';
 import Card from '~~/components/card/index.vue';
 import { apiMethods } from '~~/api/index';
 
-const {
-  data: hotHotelData,
-  pending,
-  error
-} = await useAsyncData('hotHotel', () => apiMethods.hotel.getHotHotels(), {
+const { data: hotHotelData } = await useAsyncData('hotHotel', () => apiMethods.hotel.getHotHotels(), {
   lazy: true
 });
-
 let hotProductsWrapRef = ref<HTMLElement | null>(null);
 
 let tl: GSAPTimeline | null = null;

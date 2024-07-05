@@ -22,6 +22,7 @@
 
 <script setup lang="ts">
 import gsap from 'gsap';
+import { useStore } from '@/store/index';
 
 interface Props {
   showTransitionPage: boolean;
@@ -31,21 +32,11 @@ defineProps<Props>();
 
 const emit = defineEmits(['update:showTransitionPage']);
 
+const { useSetting } = useStore();
+const settingStore = useSetting();
+const { toggleTransitionPageMounted } = settingStore;
+
 let htmlDom: HTMLElement | null = null;
-
-const lockScroll = () => {
-  htmlDom = document.querySelector('html');
-
-  if (htmlDom) {
-    htmlDom.style.overflowY = 'hidden';
-  }
-};
-
-const unlockScroll = () => {
-  if (htmlDom) {
-    htmlDom.style.overflowY = 'unset';
-  }
-};
 
 let tl: GSAPTimeline | null = gsap.timeline({
   defaults: {
@@ -74,15 +65,18 @@ const animation = () => {
 };
 
 onMounted(() => {
-  lockScroll();
+  toggleTransitionPageMounted(true);
+  htmlDom = document.querySelector('html');
+  useLockScroll(htmlDom);
   animation();
 });
 
-onBeforeUnmount(() => {
-  unlockScroll();
+onUnmounted(() => {
+  useUnlockScroll(htmlDom);
   tl?.restart();
   tl?.kill();
   tl = null;
+  toggleTransitionPageMounted(false);
 });
 // watch(
 //   () => route.name,
