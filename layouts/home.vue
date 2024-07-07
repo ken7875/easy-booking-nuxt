@@ -23,7 +23,9 @@
           </div>
         </div>
         <client-only>
-          <Earth />
+          <keep-alive>
+            <Earth />
+          </keep-alive>
         </client-only>
         <!-- <div class="w-full h-screen absolute top-0 left-0 bg-black"></div> -->
       </div>

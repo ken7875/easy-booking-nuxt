@@ -8,17 +8,26 @@
       <primitive :object="earth" />
       <primitive :object="cloud" :rotation-y="cloudRotationY" />
       <primitive :object="glow" />
-      <primitive
-        :object="point"
-        :scale="scaleValue"
-        v-always-look-at="new THREE.Vector3(0, 0, 0)"
-        v-for="(position, i) in countryInfoMap"
-        :key="i"
-        :position="setPosition(position[1].cooradinates)"
-        @click="openInfo(position[1].country)"
-        @pointer-enter="pointerEnterHandler"
-        @pointer-leave="pointerLeaveHandler"
-      />
+      <TresGroup>
+        <TresMesh
+          @click="openInfo(item[1].country)"
+          @pointer-enter="pointerEnterHandler"
+          @pointer-leave="pointerLeaveHandler"
+          v-always-look-at="new THREE.Vector3(0, 0, 0)"
+          v-for="(item, i) in countryInfoMap"
+          :key="i"
+          :position="setPosition(item[1].cooradinates)"
+          :scale="pointScale"
+        >
+          <TresCircleGeometry :args="[0.015, 32]" />
+          <TresMeshBasicMaterial
+            :transparent="true"
+            :opacity="pointOpacity"
+            :color="0xff474c"
+            :side="THREE.DoubleSide"
+          />
+        </TresMesh>
+      </TresGroup>
       <primitive :object="countryName" />
       <primitive :object="hemiLight" />
       <OrbitControls />
@@ -35,6 +44,10 @@ import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry.js';
 import { useStore } from '~~/store/index';
 import { storeToRefs } from 'pinia';
 import { CountryEnum } from './enums/earth';
+
+type CustomMeshType = THREE.Mesh<THREE.CircleGeometry, THREE.MeshBasicMaterial, THREE.Object3DEventMap> & {
+  countryName?: keyof typeof CountryEnum;
+};
 
 const router = useRouter();
 
@@ -63,26 +76,24 @@ const handleFovResize = async () => {
 handleFovResize();
 
 // all scene
-const earth = ref();
-const hemiLight = new THREE.HemisphereLight(0xffffff, 0xffffff, 0.5);
-const star = ref();
-const cloud = ref();
-const countryName = ref(new THREE.Group());
-const point = ref();
-const glow = ref();
+let earth: any = null;
+let hemiLight = new THREE.HemisphereLight(0xffffff, 0xffffff, 0.5);
+let star: any = null;
+let cloud: any = null;
+let countryName = new THREE.Group();
+let pointGroup = new THREE.Group();
+let glow: any = null;
 
 // 地球渲染
 const getEarthMesh = () => {
   const earthMaterial = new THREE.MeshStandardMaterial({
     map: loader.load('/img/earth4.jpg'),
     blending: THREE.AdditiveBlending
-    // transparent: true
-    // opacity: 0.3
   });
 
   return new THREE.Mesh(geometry, earthMaterial);
 };
-earth.value = getEarthMesh();
+earth = getEarthMesh();
 // 背景星空渲染
 const getStarfield = ({ numStars = 500 } = {}) => {
   function randomSpherePoint() {
@@ -124,7 +135,7 @@ const getStarfield = ({ numStars = 500 } = {}) => {
   const points = new THREE.Points(geo, mat);
   return points;
 };
-star.value = getStarfield({ numStars: 2500 });
+star = getStarfield({ numStars: 2500 });
 
 // 雲層
 const getCloudMesh = () => {
@@ -138,8 +149,8 @@ const getCloudMesh = () => {
   return new THREE.Mesh(geometry, cloudMaterial);
 };
 // earthcloudmaplight
-cloud.value = getCloudMesh();
-cloud.value.scale.setScalar(1.009);
+cloud = getCloudMesh();
+cloud.scale.setScalar(1.009);
 
 // 雲層流動動畫
 const cloudRotationY = ref(0);
@@ -198,8 +209,8 @@ const getFresnelMat = ({ rimHex = 0x0088ff, facingHex = 0x000000 } = {}) => {
 
   return new THREE.Mesh(geometry, fresnelMat);
 };
-glow.value = getFresnelMat();
-glow.value.scale.setScalar(1.01);
+glow = getFresnelMat();
+glow.scale.setScalar(1.01);
 
 // 地球做標計算
 const llaToEcef = (lat: number, lon: number, alt: number, rad: number) => {
@@ -234,17 +245,6 @@ const countryInfoMap = computed(() => {
   return result;
 });
 
-// 創建標記點
-const createPointMesh = () => {
-  const geo = new THREE.CircleGeometry(0.015, 32);
-  const mat = new THREE.MeshBasicMaterial({ color: 0xff474c, side: THREE.DoubleSide, transparent: true });
-  const point = new THREE.Mesh(geo, mat);
-  console.log(point.material);
-  return point;
-};
-
-point.value = createPointMesh();
-
 // 國家名
 const createCountryNameMesh = (text: string, position: number[]) => {
   const loader2 = new FontLoader();
@@ -270,76 +270,29 @@ const createCountryNameMesh = (text: string, position: number[]) => {
 };
 
 countryInfoMap.value.forEach((country, i) => {
-  countryName.value.add(createCountryNameMesh(CountryEnum[country.country], country.cooradinates));
+  countryName.add(createCountryNameMesh(CountryEnum[country.country], country.cooradinates));
 });
+
 // 閃爍動畫設定
-const opacity = ref(1);
-const scaleValue = ref(1.01);
+const pointOpacity = ref(1);
+const pointScale = ref(1);
+
 const pointShineAnimation = () => {
-  if (opacity.value > 0) {
-    opacity.value = Number((opacity.value - 0.02).toFixed(2));
-    point.value.material.opacity = opacity.value;
+  if (pointOpacity.value > 0) {
+    pointOpacity.value = Number((pointOpacity.value - 0.02).toFixed(2));
   } else {
-    opacity.value = 1;
-    point.value.material.opacity = opacity.value;
+    pointOpacity.value = 1;
   }
 
-  if (scaleValue.value < 2) {
-    scaleValue.value += 0.02;
+  if (pointScale.value < 2) {
+    pointScale.value += 0.02;
   } else {
-    scaleValue.value = 1;
+    pointScale.value = 1;
   }
 };
-// 啟動閃爍動畫
-
-// 設定座標
-// const ringPositionAry = [
-//   [120.6667, 24.15],
-//   [-71.0846, 42.3188]
-// ];
-
-// 線條動畫
-// const linePoints = [new THREE.Vector3(0, 0, 0)];
-// const lineGeometry = new THREE.BufferGeometry().setFromPoints(linePoints);
-// const getLineMesh = () => {
-//   const material = new THREE.LineBasicMaterial({ color: 0xff0000 });
-
-//   return new THREE.Line(lineGeometry, material);
-// };
-
-// line.value = getLineMesh();
-
-// function updateLine() {
-//   const speed = 0.01;
-//   // 慢慢增加線的長度
-//   length += speed;
-
-//   let newPoint;
-//   const angle = THREE.MathUtils.degToRad(70);
-//   if (length <= 1.2) {
-//     const x = length * Math.cos(angle);
-//     const y = length * Math.sin(angle);
-//     newPoint = new THREE.Vector3(x, y, 0);
-//     // newPoint = new THREE.Vector3(length, 0, 0);
-//   } else if (length <= 2.2) {
-//     // 30px後線轉向
-//     const x = 1.2 * Math.cos(angle) + (length - 1.2);
-//     const y = 1.2 * Math.sin(angle);
-//     newPoint = new THREE.Vector3(x, y, 0);
-//   } else {
-//     // 當超過60px停止
-//     // pause();
-//     return;
-//   }
-
-//   linePoints.push(newPoint);
-//   lineGeometry.setFromPoints(linePoints);
-// }
 
 const animate = () => {
-  // resume();
-
-  onLoop(({ delta, elapsed, clock }) => {
+  onLoop(() => {
     cloudAnimation();
     pointShineAnimation();
   });
@@ -347,7 +300,6 @@ const animate = () => {
 
 animate();
 
-const canvas = ref();
 const openInfo = useDebounce((countryName: string) => {
   router.push({
     path: '/Hotels',
@@ -357,21 +309,23 @@ const openInfo = useDebounce((countryName: string) => {
   });
 });
 
-const pointerEnterHandler = useDebounce((e: PointerEvent) => {
-  if (e.target) {
-    (e.target as HTMLCanvasElement).style.cursor = 'pointer';
+const pointerEnterHandler = useDebounce(() => {
+  let canvas: HTMLCanvasElement | null = document.querySelector('.canvas');
+  if (canvas) {
+    canvas.style.cursor = 'pointer';
   }
+
+  canvas = null;
 }, 10);
 
 const pointerLeaveHandler = useDebounce((e) => {
-  if (e.target) {
-    (e.target as HTMLCanvasElement).style.cursor = 'auto';
+  let canvas: HTMLCanvasElement | null = document.querySelector('.canvas');
+  if (canvas) {
+    canvas.style.cursor = 'auto';
   }
-}, 10);
 
-// onUnmounted(() => {
-//   pause();
-// });
+  canvas = null;
+}, 10);
 </script>
 
 <style>
