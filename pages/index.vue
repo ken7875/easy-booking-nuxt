@@ -1,11 +1,9 @@
 <template>
   <div class="w-full overflow-x-hidden wrap" ref="wrap">
     <!-- class="h-screen w-full z-[100] pt-[6.5rem] relative" -->
-    <!-- <section class="h-screen overflow-hidden">
-      <client-only>
-        <HotCountry></HotCountry>
-      </client-only>
-    </section> -->
+    <section ref="AirplaneTick" class="h-screen overflow-x-hidden">
+      <AirplaneTick />
+    </section>
     <section ref="hotProducts" class="h-screen overflow-x-hidden">
       <HotProducts />
     </section>

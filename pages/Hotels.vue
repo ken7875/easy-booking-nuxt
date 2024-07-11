@@ -19,101 +19,111 @@
           展開地圖
         </button>
       </div>
-      <ul>
-        <li v-for="(hotel, i) in showHotelList" :key="i" :isHorizontal="true" class="mb-[20px]">
-          <Card :detailType="detailType" :isHorizontal="true" class="border border-[#dee2e6]">
-            <template #header>
-              <img
-                :src="hotel.images[0]"
-                alt=""
-                class="min-h-[100%] w-[40vw] lg:w-[10vw] object-cover object-center"
-                @click="checkProduct(hotel.id, '所有圖片')"
-              />
-            </template>
-            <template #body>
-              <div class="h-full w-full">
-                <h2 class="font-bold lg:text-[2rem] text-[1.5rem] ml-[10px]">{{ hotel.name }}</h2>
-                <div class="flex items-center ml-[10px] h-[18px] mb-[5px]">
+      <client-only>
+        <ul>
+          <li
+            v-for="(hotel, i) in showHotelList"
+            :key="i"
+            :isHorizontal="true"
+            class="mb-[20px]"
+            data-test="hotelCards"
+          >
+            <Card :detailType="detailType" :isHorizontal="true" class="border border-[#dee2e6]">
+              <template #header>
+                <img
+                  :src="hotel.images[0]"
+                  alt=""
+                  class="min-h-[100%] w-[40vw] lg:w-[10vw] object-cover object-center"
+                  @click="checkProduct(hotel.id, '所有圖片')"
+                />
+              </template>
+              <template #body>
+                <div class="h-full w-full">
+                  <h2 class="font-bold lg:text-[2rem] text-[1.5rem] ml-[10px]">{{ hotel.name }}</h2>
+                  <div class="flex items-center ml-[10px] h-[18px] mb-[5px]">
+                    <div
+                      class="mr-[8px] h-[18px] bg-contain bg-[url('/img/star.png')]"
+                      :style="{ width: `${18 * hotel.stars}px` }"
+                    ></div>
+                    <span v-if="hotel.stars >= 3">{{ hotel.stars }}級飯店</span>
+                  </div>
                   <div
-                    class="mr-[8px] h-[18px] bg-contain bg-[url('/img/star.png')]"
-                    :style="{ width: `${18 * hotel.stars}px` }"
-                  ></div>
-                  <span v-if="hotel.stars >= 3">{{ hotel.stars }}級飯店</span>
-                </div>
-                <div
-                  :class="[
-                    'px-[10px] py-[8px] border-y border-[#dee2e6] flex items-center justify-between',
-                    { 'bg-darkLight': detailType.title === '詳細介紹' && detailType.id === hotel.id }
-                  ]"
-                  @click="checkProduct(hotel.id, '詳細介紹')"
-                >
-                  <p class="block mr-[5px]">{{ hotel.locations.address }}</p>
-                  <font-awesome-icon
-                    :icon="[
-                      'fa-solid',
-                      `angle-${detailType.title === '詳細介紹' && detailType.id === hotel.id ? 'up' : 'down'}`
+                    :class="[
+                      'px-[10px] py-[8px] border-y border-[#dee2e6] flex items-center justify-between',
+                      { 'bg-darkLight': detailType.title === '詳細介紹' && detailType.id === hotel.id }
                     ]"
-                  />
-                </div>
-                <div
-                  :class="[
-                    'px-[10px] py-[8px] flex items-center justify-between',
-                    { 'bg-darkLight': detailType.title === '所有評論' && detailType.id === hotel.id }
-                  ]"
-                  @click="checkProduct(hotel.id, '所有評論')"
-                >
-                  <p class="mb-0 w-100 mr-[5px]">
-                    <span class="badge bg-success text-[15px] font-[800] text-primary">{{ hotel.ratingAverage }}</span>
-                    <span class="text-[12px]">/ 5</span>
-                    <span class="inline-block ml-5 text-[15px]">({{ hotel.ratingQuantity }} 則評論)</span>
-                  </p>
-                  <font-awesome-icon
-                    :icon="[
-                      'fa-solid',
-                      `angle-${detailType.title === '所有評論' && detailType.id === hotel.id ? 'up' : 'down'}`
+                    @click="checkProduct(hotel.id, '詳細介紹')"
+                  >
+                    <p class="block mr-[5px]">{{ hotel.locations.address }}</p>
+                    <font-awesome-icon
+                      :icon="[
+                        'fa-solid',
+                        `angle-${detailType.title === '詳細介紹' && detailType.id === hotel.id ? 'up' : 'down'}`
+                      ]"
+                    />
+                  </div>
+                  <div
+                    :class="[
+                      'px-[10px] py-[8px] flex items-center justify-between',
+                      { 'bg-darkLight': detailType.title === '所有評論' && detailType.id === hotel.id }
                     ]"
-                  />
-                </div>
-                <!-- 手機footer -->
-                <div v-if="!isDesktop" class="border-t border-[#dee2e6] px-[10px]">
-                  <div class="flex justify-around items-center">
-                    <div class="mr-[5px]">
-                      <span class="lg:text-[1.7rem] text-[1.2rem] text-end text-primary inline-block mr-[2px]"
-                        >$ {{ hotel.price }}</span
+                    @click="checkProduct(hotel.id, '所有評論')"
+                  >
+                    <p class="mb-0 w-100 mr-[5px]">
+                      <span class="badge bg-success text-[15px] font-[800] text-primary">{{
+                        hotel.ratingAverage
+                      }}</span>
+                      <span class="text-[12px]">/ 5</span>
+                      <span class="inline-block ml-5 text-[15px]">({{ hotel.ratingQuantity }} 則評論)</span>
+                    </p>
+                    <font-awesome-icon
+                      :icon="[
+                        'fa-solid',
+                        `angle-${detailType.title === '所有評論' && detailType.id === hotel.id ? 'up' : 'down'}`
+                      ]"
+                    />
+                  </div>
+                  <!-- 手機footer -->
+                  <div v-if="!isDesktop" class="border-t border-[#dee2e6] px-[10px]">
+                    <div class="flex justify-around items-center">
+                      <div class="mr-[5px]">
+                        <span class="lg:text-[1.7rem] text-[1.2rem] text-end text-primary inline-block mr-[2px]"
+                          >$ {{ hotel.price }}</span
+                        >
+                        <span class="leading-[1] text-[0.5rem]">每晚</span>
+                        <p class="text-[0.8rem] my-[15px]">
+                          剩下 <span class="text-primary">{{ calcRoomRemainNums(hotel.id) }}</span> 間空房
+                        </p>
+                      </div>
+                      <NuxtLink :to="`/Hotel-${hotel.id}`" class="button button__outline-primary px-[5px] h-[45px]"
+                        >查看房間詳情</NuxtLink
                       >
-                      <span class="leading-[1] text-[0.5rem]">每晚</span>
-                      <p class="text-[0.8rem] my-[15px]">
-                        剩下 <span class="text-primary">{{ calcRoomRemainNums(hotel.id) }}</span> 間空房
-                      </p>
                     </div>
-                    <NuxtLink :to="`/Hotel-${hotel.id}`" class="button button__outline-primary px-[5px] h-[45px]"
-                      >查看房間詳情</NuxtLink
-                    >
                   </div>
                 </div>
-              </div>
-            </template>
-            <template #footer v-if="isDesktop">
-              <div class="w-[40%] border-l border-[#dee2e6] p-[10px]">
-                <div class="flex items-baseline justify-end">
-                  <p class="text-[1.7rem] text-end text-primary mr-[5px]">$ {{ hotel.price }}</p>
-                  <p class="leading-[1] text-[0.5rem] text-end">每晚</p>
+              </template>
+              <template #footer v-if="isDesktop">
+                <div class="w-[40%] border-l border-[#dee2e6] p-[10px]">
+                  <div class="flex items-baseline justify-end">
+                    <p class="text-[1.7rem] text-end text-primary mr-[5px]">$ {{ hotel.price }}</p>
+                    <p class="leading-[1] text-[0.5rem] text-end">每晚</p>
+                  </div>
+                  <p class="text-end text-[0.8rem] my-[15px]">
+                    剩下 <span class="text-primary font-[800]">{{ calcRoomRemainNums(hotel.id) }}</span> 間空房
+                  </p>
+                  <NuxtLink :to="`/Hotel-${hotel.id}`" class="button button__outline-primary h-[45px]"
+                    >查看房間詳情</NuxtLink
+                  >
                 </div>
-                <p class="text-end text-[0.8rem] my-[15px]">
-                  剩下 <span class="text-primary font-[800]">{{ calcRoomRemainNums(hotel.id) }}</span> 間空房
-                </p>
-                <NuxtLink :to="`/Hotel-${hotel.id}`" class="button button__outline-primary h-[45px]"
-                  >查看房間詳情</NuxtLink
-                >
-              </div>
-            </template>
-            <template #detail v-if="detailType.id && detailType.title && detailType.id === hotel.id">
-              <component :is="renderComp" :id="detailType.id" />
-            </template>
-          </Card>
-        </li>
-      </ul>
-      <Loading class="absolute bottom-[-2.5%] left-[50%] translate-x-[-50%]" v-if="isHotelApiLoading" />
+              </template>
+              <template #detail v-if="detailType.id && detailType.title && detailType.id === hotel.id">
+                <component :is="renderComp" :id="detailType.id" />
+              </template>
+            </Card>
+          </li>
+        </ul>
+        <Loading class="fixed bottom-[-2.5%] left-[50%] translate-x-[-50%]" v-if="isHotelApiLoading" />
+      </client-only>
     </article>
     <article
       class="mapWrap fixed lg:sticky z-[20] lg:top-[13rem] top-[6.5rem] left-[50%] translate-x-[-50%] lg:left-0 lg:translate-x-0 self-start w-[100vw] h-[100vh] lg:w-[50%] lg:h-[72vh] rounded-[8px] overflow-hidden"
@@ -156,7 +166,7 @@ let htmlDom: HTMLElement | null = null;
 
 const pageData = reactive({
   page: 1,
-  limit: 10
+  limit: 30
 });
 
 const { useHotel, useLeaflet } = useStore();
@@ -175,9 +185,8 @@ const resetFilterData = () => {
   hotelStore.resetHotelData();
 
   pageData.page = 1;
-  pageData.limit = 10;
+  pageData.limit = 30;
 
-  // FIXME 型別優化
   hotelStore.patchFilterDate(pageData);
   if (process.client) {
     // 避免資料過短網頁觸底重新搜尋觸發handleScroll造成發2次api
@@ -208,11 +217,11 @@ const getAllHotelsHandler = async (resetData: boolean, filterObj: AllHoteFilterO
 
 watch(
   () => [
-    hotelFilterObj.value['price[lte]'],
-    hotelFilterObj.value['price[gte]'],
-    hotelFilterObj.value['ratingAverage[gte]'],
-    hotelFilterObj.value['stars[gte]'],
-    hotelFilterObj.value['service[in]']
+    hotelFilterObj.value['minPrice'],
+    hotelFilterObj.value['maxPrice'],
+    hotelFilterObj.value['ratingAverage'],
+    hotelFilterObj.value['stars'],
+    hotelFilterObj.value['service']
   ],
   () => {
     showHotelList.value = [];
@@ -236,8 +245,15 @@ const removeScrollListener = () => {
 };
 
 const handleScroll = () => {
+  console.log(isHotelApiLoading.value);
   const { scrollTop, clientHeight, scrollHeight } = htmlDom!;
 
+  // 若已經在搜尋資料了則無需繼續觸發搜尋事件
+  if (isHotelApiLoading.value) {
+    return;
+  }
+
+  // 若已經沒資料了就不需繼續觸發搜尋事件
   if (allHotels.value?.length > 0 && curHotelTotal.value >= hotelTotal.value) {
     return;
   }
@@ -267,7 +283,6 @@ onMounted(() => {
 
 onBeforeUnmount(() => {
   removeScrollListener();
-  // hotelStore.$reset();
 });
 
 type CurComp = {

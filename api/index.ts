@@ -2,6 +2,7 @@ import { getHotHotels, getAllHotels } from './hotel';
 import { createBooking, getOrders } from './booking';
 import { login, signUp, getAvatar, getUser, updateUser } from './auth';
 import { getAllPickUpOrder, createPickUpOrder } from './pickUp';
+import { getAllAirplaneTicket } from './airplane';
 
 const apiMethods = {
   hotel: {
@@ -22,6 +23,9 @@ const apiMethods = {
   pickUp: {
     getAllPickUpOrder,
     createPickUpOrder
+  },
+  airplane: {
+    getAllAirplaneTicket
   }
 };
 

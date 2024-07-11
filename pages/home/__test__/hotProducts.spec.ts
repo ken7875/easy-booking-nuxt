@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 import { registerEndpoint, mountSuspended } from '@nuxt/test-utils/runtime';
 import HotProducts from '~~/pages/home/components/HotProducts.vue';
 import { allHotelData } from '~~/api/mocks/hotel';
@@ -31,6 +31,7 @@ const sliceHotelData: typeof allHotelData = {
     data: allHotelData.data.data.slice(0, 6)
   }
 };
+
 registerEndpoint('/products/hotProducts', getFakeCall);
 
 describe('hotProducts', () => {

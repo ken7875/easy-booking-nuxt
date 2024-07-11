@@ -31,7 +31,7 @@
                   <li class="flex justify-between mb-[10px]">
                     <p>飯店名稱</p>
                     <p class="text-secondary cursor-pointer" @click="openHotelDetail(order.product.id)">
-                      {{ order.product.name }}
+                      {{ order.product?.name }}
                     </p>
                   </li>
                   <li class="flex justify-between mb-[10px]">
