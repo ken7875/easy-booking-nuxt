@@ -37,7 +37,6 @@ export const updateUser = (
   id: string,
   body: Pick<UserInfo, 'gender' | 'address' | 'country' | 'phone'> | FormData
 ): Promise<BaseResponse<UserInfo>> => {
-  console.log(body, 'body');
   return myFetch(`/user/${id}`, {
     method: 'PATCH',
     body

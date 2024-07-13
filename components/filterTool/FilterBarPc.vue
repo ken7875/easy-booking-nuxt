@@ -5,8 +5,8 @@
         <p class="mb-[10px]">價格範圍</p>
         <RangeSlider
           @updateProducts="updateProducts($event, 'price')"
-          :max="hotelFilterObj['price[lte]']!"
-          :min="hotelFilterObj['price[gte]']!"
+          :max="hotelFilterObj['maxPrice']!"
+          :min="hotelFilterObj['minPrice']!"
         />
       </div>
       <div class="flex-[1_1_0%] h-full flex items-top justify-between px-[20px]">
@@ -141,7 +141,6 @@ const chooseServiceArray = ref<string[]>([]);
 // const emit = defineEmits(['updateProducts']);
 
 const updateProducts = useThrottle((value: any, type: string) => {
-  console.log(type, value);
   filterHandler(type, value);
 
   // emit('updateProducts', true);

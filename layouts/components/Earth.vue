@@ -10,14 +10,14 @@
       <primitive :object="glow" />
       <TresGroup>
         <TresMesh
-          @click="openInfo(item[1].country)"
-          @pointer-enter="pointerEnterHandler"
-          @pointer-leave="pointerLeaveHandler"
           v-always-look-at="new THREE.Vector3(0, 0, 0)"
           v-for="(item, i) in countryInfoMap"
           :key="i"
-          :position="setPosition(item[1].cooradinates)"
+          :position="setPosition(item[1].coordinates)"
           :scale="pointScale"
+          @click="openInfo(item[1].country)"
+          @pointer-enter="pointerEnterHandler"
+          @pointer-leave="pointerLeaveHandler"
         >
           <TresCircleGeometry :args="[0.015, 32]" />
           <TresMeshBasicMaterial
@@ -28,7 +28,24 @@
           />
         </TresMesh>
       </TresGroup>
-      <primitive :object="countryName" />
+      <TresGroup>
+        <Suspense>
+          <Text3D
+            v-for="(item, i) in countryInfoMap"
+            :font="font"
+            :key="i"
+            :text="CountryEnum[item[1].country]"
+            :size="0.03"
+            :height="0.001"
+            :bevel-size="0.001"
+            :bevel-offset="0.001"
+            :bevel-thickness="0.001"
+            v-always-look-at="new THREE.Vector3(0, 0, 0)"
+            :position="setPosition([item[1].coordinates[0], item[1].coordinates[1] - 3])"
+            :scale="[-1, 1, 1]"
+          />
+        </Suspense>
+      </TresGroup>
       <primitive :object="hemiLight" />
       <OrbitControls />
     </TresCanvas>
@@ -40,24 +57,26 @@ import { vAlwaysLookAt } from '@tresjs/cientos';
 import * as THREE from 'three';
 import { FontLoader } from 'three/examples/jsm/loaders/FontLoader.js';
 import helvetikerRegular from 'three/examples/fonts/helvetiker_regular.typeface.json';
-import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry.js';
 import { useStore } from '~~/store/index';
 import { storeToRefs } from 'pinia';
 import { CountryEnum } from './enums/earth';
+import { Text3D } from '@tresjs/cientos';
 
-type CustomMeshType = THREE.Mesh<THREE.CircleGeometry, THREE.MeshBasicMaterial, THREE.Object3DEventMap> & {
-  countryName?: keyof typeof CountryEnum;
-};
-
+// const emit = defineEmits(['renderDone']);
 const router = useRouter();
-
 const { useHotel } = useStore();
 const hotelStore = useHotel();
 const { allHotels } = storeToRefs(hotelStore);
 const { getAllHotels } = hotelStore;
-await getAllHotels();
 
-const { onLoop, resume, pause } = useRenderLoop();
+const loader2 = new FontLoader();
+const font = loader2.parse(helvetikerRegular) as any;
+
+const getHotelData = async () => {
+  await getAllHotels();
+};
+
+const { onLoop } = useRenderLoop();
 
 const { isDesktop } = useDevice();
 const loader = new THREE.TextureLoader();
@@ -73,15 +92,11 @@ const handleFovResize = async () => {
   }
 };
 
-handleFovResize();
-
 // all scene
 let earth: any = null;
 let hemiLight = new THREE.HemisphereLight(0xffffff, 0xffffff, 0.5);
 let star: any = null;
 let cloud: any = null;
-let countryName = new THREE.Group();
-let pointGroup = new THREE.Group();
 let glow: any = null;
 
 // 地球渲染
@@ -133,6 +148,7 @@ const getStarfield = ({ numStars = 500 } = {}) => {
     map: new THREE.TextureLoader().load('/img/circle.png')
   });
   const points = new THREE.Points(geo, mat);
+
   return points;
 };
 star = getStarfield({ numStars: 2500 });
@@ -231,46 +247,18 @@ const setPosition = (coordinates: number[]) => {
 };
 
 const countryInfoMap = computed(() => {
-  const result = new Map<string, { country: keyof typeof CountryEnum; cooradinates: number[] }>();
+  const result = new Map<string, { country: keyof typeof CountryEnum; coordinates: number[] }>();
   allHotels.value.forEach((hotel) => {
     if (!result.has(hotel.country)) {
       // setPosition([hotel.locations.coordinates[0], hotel.locations.coordinates[1]])
       result.set(hotel.country, {
         country: hotel.country as keyof typeof CountryEnum,
-        cooradinates: hotel.locations.coordinates
+        coordinates: hotel.locations.coordinates
       });
     }
   });
 
   return result;
-});
-
-// 國家名
-const createCountryNameMesh = (text: string, position: number[]) => {
-  const loader2 = new FontLoader();
-  const font = loader2.parse(helvetikerRegular);
-  const geometryCountryName = new TextGeometry(`${text}`, {
-    font,
-    size: 0.03,
-    depth: 0.001
-  });
-
-  geometryCountryName.center();
-  geometryCountryName.rotateY(Math.PI);
-
-  const mat = new THREE.MeshBasicMaterial({ color: 0xffffff });
-  const textMesh = new THREE.Mesh(geometryCountryName, mat);
-  const getPosition = setPosition([position[0], position[1] - 3]);
-  textMesh.position.x = getPosition[0];
-  textMesh.position.y = getPosition[1];
-  textMesh.position.z = getPosition[2];
-
-  textMesh.lookAt(new THREE.Vector3(0, 0, 0));
-  return textMesh;
-};
-
-countryInfoMap.value.forEach((country, i) => {
-  countryName.add(createCountryNameMesh(CountryEnum[country.country], country.cooradinates));
 });
 
 // 閃爍動畫設定
@@ -298,8 +286,6 @@ const animate = () => {
   });
 };
 
-animate();
-
 const openInfo = useDebounce((countryName: string) => {
   router.push({
     path: '/Hotels',
@@ -326,6 +312,10 @@ const pointerLeaveHandler = useDebounce((e) => {
 
   canvas = null;
 }, 10);
+
+getHotelData();
+handleFovResize();
+animate();
 </script>
 
 <style>

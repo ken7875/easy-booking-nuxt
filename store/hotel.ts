@@ -47,22 +47,11 @@ export const useHotel = defineStore('hotelStore', {
       hotHotels: [],
       baseUrl: baseUrl as unknown as string,
       hotelFilterObj: {
-        'price[gte]': 0,
-        'price[lte]': 20000,
-        'ratingAverage[gte]': 0,
-        'stars[gte]': 0,
-        'service[in]': [
-          '游泳池',
-          '健身房',
-          '停車場',
-          '機場接送',
-          '酒吧',
-          '溫泉',
-          '禁菸房',
-          '景觀',
-          '提供早餐',
-          '免費網路'
-        ],
+        minPrice: 0,
+        maxPrice: 20000,
+        ratingAverage: 0,
+        stars: 0,
+        service: ['游泳池', '健身房', '停車場', '機場接送', '酒吧', '溫泉', '禁菸房', '景觀', '提供早餐', '免費網路'],
         people: 0,
         country: '',
         room: 0,
@@ -77,24 +66,25 @@ export const useHotel = defineStore('hotelStore', {
   actions: {
     async getAllHotels(filterObj?: AllHoteFilterObj) {
       const hotelData = await apiMethods.hotel.getAllHotels(filterObj);
-      this.allHotels.push(...hotelData?.data?.data);
+      this.allHotels = hotelData?.data?.data;
+
       this.hotelTotal = hotelData.total;
       this.curHotelNum = hotelData.result;
     },
     filterHandler(type: string, value: any) {
       switch (type) {
         case 'price':
-          this.hotelFilterObj['price[lte]'] = value.max;
-          this.hotelFilterObj['price[gte]'] = value.min;
+          this.hotelFilterObj['maxPrice'] = value.max;
+          this.hotelFilterObj['minPrice'] = value.min;
           break;
         case 'rating':
-          this.hotelFilterObj['ratingAverage[gte]'] = value;
+          this.hotelFilterObj['ratingAverage'] = value;
           break;
         case 'stars':
-          this.hotelFilterObj['stars[gte]'] = value;
+          this.hotelFilterObj['stars'] = value;
           break;
         case 'service':
-          this.hotelFilterObj['service[in]'] = value;
+          this.hotelFilterObj['service'] = value;
           break;
 
         default:

@@ -46,7 +46,6 @@ let prevStep = 0;
 
 const finishBar = ref();
 const nextStepAnimate = () => {
-  console.log(curStep.value, 'asdasdasd');
   const prevStepWidth = prevStep / (steps.value.length - 1);
   const curStepWidth = curStep.value / (steps.value.length - 1);
   tl.fromTo(

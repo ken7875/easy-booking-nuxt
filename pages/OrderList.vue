@@ -138,7 +138,6 @@ const openHotelDetail = async (id: string) => {
   isHotelDetailOpen.value = true;
   const { data, pending } = await useAsyncData('hotelDetail', () => getProductApi<Hotel>(id));
   isHotelDetailPending.value = false;
-  console.log(pending.value, 'sadasdasdasdasd');
 
   hotelDetail.value = data.value?.data?.data || null;
   isHotelDetailPending.value = pending.value;

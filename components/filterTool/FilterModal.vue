@@ -9,8 +9,8 @@
           <p class="mb-[20px]">價格範圍</p>
           <RangeSlider
             @updateProducts="updateProducts($event, 'price')"
-            :max="hotelFilterObj['price[lte]']!"
-            :min="hotelFilterObj['price[gte]']!"
+            :max="hotelFilterObj['maxPrice']!"
+            :min="hotelFilterObj['minPrice']!"
           />
         </div>
         <div class="flex items-center justify-between mb-[40px] border-y border-[#E6EAEA] px-[1.5rem] py-[10px]">
@@ -137,8 +137,8 @@ const chooseServiceArray = ref<string[]>([]);
 
 const options = reactive<OptionsType>({
   price: {
-    max: hotelFilterObj.value['price[gte]']!,
-    min: hotelFilterObj.value['price[lte]']!
+    max: hotelFilterObj.value['maxPrice']!,
+    min: hotelFilterObj.value['minPrice']!
   },
   ratingAverage: 0,
   stars: 0,

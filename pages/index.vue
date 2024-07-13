@@ -1,6 +1,5 @@
 <template>
   <div class="w-full overflow-x-hidden wrap" ref="wrap">
-    <!-- class="h-screen w-full z-[100] pt-[6.5rem] relative" -->
     <section ref="AirplaneTick" class="h-screen overflow-x-hidden">
       <AirplaneTick />
     </section>

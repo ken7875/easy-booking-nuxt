@@ -1,5 +1,5 @@
 export interface Locations {
-  type: "Point";
+  type: 'Point';
   coordinates: number[];
   address: string;
 }
@@ -88,21 +88,22 @@ export interface Hotel {
 
 export type AllHotelMap = { [key: string]: Hotel };
 export interface BaseRangeQuery {
-  price?: number;
+  minPrice?: number;
+  maxPrice?: number;
   ratingAverage?: number;
   stars?: number;
 }
 
-type AllHotelQueryGte = {
-  [P in keyof BaseRangeQuery as `${P}[gte]`]?: number;
-};
+// type AllHotelQueryGte = {
+//   [P in keyof BaseRangeQuery as `${P}[gte]`]?: number;
+// };
 
-type AllHotelQueryLte = {
-  [P in keyof BaseRangeQuery as `${P}[lte]`]?: number;
-};
+// type AllHotelQueryLte = {
+//   [P in keyof BaseRangeQuery as `${P}[lte]`]?: number;
+// };
 
-export interface AllHoteFilterObj extends BaseRangeQuery, AllHotelQueryGte, AllHotelQueryLte {
-  'service[in]'?: Service;
+export interface AllHoteFilterObj extends BaseRangeQuery {
+  service?: Service;
   page?: number;
   limit?: number;
   country?: string;

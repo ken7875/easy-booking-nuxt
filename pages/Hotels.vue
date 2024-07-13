@@ -179,9 +179,13 @@ const { allHotels, allHotelMap, hotelFilterObj, hotelTotal, curHotelNum, hotelsC
 const leafletStore = useLeaflet();
 const { setMarkers, setCenterMarker } = leafletStore;
 
+const curHotelTotal = ref(0);
+const isHotelApiLoading = ref(false);
+
 // 篩選條件改變需要初始的資料
-const resetFilterData = () => {
+const resetFilterData = async () => {
   // 篩選資料需要reset
+  curHotelTotal.value = 0;
   hotelStore.resetHotelData();
 
   pageData.page = 1;
@@ -193,9 +197,6 @@ const resetFilterData = () => {
     window.scrollTo(0, 0);
   }
 };
-
-const curHotelTotal = ref(0);
-const isHotelApiLoading = ref(false);
 
 const showHotelList = ref<Hotel[]>([]);
 // 取得所有飯店api
@@ -240,12 +241,11 @@ const calcRoomRemainNums = (id: string) => {
 };
 
 const removeScrollListener = () => {
-  window.removeEventListener('scroll', throttleScroll);
+  window.removeEventListener('scroll', debounceScroll);
   htmlDom = null;
 };
 
 const handleScroll = () => {
-  console.log(isHotelApiLoading.value);
   const { scrollTop, clientHeight, scrollHeight } = htmlDom!;
 
   // 若已經在搜尋資料了則無需繼續觸發搜尋事件
@@ -254,10 +254,12 @@ const handleScroll = () => {
   }
 
   // 若已經沒資料了就不需繼續觸發搜尋事件
+
   if (allHotels.value?.length > 0 && curHotelTotal.value >= hotelTotal.value) {
     return;
   }
 
+  console.log('asdasdasd');
   if (scrollTop + clientHeight >= scrollHeight - 50) {
     hotelStore.$patch({
       hotelFilterObj: {
@@ -270,14 +272,14 @@ const handleScroll = () => {
   }
 };
 
-const throttleScroll = useThrottle(handleScroll.bind(this), 500);
+const debounceScroll = useDebounce(handleScroll.bind(this), 500);
 
 onMounted(() => {
   getAllHotelsHandler(true, hotelFilterObj.value);
 
   if (process.client) {
     htmlDom = document.querySelector('html')!;
-    window.addEventListener('scroll', throttleScroll);
+    window.addEventListener('scroll', debounceScroll);
   }
 });
 
