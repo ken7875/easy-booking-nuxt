@@ -61,7 +61,19 @@ export default defineNuxtConfig({
     plugins: [svgLoader({ defaultImport: 'url' })]
   },
   app: {
-    baseURL: '/'
+    baseURL: '/',
+    head: {
+      meta: [
+        {
+          hid: 'description',
+          name: 'description',
+          content: 'Welcome to Easy Booking'
+        }
+      ],
+      title: 'Easy Booking',
+      charset: 'utf-8',
+      viewport: 'width=device-width, initial-scale=1'
+    }
   }
   // 'http://localhost:8000/api'
 });

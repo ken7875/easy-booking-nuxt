@@ -92,7 +92,9 @@ const isMapOpen = ref(false);
 
 const userId = userIdCookie().getItem();
 
-const { data: pickUpListData } = await useAsyncData('pickUpOrder', () => apiMethods.pickUp.getAllPickUpOrder<PickUpOrder[]>(userId!));
+const { data: pickUpListData } = await useAsyncData('pickUpOrder', () =>
+  apiMethods.pickUp.getAllPickUpOrder<PickUpOrder[]>(userId!)
+);
 
 const pickUpList = ref(pickUpListData.value?.data.data);
 
