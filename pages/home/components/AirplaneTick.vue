@@ -79,26 +79,24 @@ const airplaneTickWrapRef = ref<HTMLElement>();
 
 const airplaneTickets = ref<AirplaneTicketWithFormatTotalTime[]>([]);
 
-const getAirplaneTick = async () => {
-  const { data } = await useAsyncData('airplaneTicket', () => apiMethods.airplane.getAllAirplaneTicket());
+const { data, error } = await useAsyncData('airplaneTicket', () => apiMethods.airplane.getAllAirplaneTicket());
 
-  if (data.value) {
-    airplaneTickets.value = data.value.data.data.map((ticket) => {
-      const totalDiff = moment.duration(ticket.totalTime);
+if (data.value) {
+  airplaneTickets.value = data.value.data.data.map((ticket) => {
+    const totalDiff = moment.duration(ticket.totalTime);
 
-      return {
-        ...ticket,
-        boardTime: useDateFormat(ticket.boardTime, 'HH:mm').value,
-        arriveTime: useDateFormat(ticket.arriveTime, 'HH:mm').value,
-        totalTime: {
-          days: Math.floor(totalDiff.days()),
-          hours: Math.floor(totalDiff.hours()),
-          minutes: Math.floor(totalDiff.minutes())
-        }
-      };
-    });
-  }
-};
+    return {
+      ...ticket,
+      boardTime: useDateFormat(ticket.boardTime, 'HH:mm').value,
+      arriveTime: useDateFormat(ticket.arriveTime, 'HH:mm').value,
+      totalTime: {
+        days: Math.floor(totalDiff.days()),
+        hours: Math.floor(totalDiff.hours()),
+        minutes: Math.floor(totalDiff.minutes())
+      }
+    };
+  });
+}
 
 let tl = null;
 const flipCardAnimate = () => {
@@ -110,7 +108,7 @@ const flipCardAnimate = () => {
   tl?.fromTo(cardArray, { rotateX: 0 }, { rotateX: 720, stagger: 0.1, duration: 1.2 });
 };
 
-getAirplaneTick();
+// await getAirplaneTick();
 
 watch(
   card,

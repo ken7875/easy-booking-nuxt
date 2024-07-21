@@ -34,6 +34,7 @@ const emit = defineEmits(['update:showTransitionPage']);
 
 const { useSetting } = useStore();
 const settingStore = useSetting();
+
 const { toggleTransitionPageMounted } = settingStore;
 
 let htmlDom: HTMLElement | null = null;

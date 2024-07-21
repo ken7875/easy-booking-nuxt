@@ -259,7 +259,6 @@ const handleScroll = () => {
     return;
   }
 
-  console.log('asdasdasd');
   if (scrollTop + clientHeight >= scrollHeight - 50) {
     hotelStore.$patch({
       hotelFilterObj: {

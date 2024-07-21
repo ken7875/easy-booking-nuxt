@@ -42,7 +42,7 @@ export const useBooking = defineStore('booking', {
     };
   },
   actions: {
-    setReserHotelInfo(reserveHotelInfo: ReserveHotelInfo): void {
+    setResetHotelInfo(reserveHotelInfo: ReserveHotelInfo): void {
       this.reserveHotelInfo = reserveHotelInfo;
     },
     setBookingForm(form: BookingForm) {

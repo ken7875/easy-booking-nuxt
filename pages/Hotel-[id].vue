@@ -236,7 +236,7 @@ const datePickerStore = useDatePicker();
 const { date } = storeToRefs(datePickerStore);
 
 const bookingStore = useBooking();
-const { setReserHotelInfo } = bookingStore;
+const { setResetHotelInfo } = bookingStore;
 
 const hotelId = ref<string>(route.params.id as string);
 
@@ -332,7 +332,7 @@ const openReserve = (productInfo: RoomType) => {
 const reserve = () => {
   reserveHotelInfo.paid = totalPriceGetter.value;
 
-  setReserHotelInfo(reserveHotelInfo);
+  setResetHotelInfo(reserveHotelInfo);
   let path = token.value ? '/Booking/Form' : '/Login';
   // JSON.stringify(reserveHotelInfo)
   router.push(path);

@@ -183,6 +183,11 @@ watch(openCalendar, (val) => {
   }
 });
 
+defineExpose({
+  firstCalendarDate,
+  adjustDateStrategy
+});
+
 const showDateRange = ref({
   star: dateRange.value.isoDate[0],
   end: dateRange.value.isoDate[1]

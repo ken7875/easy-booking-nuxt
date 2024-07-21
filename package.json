@@ -1,14 +1,14 @@
 {
   "private": true,
   "scripts": {
-    "build": "nuxt build -a",
-    "dev": "nuxt dev --port=3000",
+    "build": "nuxt build -a --dotenv .env.production",
+    "dev": "nuxt dev --port=3000 --dotenv .env.development",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
     "lint": "eslint . --ext .ts,.vue",
     "test": "vitest --config ./vitest.config.ts",
-    "start": "node .output/server/index.mjs",
+    "start": "cross-env PORT=80 node .output/server/index.mjs",
     "anal": "npx nuxi analyze",
     "clean": "npx nuxi cleanup"
   },
@@ -89,6 +89,7 @@
     "nuxt-vitest": "^0.8.5",
     "ofetch": "^1.0.0",
     "pinia": "^2.0.23",
+    "pm2": "^5.4.2",
     "qs": "^6.12.2",
     "three": "^0.165.0",
     "tweakpane": "^4.0.3",

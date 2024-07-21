@@ -165,7 +165,7 @@ const { useBooking } = useStore();
 
 const bookingStore = useBooking();
 const { bookingForm, reserveHotelInfo } = storeToRefs(bookingStore);
-const { setBookingForm, setReserHotelInfo } = bookingStore;
+const { setBookingForm, setResetHotelInfo } = bookingStore;
 
 // 房間價格 + 20%稅 + 10%客房服務
 const totalPaid = computed(
@@ -218,7 +218,7 @@ const submit = handleSubmit(() => {
     };
 
     setBookingForm(form);
-    setReserHotelInfo({ ...reserveHotelInfo.value, paid: totalPaid.value });
+    setResetHotelInfo({ ...reserveHotelInfo.value, paid: totalPaid.value });
     router.push('/booking/confirm');
   } catch (error) {
     console.log(error);

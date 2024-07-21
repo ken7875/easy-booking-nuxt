@@ -6,14 +6,33 @@ const store = () => import('~~/store/index');
 // const { openMsg } = messageStore;
 
 interface Options {
-  method: "get" | "post" | "GET" | "HEAD" | "PATCH" | "POST" | "PUT" | "DELETE" | "CONNECT" | "OPTIONS" | "TRACE" | "head" | "patch" | "put" | "delete" | "connect" | "options" | "trace" | undefined;
+  method:
+    | 'get'
+    | 'post'
+    | 'GET'
+    | 'HEAD'
+    | 'PATCH'
+    | 'POST'
+    | 'PUT'
+    | 'DELETE'
+    | 'CONNECT'
+    | 'OPTIONS'
+    | 'TRACE'
+    | 'head'
+    | 'patch'
+    | 'put'
+    | 'delete'
+    | 'connect'
+    | 'options'
+    | 'trace'
+    | undefined;
   body?: any;
   responseType?: 'blob' | 'json';
 }
 
 export default <T>(url: string, options: Options): Promise<T> => {
   const runtimeConfig = useRuntimeConfig();
-  const baseURL = runtimeConfig.public.apiBase;
+  const baseURL = (process.server && !process.dev ? runtimeConfig.apiSSR : runtimeConfig.public.apiBase) as string;
   const apiFetch = $fetch.create({ baseURL, responseType: options.responseType || 'json' });
   const authToken = tokenCookie().getItem();
 

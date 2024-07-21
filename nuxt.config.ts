@@ -29,6 +29,7 @@ export default defineNuxtConfig({
   },
   css: ['~~/assets/css/tailwinds.css', '@fortawesome/fontawesome-svg-core/styles.css'],
   runtimeConfig: {
+    apiSSR: process.env.API_SSR_URL,
     public: {
       // process.env.NODE_ENV === 'development' ? process.env.API_BASE_URL : process.env.API_BASE_URL_PROD
       apiBase: process.env.API_BASE_URL
@@ -47,16 +48,16 @@ export default defineNuxtConfig({
       pure: process.env.NODE_ENV === 'production' ? ['console.log', 'debugger'] : []
     },
     build: {
-      minify: 'terser',
-      rollupOptions: {
-        output: {
-          manualChunks(id) {
-            if (id.includes('node_modules')) {
-              return id.toString().split('node_modules/')[1].split('/')[0].toString();
-            }
-          }
-        }
-      }
+      minify: 'terser'
+      // rollupOptions: {
+      //   output: {
+      //     manualChunks(id) {
+      //       if (id.includes('node_modules')) {
+      //         return id.toString().split('node_modules/')[1].split('/')[0].toString();
+      //       }
+      //     }
+      //   }
+      // }
     },
     plugins: [svgLoader({ defaultImport: 'url' })]
   },
@@ -75,5 +76,4 @@ export default defineNuxtConfig({
       viewport: 'width=device-width, initial-scale=1'
     }
   }
-  // 'http://localhost:8000/api'
 });
