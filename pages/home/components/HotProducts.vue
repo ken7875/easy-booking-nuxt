@@ -86,9 +86,7 @@ import Slider from '~~/components/slider/Slider.vue';
 import Card from '~~/components/card/index.vue';
 import { apiMethods } from '~~/api/index';
 
-const { data: hotHotelData } = await useAsyncData('hotHotel', () => apiMethods.hotel.getHotHotels(), {
-  lazy: true
-});
+const { data: hotHotelData } = await useAsyncData('hotHotel', () => apiMethods.hotel.getHotHotels());
 let hotProductsWrapRef = ref<HTMLElement | null>(null);
 
 let tl: GSAPTimeline | null = null;

@@ -27,6 +27,7 @@ const createWrapper = async (override = {}) => {
 const getFakeCall = vi.fn();
 const sliceHotelData: typeof allHotelData = {
   ...allHotelData,
+  result: 6,
   data: {
     data: allHotelData.data.data.slice(0, 6)
   }
@@ -35,6 +36,10 @@ const sliceHotelData: typeof allHotelData = {
 registerEndpoint('/products/hotProducts', getFakeCall);
 
 describe('hotProducts', () => {
+  afterEach(() => {
+    getFakeCall.mockReset();
+  });
+
   it('chinese title is shown', async () => {
     const wrapper = await createWrapper();
     await flushPromises();
@@ -44,7 +49,13 @@ describe('hotProducts', () => {
   });
 
   it('if data more then 9 then card amount should equal data', async () => {
-    getFakeCall.mockImplementationOnce(() => allHotelData);
+    getFakeCall.mockImplementationOnce(() => ({
+      ...allHotelData,
+      result: 15,
+      data: {
+        data: allHotelData.data.data.slice(0, 15)
+      }
+    }));
 
     const wrapper = await createWrapper();
 
@@ -53,7 +64,7 @@ describe('hotProducts', () => {
     expect(cardNums?.length).toBe(15);
   });
 
-  it('if data length is 6 then data amount should be double utils amount more then 9', async () => {
+  it('if data length is 6 then data amount should be double untils amount more then 9', async () => {
     getFakeCall.mockImplementationOnce(() => sliceHotelData);
 
     const wrapper = await createWrapper();
